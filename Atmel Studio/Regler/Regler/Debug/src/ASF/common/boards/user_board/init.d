@@ -62,7 +62,9 @@ src/ASF/common/boards/user_board/init.d \
  ../src/ASF/common/utils/interrupt/interrupt_avr32.h \
  ../src/ASF/avr32/utils/preprocessor/tpaste.h \
  ../src/ASF/avr32/drivers/intc/intc.h \
- ../src/ASF/avr32/utils/status_codes.h ../src/ASF/common/boards/board.h
+ ../src/ASF/avr32/utils/status_codes.h \
+ ../src/ASF/avr32/drivers/gpio/gpio.h ../src/ASF/common/boards/board.h \
+ ../src/ASF/avr32/drivers/twim/twim.h ../src/config/conf_twim.h
 
 ../src/asf.h:
 
@@ -190,4 +192,10 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bi
 
 ../src/ASF/avr32/utils/status_codes.h:
 
+../src/ASF/avr32/drivers/gpio/gpio.h:
+
 ../src/ASF/common/boards/board.h:
+
+../src/ASF/avr32/drivers/twim/twim.h:
+
+../src/config/conf_twim.h:

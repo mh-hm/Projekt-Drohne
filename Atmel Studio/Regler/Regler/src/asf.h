@@ -59,6 +59,9 @@
 #include <compiler.h>
 #include <status_codes.h>
 
+// From module: GPIO - General-Purpose Input/Output
+#include <gpio.h>
+
 // From module: Generic board support
 #include <board.h>
 
@@ -67,5 +70,8 @@
 
 // From module: Part identification macros
 #include <parts.h>
+
+// From module: TWI - Two-Wire Master Interface
+#include <twim.h>
 
 #endif // ASF_H
