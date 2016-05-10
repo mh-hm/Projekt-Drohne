@@ -52,12 +52,21 @@
  * running the ASF driver selector tool. Any changes will be discarded.
  */
 
+// From module: CPU Reset Cause
+#include <avr32_reset_cause.h>
+
+// From module: Chip Reset Cause Access - UC3 implementation
+#include <reset_cause.h>
+
 // From module: Common build items for user board support templates
 #include <user_board.h>
 
 // From module: Compiler abstraction layer and code utilities
 #include <compiler.h>
 #include <status_codes.h>
+
+// From module: FLASH Controller Double-Word (FLASHCDW)
+#include <flashcdw.h>
 
 // From module: GPIO - General-Purpose Input/Output
 #include <gpio.h>
@@ -68,8 +77,18 @@
 // From module: Interrupt management - UC3 implementation
 #include <interrupt.h>
 
+// From module: PM Power Manager - UC3 D implementation
+#include <power_clocks_lib.h>
+#include <sleep.h>
+
 // From module: Part identification macros
 #include <parts.h>
+
+// From module: SCIF System Control Interface - UC3D implementation
+#include <scif_uc3d.h>
+
+// From module: System Clock Control - UC3 D implementation
+#include <sysclk.h>
 
 // From module: TWI - Two-Wire Master Interface
 #include <twim.h>
