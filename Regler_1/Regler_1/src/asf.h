@@ -68,8 +68,15 @@
 // From module: Interrupt management - UC3 implementation
 #include <interrupt.h>
 
+// From module: PM Power Manager - UC3 D implementation
+#include <power_clocks_lib.h>
+#include <sleep.h>
+
 // From module: Part identification macros
 #include <parts.h>
+
+// From module: SCIF System Control Interface - UC3D implementation
+#include <scif_uc3d.h>
 
 // From module: SPI - Serial Peripheral Interface
 #include <spi.h>
@@ -77,6 +84,10 @@
 // From module: SPI - UC3 implementation
 #include <spi_master.h>
 #include <spi_master.h>
+
+// From module: Sleep manager - UC3 implementation
+#include <sleepmgr.h>
+#include <uc3/sleepmgr.h>
 
 // From module: System Clock Control - UC3 D implementation
 #include <sysclk.h>
@@ -86,5 +97,12 @@
 
 // From module: TWI - Two-Wire Master Interface
 #include <twim.h>
+
+// From module: USB - Universial Serial Bus driver (with sleep manager)
+#include <usbc_device.h>
+
+// From module: USB Device Stack Core (Common API)
+#include <udc.h>
+#include <udd.h>
 
 #endif // ASF_H

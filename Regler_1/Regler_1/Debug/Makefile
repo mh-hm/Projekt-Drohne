@@ -44,6 +44,7 @@ SUBDIRS :=  \
 ../src/ASF/avr32/drivers/spi/ \
 ../src/ASF/avr32/drivers/tc/ \
 ../src/ASF/avr32/drivers/twim/ \
+../src/ASF/avr32/drivers/usbc/ \
 ../src/ASF/avr32/utils/ \
 ../src/ASF/avr32/utils/header_files/ \
 ../src/ASF/avr32/utils/make/ \
@@ -55,8 +56,18 @@ SUBDIRS :=  \
 ../src/ASF/common/services/ \
 ../src/ASF/common/services/clock/ \
 ../src/ASF/common/services/clock/uc3d/ \
+../src/ASF/common/services/isp/ \
+../src/ASF/common/services/isp/flip/ \
+../src/ASF/common/services/isp/flip/uc3/ \
+../src/ASF/common/services/sleepmgr/ \
+../src/ASF/common/services/sleepmgr/uc3/ \
 ../src/ASF/common/services/spi/ \
 ../src/ASF/common/services/spi/uc3_spi/ \
+../src/ASF/common/services/usb/ \
+../src/ASF/common/services/usb/class/ \
+../src/ASF/common/services/usb/class/dfu_flip/ \
+../src/ASF/common/services/usb/class/dfu_flip/device/ \
+../src/ASF/common/services/usb/udc/ \
 ../src/ASF/common/utils/ \
 ../src/ASF/common/utils/interrupt/ \
 ../src/config/
@@ -66,21 +77,28 @@ SUBDIRS :=  \
 C_SRCS +=  \
 ../src/ASF/avr32/drivers/flashcdw/flashcdw.c \
 ../src/ASF/avr32/drivers/pm/pm_uc3d.c \
-../src/ASF/avr32/drivers/scif/scif_uc3d.c \
 ../src/ASF/avr32/drivers/pm/power_clocks_lib.c \
+../src/ASF/avr32/drivers/scif/scif_uc3d.c \
 ../src/ASF/avr32/drivers/spi/spi.c \
 ../src/ASF/avr32/drivers/tc/tc.c \
 ../src/ASF/avr32/drivers/twim/twim.c \
+../src/ASF/avr32/drivers/usbc/usbc_device.c \
+../src/ASF/common/services/isp/flip/uc3/isp.c \
+../src/ASF/common/services/sleepmgr/uc3/sleepmgr.c \
 ../src/ASF/common/services/spi/uc3_spi/spi_master.c \
 ../src/ASF/common/services/clock/uc3d/osc.c \
 ../src/ASF/common/services/clock/uc3d/pll.c \
 ../src/ASF/common/services/clock/uc3d/sysclk.c \
 ../src/ASF/avr32/drivers/intc/intc.c \
 ../src/ASF/common/boards/user_board/init.c \
+../src/ASF/common/services/usb/class/dfu_flip/device/udi_dfu_atmel.c \
+../src/ASF/common/services/usb/class/dfu_flip/device/udi_dfu_atmel_desc.c \
+../src/ASF/common/services/usb/udc/udc.c \
 ../src/main.c
 
 
 PREPROCESSING_SRCS +=  \
+../src/ASF/common/services/isp/flip/uc3/boot.S \
 ../src/ASF/avr32/drivers/intc/exception.S \
 ../src/ASF/avr32/utils/startup/startup_uc3.S \
 ../src/ASF/avr32/utils/startup/trampoline_uc3.S
@@ -92,11 +110,15 @@ ASM_SRCS +=
 OBJS +=  \
 src/ASF/avr32/drivers/flashcdw/flashcdw.o \
 src/ASF/avr32/drivers/pm/pm_uc3d.o \
-src/ASF/avr32/drivers/scif/scif_uc3d.o \
 src/ASF/avr32/drivers/pm/power_clocks_lib.o \
+src/ASF/avr32/drivers/scif/scif_uc3d.o \
 src/ASF/avr32/drivers/spi/spi.o \
 src/ASF/avr32/drivers/tc/tc.o \
 src/ASF/avr32/drivers/twim/twim.o \
+src/ASF/avr32/drivers/usbc/usbc_device.o \
+src/ASF/common/services/isp/flip/uc3/boot.o \
+src/ASF/common/services/isp/flip/uc3/isp.o \
+src/ASF/common/services/sleepmgr/uc3/sleepmgr.o \
 src/ASF/common/services/spi/uc3_spi/spi_master.o \
 src/ASF/common/services/clock/uc3d/osc.o \
 src/ASF/common/services/clock/uc3d/pll.o \
@@ -106,16 +128,23 @@ src/ASF/avr32/drivers/intc/intc.o \
 src/ASF/avr32/utils/startup/startup_uc3.o \
 src/ASF/avr32/utils/startup/trampoline_uc3.o \
 src/ASF/common/boards/user_board/init.o \
+src/ASF/common/services/usb/class/dfu_flip/device/udi_dfu_atmel.o \
+src/ASF/common/services/usb/class/dfu_flip/device/udi_dfu_atmel_desc.o \
+src/ASF/common/services/usb/udc/udc.o \
 src/main.o
 
 OBJS_AS_ARGS +=  \
 src/ASF/avr32/drivers/flashcdw/flashcdw.o \
 src/ASF/avr32/drivers/pm/pm_uc3d.o \
-src/ASF/avr32/drivers/scif/scif_uc3d.o \
 src/ASF/avr32/drivers/pm/power_clocks_lib.o \
+src/ASF/avr32/drivers/scif/scif_uc3d.o \
 src/ASF/avr32/drivers/spi/spi.o \
 src/ASF/avr32/drivers/tc/tc.o \
 src/ASF/avr32/drivers/twim/twim.o \
+src/ASF/avr32/drivers/usbc/usbc_device.o \
+src/ASF/common/services/isp/flip/uc3/boot.o \
+src/ASF/common/services/isp/flip/uc3/isp.o \
+src/ASF/common/services/sleepmgr/uc3/sleepmgr.o \
 src/ASF/common/services/spi/uc3_spi/spi_master.o \
 src/ASF/common/services/clock/uc3d/osc.o \
 src/ASF/common/services/clock/uc3d/pll.o \
@@ -125,16 +154,23 @@ src/ASF/avr32/drivers/intc/intc.o \
 src/ASF/avr32/utils/startup/startup_uc3.o \
 src/ASF/avr32/utils/startup/trampoline_uc3.o \
 src/ASF/common/boards/user_board/init.o \
+src/ASF/common/services/usb/class/dfu_flip/device/udi_dfu_atmel.o \
+src/ASF/common/services/usb/class/dfu_flip/device/udi_dfu_atmel_desc.o \
+src/ASF/common/services/usb/udc/udc.o \
 src/main.o
 
 C_DEPS +=  \
 src/ASF/avr32/drivers/flashcdw/flashcdw.d \
 src/ASF/avr32/drivers/pm/pm_uc3d.d \
-src/ASF/avr32/drivers/scif/scif_uc3d.d \
 src/ASF/avr32/drivers/pm/power_clocks_lib.d \
+src/ASF/avr32/drivers/scif/scif_uc3d.d \
 src/ASF/avr32/drivers/spi/spi.d \
 src/ASF/avr32/drivers/tc/tc.d \
 src/ASF/avr32/drivers/twim/twim.d \
+src/ASF/avr32/drivers/usbc/usbc_device.d \
+src/ASF/common/services/isp/flip/uc3/boot.d \
+src/ASF/common/services/isp/flip/uc3/isp.d \
+src/ASF/common/services/sleepmgr/uc3/sleepmgr.d \
 src/ASF/common/services/spi/uc3_spi/spi_master.d \
 src/ASF/common/services/clock/uc3d/osc.d \
 src/ASF/common/services/clock/uc3d/pll.d \
@@ -144,16 +180,23 @@ src/ASF/avr32/drivers/intc/intc.d \
 src/ASF/avr32/utils/startup/startup_uc3.d \
 src/ASF/avr32/utils/startup/trampoline_uc3.d \
 src/ASF/common/boards/user_board/init.d \
+src/ASF/common/services/usb/class/dfu_flip/device/udi_dfu_atmel.d \
+src/ASF/common/services/usb/class/dfu_flip/device/udi_dfu_atmel_desc.d \
+src/ASF/common/services/usb/udc/udc.d \
 src/main.d
 
 C_DEPS_AS_ARGS +=  \
 src/ASF/avr32/drivers/flashcdw/flashcdw.d \
 src/ASF/avr32/drivers/pm/pm_uc3d.d \
-src/ASF/avr32/drivers/scif/scif_uc3d.d \
 src/ASF/avr32/drivers/pm/power_clocks_lib.d \
+src/ASF/avr32/drivers/scif/scif_uc3d.d \
 src/ASF/avr32/drivers/spi/spi.d \
 src/ASF/avr32/drivers/tc/tc.d \
 src/ASF/avr32/drivers/twim/twim.d \
+src/ASF/avr32/drivers/usbc/usbc_device.d \
+src/ASF/common/services/isp/flip/uc3/boot.d \
+src/ASF/common/services/isp/flip/uc3/isp.d \
+src/ASF/common/services/sleepmgr/uc3/sleepmgr.d \
 src/ASF/common/services/spi/uc3_spi/spi_master.d \
 src/ASF/common/services/clock/uc3d/osc.d \
 src/ASF/common/services/clock/uc3d/pll.d \
@@ -163,6 +206,9 @@ src/ASF/avr32/drivers/intc/intc.d \
 src/ASF/avr32/utils/startup/startup_uc3.d \
 src/ASF/avr32/utils/startup/trampoline_uc3.d \
 src/ASF/common/boards/user_board/init.d \
+src/ASF/common/services/usb/class/dfu_flip/device/udi_dfu_atmel.d \
+src/ASF/common/services/usb/class/dfu_flip/device/udi_dfu_atmel_desc.d \
+src/ASF/common/services/usb/udc/udc.d \
 src/main.d
 
 OUTPUT_FILE_PATH +=Regler_1.elf
@@ -208,80 +254,127 @@ LINKER_SCRIPT_DEP+=
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 src/ASF/avr32/drivers/flashcdw/%.o: ../src/ASF/avr32/drivers/flashcdw/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD -DUDD_ENABLE  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/usbc" -I"../src/ASF/common/services/isp/flip/uc3" -I"../src/ASF/common/services/isp/flip" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/usb" -I"../src/ASF/common/services/usb/class/dfu_flip" -I"../src/ASF/common/services/usb/class/dfu_flip/device" -I"../src/ASF/common/services/usb/udc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/pm/%.o: ../src/ASF/avr32/drivers/pm/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD -DUDD_ENABLE  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/usbc" -I"../src/ASF/common/services/isp/flip/uc3" -I"../src/ASF/common/services/isp/flip" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/usb" -I"../src/ASF/common/services/usb/class/dfu_flip" -I"../src/ASF/common/services/usb/class/dfu_flip/device" -I"../src/ASF/common/services/usb/udc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/scif/%.o: ../src/ASF/avr32/drivers/scif/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD -DUDD_ENABLE  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/usbc" -I"../src/ASF/common/services/isp/flip/uc3" -I"../src/ASF/common/services/isp/flip" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/usb" -I"../src/ASF/common/services/usb/class/dfu_flip" -I"../src/ASF/common/services/usb/class/dfu_flip/device" -I"../src/ASF/common/services/usb/udc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/spi/%.o: ../src/ASF/avr32/drivers/spi/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD -DUDD_ENABLE  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/usbc" -I"../src/ASF/common/services/isp/flip/uc3" -I"../src/ASF/common/services/isp/flip" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/usb" -I"../src/ASF/common/services/usb/class/dfu_flip" -I"../src/ASF/common/services/usb/class/dfu_flip/device" -I"../src/ASF/common/services/usb/udc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/tc/%.o: ../src/ASF/avr32/drivers/tc/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD -DUDD_ENABLE  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/usbc" -I"../src/ASF/common/services/isp/flip/uc3" -I"../src/ASF/common/services/isp/flip" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/usb" -I"../src/ASF/common/services/usb/class/dfu_flip" -I"../src/ASF/common/services/usb/class/dfu_flip/device" -I"../src/ASF/common/services/usb/udc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/twim/%.o: ../src/ASF/avr32/drivers/twim/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD -DUDD_ENABLE  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/usbc" -I"../src/ASF/common/services/isp/flip/uc3" -I"../src/ASF/common/services/isp/flip" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/usb" -I"../src/ASF/common/services/usb/class/dfu_flip" -I"../src/ASF/common/services/usb/class/dfu_flip/device" -I"../src/ASF/common/services/usb/udc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/ASF/avr32/drivers/usbc/%.o: ../src/ASF/avr32/drivers/usbc/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD -DUDD_ENABLE  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/usbc" -I"../src/ASF/common/services/isp/flip/uc3" -I"../src/ASF/common/services/isp/flip" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/usb" -I"../src/ASF/common/services/usb/class/dfu_flip" -I"../src/ASF/common/services/usb/class/dfu_flip/device" -I"../src/ASF/common/services/usb/udc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/ASF/common/services/isp/flip/uc3/%.o: ../src/ASF/common/services/isp/flip/uc3/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD -DUDD_ENABLE  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/usbc" -I"../src/ASF/common/services/isp/flip/uc3" -I"../src/ASF/common/services/isp/flip" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/usb" -I"../src/ASF/common/services/usb/class/dfu_flip" -I"../src/ASF/common/services/usb/class/dfu_flip/device" -I"../src/ASF/common/services/usb/udc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/ASF/common/services/sleepmgr/uc3/%.o: ../src/ASF/common/services/sleepmgr/uc3/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD -DUDD_ENABLE  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/usbc" -I"../src/ASF/common/services/isp/flip/uc3" -I"../src/ASF/common/services/isp/flip" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/usb" -I"../src/ASF/common/services/usb/class/dfu_flip" -I"../src/ASF/common/services/usb/class/dfu_flip/device" -I"../src/ASF/common/services/usb/udc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/common/services/spi/uc3_spi/%.o: ../src/ASF/common/services/spi/uc3_spi/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD -DUDD_ENABLE  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/usbc" -I"../src/ASF/common/services/isp/flip/uc3" -I"../src/ASF/common/services/isp/flip" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/usb" -I"../src/ASF/common/services/usb/class/dfu_flip" -I"../src/ASF/common/services/usb/class/dfu_flip/device" -I"../src/ASF/common/services/usb/udc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/common/services/clock/uc3d/%.o: ../src/ASF/common/services/clock/uc3d/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD -DUDD_ENABLE  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/usbc" -I"../src/ASF/common/services/isp/flip/uc3" -I"../src/ASF/common/services/isp/flip" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/usb" -I"../src/ASF/common/services/usb/class/dfu_flip" -I"../src/ASF/common/services/usb/class/dfu_flip/device" -I"../src/ASF/common/services/usb/udc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/intc/%.o: ../src/ASF/avr32/drivers/intc/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD -DUDD_ENABLE  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/usbc" -I"../src/ASF/common/services/isp/flip/uc3" -I"../src/ASF/common/services/isp/flip" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/usb" -I"../src/ASF/common/services/usb/class/dfu_flip" -I"../src/ASF/common/services/usb/class/dfu_flip/device" -I"../src/ASF/common/services/usb/udc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/common/boards/user_board/%.o: ../src/ASF/common/boards/user_board/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD -DUDD_ENABLE  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/usbc" -I"../src/ASF/common/services/isp/flip/uc3" -I"../src/ASF/common/services/isp/flip" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/usb" -I"../src/ASF/common/services/usb/class/dfu_flip" -I"../src/ASF/common/services/usb/class/dfu_flip/device" -I"../src/ASF/common/services/usb/udc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/ASF/common/services/usb/class/dfu_flip/device/%.o: ../src/ASF/common/services/usb/class/dfu_flip/device/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD -DUDD_ENABLE  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/usbc" -I"../src/ASF/common/services/isp/flip/uc3" -I"../src/ASF/common/services/isp/flip" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/usb" -I"../src/ASF/common/services/usb/class/dfu_flip" -I"../src/ASF/common/services/usb/class/dfu_flip/device" -I"../src/ASF/common/services/usb/udc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/ASF/common/services/usb/udc/%.o: ../src/ASF/common/services/usb/udc/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD -DUDD_ENABLE  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/usbc" -I"../src/ASF/common/services/isp/flip/uc3" -I"../src/ASF/common/services/isp/flip" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/usb" -I"../src/ASF/common/services/usb/class/dfu_flip" -I"../src/ASF/common/services/usb/class/dfu_flip/device" -I"../src/ASF/common/services/usb/udc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/%.o: ../src/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD -DUDD_ENABLE  -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/flashcdw" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/tc" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/usbc" -I"../src/ASF/common/services/isp/flip/uc3" -I"../src/ASF/common/services/isp/flip" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/usb" -I"../src/ASF/common/services/usb/class/dfu_flip" -I"../src/ASF/common/services/usb/class/dfu_flip/device" -I"../src/ASF/common/services/usb/udc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
@@ -289,59 +382,87 @@ src/%.o: ../src/%.c
 
 # AVR32/GNU Preprocessing Assembler
 
+src/ASF/common/services/isp/flip/uc3/%.o: ../src/ASF/common/services/isp/flip/uc3/%.S
+	@echo Building file: $<
+	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -DUDD_ENABLE -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi" -I "../src/ASF/avr32/drivers/scif" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/usbc" -I "../src/ASF/common/services/isp/flip/uc3" -I "../src/ASF/common/services/isp/flip" -I "../src/ASF/common/services/sleepmgr" -I "../src/ASF/common/services/usb" -I "../src/ASF/common/services/usb/class/dfu_flip" -I "../src/ASF/common/services/usb/class/dfu_flip/device" -I "../src/ASF/common/services/usb/udc"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/ASF/common/services/isp/flip/uc3/%.o: ../src/ASF/common/services/isp/flip/uc3/%.x
+	@echo Building file: $<
+	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -DUDD_ENABLE -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi" -I "../src/ASF/avr32/drivers/scif" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/usbc" -I "../src/ASF/common/services/isp/flip/uc3" -I "../src/ASF/common/services/isp/flip" -I "../src/ASF/common/services/sleepmgr" -I "../src/ASF/common/services/usb" -I "../src/ASF/common/services/usb/class/dfu_flip" -I "../src/ASF/common/services/usb/class/dfu_flip/device" -I "../src/ASF/common/services/usb/udc"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/ASF/common/services/isp/flip/uc3/%.o: ../src/ASF/common/services/isp/flip/uc3/%.X
+	@echo Building file: $<
+	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -DUDD_ENABLE -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi" -I "../src/ASF/avr32/drivers/scif" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/usbc" -I "../src/ASF/common/services/isp/flip/uc3" -I "../src/ASF/common/services/isp/flip" -I "../src/ASF/common/services/sleepmgr" -I "../src/ASF/common/services/usb" -I "../src/ASF/common/services/usb/class/dfu_flip" -I "../src/ASF/common/services/usb/class/dfu_flip/device" -I "../src/ASF/common/services/usb/udc"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/ASF/common/services/isp/flip/uc3/%.o: ../src/ASF/common/services/isp/flip/uc3/%.sx
+	@echo Building file: $<
+	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -DUDD_ENABLE -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi" -I "../src/ASF/avr32/drivers/scif" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/usbc" -I "../src/ASF/common/services/isp/flip/uc3" -I "../src/ASF/common/services/isp/flip" -I "../src/ASF/common/services/sleepmgr" -I "../src/ASF/common/services/usb" -I "../src/ASF/common/services/usb/class/dfu_flip" -I "../src/ASF/common/services/usb/class/dfu_flip/device" -I "../src/ASF/common/services/usb/udc"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 src/ASF/avr32/drivers/intc/%.o: ../src/ASF/avr32/drivers/intc/%.S
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -DUDD_ENABLE -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi" -I "../src/ASF/avr32/drivers/scif" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/usbc" -I "../src/ASF/common/services/isp/flip/uc3" -I "../src/ASF/common/services/isp/flip" -I "../src/ASF/common/services/sleepmgr" -I "../src/ASF/common/services/usb" -I "../src/ASF/common/services/usb/class/dfu_flip" -I "../src/ASF/common/services/usb/class/dfu_flip/device" -I "../src/ASF/common/services/usb/udc"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/intc/%.o: ../src/ASF/avr32/drivers/intc/%.x
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -DUDD_ENABLE -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi" -I "../src/ASF/avr32/drivers/scif" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/usbc" -I "../src/ASF/common/services/isp/flip/uc3" -I "../src/ASF/common/services/isp/flip" -I "../src/ASF/common/services/sleepmgr" -I "../src/ASF/common/services/usb" -I "../src/ASF/common/services/usb/class/dfu_flip" -I "../src/ASF/common/services/usb/class/dfu_flip/device" -I "../src/ASF/common/services/usb/udc"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/intc/%.o: ../src/ASF/avr32/drivers/intc/%.X
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -DUDD_ENABLE -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi" -I "../src/ASF/avr32/drivers/scif" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/usbc" -I "../src/ASF/common/services/isp/flip/uc3" -I "../src/ASF/common/services/isp/flip" -I "../src/ASF/common/services/sleepmgr" -I "../src/ASF/common/services/usb" -I "../src/ASF/common/services/usb/class/dfu_flip" -I "../src/ASF/common/services/usb/class/dfu_flip/device" -I "../src/ASF/common/services/usb/udc"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/drivers/intc/%.o: ../src/ASF/avr32/drivers/intc/%.sx
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -DUDD_ENABLE -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi" -I "../src/ASF/avr32/drivers/scif" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/usbc" -I "../src/ASF/common/services/isp/flip/uc3" -I "../src/ASF/common/services/isp/flip" -I "../src/ASF/common/services/sleepmgr" -I "../src/ASF/common/services/usb" -I "../src/ASF/common/services/usb/class/dfu_flip" -I "../src/ASF/common/services/usb/class/dfu_flip/device" -I "../src/ASF/common/services/usb/udc"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/utils/startup/%.o: ../src/ASF/avr32/utils/startup/%.S
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -DUDD_ENABLE -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi" -I "../src/ASF/avr32/drivers/scif" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/usbc" -I "../src/ASF/common/services/isp/flip/uc3" -I "../src/ASF/common/services/isp/flip" -I "../src/ASF/common/services/sleepmgr" -I "../src/ASF/common/services/usb" -I "../src/ASF/common/services/usb/class/dfu_flip" -I "../src/ASF/common/services/usb/class/dfu_flip/device" -I "../src/ASF/common/services/usb/udc"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/utils/startup/%.o: ../src/ASF/avr32/utils/startup/%.x
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -DUDD_ENABLE -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi" -I "../src/ASF/avr32/drivers/scif" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/usbc" -I "../src/ASF/common/services/isp/flip/uc3" -I "../src/ASF/common/services/isp/flip" -I "../src/ASF/common/services/sleepmgr" -I "../src/ASF/common/services/usb" -I "../src/ASF/common/services/usb/class/dfu_flip" -I "../src/ASF/common/services/usb/class/dfu_flip/device" -I "../src/ASF/common/services/usb/udc"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/utils/startup/%.o: ../src/ASF/avr32/utils/startup/%.X
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -DUDD_ENABLE -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi" -I "../src/ASF/avr32/drivers/scif" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/usbc" -I "../src/ASF/common/services/isp/flip/uc3" -I "../src/ASF/common/services/isp/flip" -I "../src/ASF/common/services/sleepmgr" -I "../src/ASF/common/services/usb" -I "../src/ASF/common/services/usb/class/dfu_flip" -I "../src/ASF/common/services/usb/class/dfu_flip/device" -I "../src/ASF/common/services/usb/udc"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 src/ASF/avr32/utils/startup/%.o: ../src/ASF/avr32/utils/startup/%.sx
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU Preprocessing Assembler : 4.4.7
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE) -x assembler-with-cpp -c -mpart=uc64d4 -mrelax -DBOARD=USER_BOARD -DUDD_ENABLE -I "../common/applications/user_application/user_board/config" -I "../src/ASF/avr32/utils" -I "../src/config" -I "../src/ASF/common/boards" -I "../src/ASF/avr32/utils/preprocessor" -I "../src/ASF/avr32/drivers/intc" -I "../src/ASF/common/utils" -I "../src" -I "../src/ASF/common/boards/user_board" -I "../src/ASF/avr32/drivers/flashcdw" -I "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.31\include\ATUC64D4" -I "../src/ASF/avr32/drivers/spi" -I "../src/ASF/avr32/drivers/tc" -I "../src/ASF/avr32/drivers/twim" -I "../src/ASF/common/services/clock" -I "../src/ASF/common/services/spi/uc3_spi" -I "../src/ASF/common/services/spi" -I "../src/ASF/avr32/drivers/scif" -I "../src/ASF/avr32/drivers/pm" -I "../src/ASF/avr32/drivers/usbc" -I "../src/ASF/common/services/isp/flip/uc3" -I "../src/ASF/common/services/isp/flip" -I "../src/ASF/common/services/sleepmgr" -I "../src/ASF/common/services/usb" -I "../src/ASF/common/services/usb/class/dfu_flip" -I "../src/ASF/common/services/usb/class/dfu_flip/device" -I "../src/ASF/common/services/usb/udc"  -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -Wa,-g   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
