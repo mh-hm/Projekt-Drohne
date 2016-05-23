@@ -55,6 +55,8 @@
   #endif
 #endif
 
+#define AVR32_PM_UNLOCK_KEY_VALUE 0xAA
+
 /*! \name PM Writable Bit-Field Registers
  */
 //! @{
