@@ -182,6 +182,8 @@ long int scif_start_osc(scif_osc_t osc, const scif_osc_opt_t *opt, bool wait_for
   SCIF_UNLOCK(AVR32_SCIF_OSCCTRL + 4*osc);
   // Write Back
   AVR32_SCIF.OSCCTRL[osc] = u_avr32_scif_oscctrl.OSCCTRL[osc];
+  //AVR32_SCIF.OSCCTRL = u_avr32_scif_oscctrl.OSCCTRL[osc];
+  
   AVR32_LEAVE_CRITICAL_REGION( );
 
   if(true == wait_for_ready)

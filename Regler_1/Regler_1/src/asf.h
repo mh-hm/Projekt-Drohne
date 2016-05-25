@@ -52,6 +52,9 @@
  * running the ASF driver selector tool. Any changes will be discarded.
  */
 
+// From module: CPU Cycle Counter
+#include <cycle_counter.h>
+
 // From module: Common build items for user board support templates
 #include <user_board.h>
 
@@ -59,11 +62,17 @@
 #include <compiler.h>
 #include <status_codes.h>
 
+// From module: Delay routines
+#include <delay.h>
+
 // From module: FLASH Controller Double-Word (FLASHCDW)
 #include <flashcdw.h>
 
 // From module: Generic board support
 #include <board.h>
+
+// From module: IOPORT - General purpose I/O service
+#include <ioport.h>
 
 // From module: Interrupt management - UC3 implementation
 #include <interrupt.h>
@@ -97,12 +106,5 @@
 
 // From module: TWI - Two-Wire Master Interface
 #include <twim.h>
-
-// From module: USB - Universial Serial Bus driver (with sleep manager)
-#include <usbc_device.h>
-
-// From module: USB Device Stack Core (Common API)
-#include <udc.h>
-#include <udd.h>
 
 #endif // ASF_H

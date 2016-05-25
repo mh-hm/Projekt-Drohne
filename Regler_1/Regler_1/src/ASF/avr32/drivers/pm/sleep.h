@@ -95,6 +95,15 @@ extern "C" {
 # error Unsupported AVR UC3 series.
 #endif
 
+#ifndef AVR32_PM_SMODE_IDLE
+	#define AVR32_PM_SMODE_IDLE 0
+	#define AVR32_PM_SMODE_FROZEN 1
+	#define AVR32_PM_SMODE_STANDBY 2
+	#define AVR32_PM_SMODE_STOP 3
+	#define AVR32_PM_SMODE_DEEPSTOP 4
+	#define AVR32_PM_SMODE_STATIC 5
+#endif
+
 static inline void pm_sleep(int sleep_mode)
 {
 	switch (sleep_mode) {

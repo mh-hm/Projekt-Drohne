@@ -69,7 +69,7 @@ long int pcl_configure_clocks(pcl_freq_param_t *param)
   // Implementation for UC3A, UC3A3, UC3B parts.
   return(pm_configure_clocks(param));
 #else
-  #if (defined AVR32_PM_410_H_INCLUDED ) || (defined AVR32_PM_412_H_INCLUDED )
+  #if (defined _AVR32_PM_410_H_INCLUDED ) || (defined _AVR32_PM_412_H_INCLUDED )
 	#if UC3D
 		// Implementation for UC3D parts.
 		return(pcl_configure_clocks_uc3d(param));

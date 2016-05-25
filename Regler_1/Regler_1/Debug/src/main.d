@@ -1,7 +1,4 @@
-src/ASF/common/boards/user_board/init.d \
- src/ASF/common/boards/user_board/init.o \
- src/ASF/common/boards/user_board/init.o: \
- ../src/ASF/common/boards/user_board/init.c ../src/asf.h \
+src/main.d src/main.o src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/avr32/drivers/cpu/cycle_counter/cycle_counter.h \
  ../src/ASF/avr32/utils/compiler.h \
  ../src/ASF/avr32/utils/preprocessor/preprocessor.h \
@@ -87,7 +84,7 @@ src/ASF/common/boards/user_board/init.d \
  ../src/config/conf_sleepmgr.h \
  ../src/ASF/common/services/sleepmgr/uc3/sleepmgr.h \
  ../src/ASF/avr32/drivers/tc/tc.h ../src/ASF/avr32/drivers/twim/twim.h \
- ../src/config/conf_twim.h
+ ../src/config/conf_twim.h ../src/settings.h ../src/motor_control.h
 
 ../src/asf.h:
 
@@ -272,3 +269,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bi
 ../src/ASF/avr32/drivers/twim/twim.h:
 
 ../src/config/conf_twim.h:
+
+../src/settings.h:
+
+../src/motor_control.h:

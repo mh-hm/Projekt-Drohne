@@ -28,14 +28,26 @@
 /*
  * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
-
 #include <asf.h>
+#include "settings.h"
+
+settings set;
+
+#include "motor_control.h"
 
 int main (void)
 {
 	/* Insert system clock initialization code here (sysclk_init()). */
-
+	
 	board_init();
+	while(1)
+	{
+			ioport_set_pin_level(LED_TRANS,HIGH);
+			delay_ms(100);
+			ioport_set_pin_level(LED_TRANS,LOW);
+			delay_ms(100);
+	}
 
+	
 	/* Insert application code here, after the board has been initialized. */
 }

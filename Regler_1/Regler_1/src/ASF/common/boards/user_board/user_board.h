@@ -19,6 +19,8 @@
 
 #include <conf_board.h>
 
+ #define LED_TRANS AVR32_PIN_PA23
+
 // External oscillator settings.
 // Uncomment and set correct values if external oscillator is used.
 
