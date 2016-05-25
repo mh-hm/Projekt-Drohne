@@ -71,6 +71,7 @@ SUBDIRS :=  \
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../src/settings_t.c \
 ../src/motor_control.c \
 ../src/ASF/avr32/drivers/flashcdw/flashcdw.c \
 ../src/ASF/avr32/drivers/pm/pm_uc3d.c \
@@ -99,6 +100,7 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+src/settings_t.o \
 src/motor_control.o \
 src/ASF/avr32/drivers/flashcdw/flashcdw.o \
 src/ASF/avr32/drivers/pm/pm_uc3d.o \
@@ -120,6 +122,7 @@ src/ASF/common/boards/user_board/init.o \
 src/main.o
 
 OBJS_AS_ARGS +=  \
+src/settings_t.o \
 src/motor_control.o \
 src/ASF/avr32/drivers/flashcdw/flashcdw.o \
 src/ASF/avr32/drivers/pm/pm_uc3d.o \
@@ -141,6 +144,7 @@ src/ASF/common/boards/user_board/init.o \
 src/main.o
 
 C_DEPS +=  \
+src/settings_t.d \
 src/motor_control.d \
 src/ASF/avr32/drivers/flashcdw/flashcdw.d \
 src/ASF/avr32/drivers/pm/pm_uc3d.d \
@@ -162,6 +166,7 @@ src/ASF/common/boards/user_board/init.d \
 src/main.d
 
 C_DEPS_AS_ARGS +=  \
+src/settings_t.d \
 src/motor_control.d \
 src/ASF/avr32/drivers/flashcdw/flashcdw.d \
 src/ASF/avr32/drivers/pm/pm_uc3d.d \
@@ -196,6 +201,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

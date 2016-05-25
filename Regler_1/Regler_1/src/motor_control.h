@@ -9,7 +9,7 @@
 #ifndef MOTOR_CONTROL_H_
 #define MOTOR_CONTROL_H_
 
-extern settings set;
+#include "asf.h"
 
 typedef enum motor_pos{
 	MOTOR_POS_FR = 0, //FRONT RIGHT
@@ -19,14 +19,14 @@ typedef enum motor_pos{
 	MOTOR_POS_ALL = 4
 	}motor_pos;
 
-void motor_init();
+void motor_init(void);
 
 bool motor_start(motor_pos _motor_pos, uint_fast16_t *speed);
-//Start Motor with defined speed.
+//Start Motor with defined speed or change speed.
 //Speed as Array[] with speed[0] as Speed if _motor_pos != MOTOR_POS_ALL
 //else Speed[MOTOR_POS_FR] = Speed of MOTOR FRONT RIGHT ...
 
-uint_fast16_t *get_motor_speed();
+uint_fast16_t *get_motor_speed(void);
 //return Array speed[] from all motors
 
 bool motor_stop(motor_pos _motor_pos);

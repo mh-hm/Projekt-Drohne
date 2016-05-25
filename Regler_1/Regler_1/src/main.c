@@ -29,11 +29,9 @@
  * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 #include <asf.h>
-#include "settings.h"
-
-settings set;
-
+#include "settings_t.h"
 #include "motor_control.h"
+#include "sensor.h"
 
 int main (void)
 {

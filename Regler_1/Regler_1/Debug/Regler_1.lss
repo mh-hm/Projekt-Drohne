@@ -21,25 +21,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   8 .debug_aranges 00000130  00000000  00000000  000028e0  2**3
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_pubnames 00000162  00000000  00000000  00002a10  2**0
+  9 .debug_pubnames 0000015a  00000000  00000000  00002a10  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_info   0001bddc  00000000  00000000  00002b72  2**0
+ 10 .debug_info   0001bd5b  00000000  00000000  00002b6a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_abbrev 00000929  00000000  00000000  0001e94e  2**0
+ 11 .debug_abbrev 00000909  00000000  00000000  0001e8c5  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_line   000026a8  00000000  00000000  0001f277  2**0
+ 12 .debug_line   000026b6  00000000  00000000  0001f1ce  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_frame  0000014c  00000000  00000000  00021920  2**2
+ 13 .debug_frame  0000014c  00000000  00000000  00021884  2**2
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_str    00001c0d  00000000  00000000  00021a6c  2**0
+ 14 .debug_str    00001bbe  00000000  00000000  000219d0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_loc    000002b2  00000000  00000000  00023679  2**0
+ 15 .debug_loc    000002b2  00000000  00000000  0002358e  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_macinfo 003249ce  00000000  00000000  0002392b  2**0
+ 16 .debug_macinfo 003253b2  00000000  00000000  00023840  2**0
                   CONTENTS, READONLY, DEBUGGING
  17 .stack        00001000  00003000  00003000  00000400  2**0
                   ALLOC
- 18 .debug_ranges 00000110  00000000  00000000  00348300  2**3
+ 18 .debug_ranges 00000110  00000000  00000000  00348bf8  2**3
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .reset:
@@ -266,9 +266,9 @@ __always_inline static void arch_ioport_set_pin_dir(ioport_pin_t pin,
 800020d6:	20 06       	sub	r6,0
 
 800020d8 <main>:
-settings set;
-
+#include "settings_t.h"
 #include "motor_control.h"
+#include "sensor.h"
 
 int main (void)
 {
