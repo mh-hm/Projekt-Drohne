@@ -1747,3 +1747,5 @@ BNO055_GYRO_ANY_MOTION_THRES_ADDR
 
 /* PAGE1 DATA REGISTERS DEFINITION END*/
 /*************************************************/
+
+#endif
