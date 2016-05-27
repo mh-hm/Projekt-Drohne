@@ -21,27 +21,27 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
   8 .comment      00000030  00000000  00000000  00003408  2**0
                   CONTENTS, READONLY
-  9 .debug_aranges 00000520  00000000  00000000  00003438  2**3
+  9 .debug_aranges 00000540  00000000  00000000  00003438  2**3
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_pubnames 00000e73  00000000  00000000  00003958  2**0
+ 10 .debug_pubnames 00000eed  00000000  00000000  00003978  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_info   0003ae90  00000000  00000000  000047cb  2**0
+ 11 .debug_info   0000b0a8  00000000  00000000  00004865  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_abbrev 000015d6  00000000  00000000  0003f65b  2**0
+ 12 .debug_abbrev 0000165d  00000000  00000000  0000f90d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_line   000057c0  00000000  00000000  00040c31  2**0
+ 13 .debug_line   00005822  00000000  00000000  00010f6a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_frame  00000c04  00000000  00000000  000463f4  2**2
+ 14 .debug_frame  00000c44  00000000  00000000  0001678c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_str    00003e7c  00000000  00000000  00046ff8  2**0
+ 15 .debug_str    000037c0  00000000  00000000  000173d0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_loc    00001ce4  00000000  00000000  0004ae74  2**0
+ 16 .debug_loc    00001d30  00000000  00000000  0001ab90  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_macinfo 0072c3d9  00000000  00000000  0004cb58  2**0
+ 17 .debug_macinfo 009187c6  00000000  00000000  0001c8c0  2**0
                   CONTENTS, READONLY, DEBUGGING
  18 .stack        00001000  00003000  00003000  00000400  2**0
                   ALLOC
- 19 .debug_ranges 00000580  00000000  00000000  00778f38  2**3
+ 19 .debug_ranges 000005a0  00000000  00000000  00935088  2**3
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .reset:

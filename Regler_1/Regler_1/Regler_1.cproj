@@ -180,11 +180,11 @@
       <Value>../src/ASF/avr32/drivers/scif</Value>
       <Value>../src/ASF/avr32/drivers/pm</Value>
       <Value>../src/ASF/common/services/sleepmgr</Value>
-      <Value>%24(PackRepoDir)\atmel\UC3D_DFP\1.0.31\include\ATUC64D4</Value>
       <Value>../src/ASF/common/services/ioport</Value>
       <Value>../src/ASF/avr32/drivers/cpu/cycle_counter</Value>
       <Value>../src/ASF/common/services/delay</Value>
       <Value>../src/ASF/avr32/drivers/gpio</Value>
+      <Value>%24(PackRepoDir)\atmel\UC3D_DFP\1.0.40\include\ATUC64D4</Value>
     </ListValues>
   </avr32gcc.compiler.directories.IncludePaths>
   <avr32gcc.compiler.optimization.level>Optimize for size (-Os)</avr32gcc.compiler.optimization.level>
@@ -225,11 +225,11 @@
       <Value>../src/ASF/avr32/drivers/scif</Value>
       <Value>../src/ASF/avr32/drivers/pm</Value>
       <Value>../src/ASF/common/services/sleepmgr</Value>
-      <Value>%24(PackRepoDir)\atmel\UC3D_DFP\1.0.31\include\ATUC64D4</Value>
       <Value>../src/ASF/common/services/ioport</Value>
       <Value>../src/ASF/avr32/drivers/cpu/cycle_counter</Value>
       <Value>../src/ASF/common/services/delay</Value>
       <Value>../src/ASF/avr32/drivers/gpio</Value>
+      <Value>%24(PackRepoDir)\atmel\UC3D_DFP\1.0.40\include\ATUC64D4</Value>
     </ListValues>
   </avr32gcc.assembler.general.IncludePaths>
   <avr32gcc.preprocessingassembler.general.AssemblerFlags>-mrelax -DBOARD=USER_BOARD</avr32gcc.preprocessingassembler.general.AssemblerFlags>
@@ -254,11 +254,11 @@
       <Value>../src/ASF/avr32/drivers/scif</Value>
       <Value>../src/ASF/avr32/drivers/pm</Value>
       <Value>../src/ASF/common/services/sleepmgr</Value>
-      <Value>%24(PackRepoDir)\atmel\UC3D_DFP\1.0.31\include\ATUC64D4</Value>
       <Value>../src/ASF/common/services/ioport</Value>
       <Value>../src/ASF/avr32/drivers/cpu/cycle_counter</Value>
       <Value>../src/ASF/common/services/delay</Value>
       <Value>../src/ASF/avr32/drivers/gpio</Value>
+      <Value>%24(PackRepoDir)\atmel\UC3D_DFP\1.0.40\include\ATUC64D4</Value>
     </ListValues>
   </avr32gcc.preprocessingassembler.general.IncludePaths>
 </Avr32Gcc>
@@ -298,11 +298,11 @@
       <Value>../src/ASF/avr32/drivers/scif</Value>
       <Value>../src/ASF/avr32/drivers/pm</Value>
       <Value>../src/ASF/common/services/sleepmgr</Value>
-      <Value>%24(PackRepoDir)\atmel\UC3D_DFP\1.0.31\include\ATUC64D4</Value>
       <Value>../src/ASF/common/services/ioport</Value>
       <Value>../src/ASF/avr32/drivers/cpu/cycle_counter</Value>
       <Value>../src/ASF/common/services/delay</Value>
       <Value>../src/ASF/avr32/drivers/gpio</Value>
+      <Value>%24(PackRepoDir)\atmel\UC3D_DFP\1.0.40\include\ATUC64D4</Value>
     </ListValues>
   </avr32gcc.compiler.directories.IncludePaths>
   <avr32gcc.compiler.optimization.level>Optimize (-O1)</avr32gcc.compiler.optimization.level>
@@ -344,11 +344,11 @@
       <Value>../src/ASF/avr32/drivers/scif</Value>
       <Value>../src/ASF/avr32/drivers/pm</Value>
       <Value>../src/ASF/common/services/sleepmgr</Value>
-      <Value>%24(PackRepoDir)\atmel\UC3D_DFP\1.0.31\include\ATUC64D4</Value>
       <Value>../src/ASF/common/services/ioport</Value>
       <Value>../src/ASF/avr32/drivers/cpu/cycle_counter</Value>
       <Value>../src/ASF/common/services/delay</Value>
       <Value>../src/ASF/avr32/drivers/gpio</Value>
+      <Value>%24(PackRepoDir)\atmel\UC3D_DFP\1.0.40\include\ATUC64D4</Value>
     </ListValues>
   </avr32gcc.assembler.general.IncludePaths>
   <avr32gcc.assembler.debugging.DebugLevel>Default (-g)</avr32gcc.assembler.debugging.DebugLevel>
@@ -374,11 +374,11 @@
       <Value>../src/ASF/avr32/drivers/scif</Value>
       <Value>../src/ASF/avr32/drivers/pm</Value>
       <Value>../src/ASF/common/services/sleepmgr</Value>
-      <Value>%24(PackRepoDir)\atmel\UC3D_DFP\1.0.31\include\ATUC64D4</Value>
       <Value>../src/ASF/common/services/ioport</Value>
       <Value>../src/ASF/avr32/drivers/cpu/cycle_counter</Value>
       <Value>../src/ASF/common/services/delay</Value>
       <Value>../src/ASF/avr32/drivers/gpio</Value>
+      <Value>%24(PackRepoDir)\atmel\UC3D_DFP\1.0.40\include\ATUC64D4</Value>
     </ListValues>
   </avr32gcc.preprocessingassembler.general.IncludePaths>
   <avr32gcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</avr32gcc.preprocessingassembler.debugging.DebugLevel>

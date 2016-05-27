@@ -54,6 +54,7 @@ int main (void)
 		delay_ms(500);
 	}
 
+
 	
 	//
 	//ioport_set_pin_dir(SCL_SENS,IOPORT_DIR_OUTPUT);
