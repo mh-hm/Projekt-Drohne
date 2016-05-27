@@ -71,6 +71,7 @@ src/sensor.d src/sensor.o src/sensor.o: ../src/sensor.c ../src/asf.h \
  ../src/ASF/common/services/clock/genclk.h \
  ../src/ASF/common/services/clock/uc3d/genclk.h \
  ../src/ASF/avr32/drivers/flashcdw/flashcdw.h \
+ ../src/ASF/avr32/drivers/gpio/gpio.h \
  ../src/ASF/common/services/ioport/ioport.h \
  ../src/ASF/common/services/ioport/uc3/ioport.h \
  ../src/ASF/avr32/drivers/pm/power_clocks_lib.h \
@@ -237,6 +238,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bi
 ../src/ASF/common/services/clock/uc3d/genclk.h:
 
 ../src/ASF/avr32/drivers/flashcdw/flashcdw.h:
+
+../src/ASF/avr32/drivers/gpio/gpio.h:
 
 ../src/ASF/common/services/ioport/ioport.h:
 

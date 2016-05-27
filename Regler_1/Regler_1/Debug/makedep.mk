@@ -2,6 +2,8 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\ASF\avr32\drivers\gpio\gpio.c
+
 src\sensor.c
 
 src\settings_t.c

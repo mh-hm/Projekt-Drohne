@@ -15,12 +15,10 @@
 
 void board_init(void)
 {
+	sysclk_init();
 	ioport_init();
 	sensor_init();
+	
 	ioport_set_pin_dir(LED_TRANS, IOPORT_DIR_OUTPUT);
 	
-	/* This function is meant to contain board-specific initialization code
-	 * for, e.g., the I/O pins. The initialization can rely on application-
-	 * specific board configuration, found in conf_board.h.
-	 */
 }

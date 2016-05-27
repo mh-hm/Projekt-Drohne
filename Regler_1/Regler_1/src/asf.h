@@ -68,6 +68,9 @@
 // From module: FLASH Controller Double-Word (FLASHCDW)
 #include <flashcdw.h>
 
+// From module: GPIO - General-Purpose Input/Output
+#include <gpio.h>
+
 // From module: Generic board support
 #include <board.h>
 

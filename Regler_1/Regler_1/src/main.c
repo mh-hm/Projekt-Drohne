@@ -35,19 +35,23 @@
 
 int main (void)
 {
-	/* Insert system clock initialization code here (sysclk_init()). */
-	
-	sysclk_init();
-	volatile uint_fast32_t val = sysclk_get_pba_hz();
-	board_init();
-	
+	board_init();		
 
-	
-	uint_fast8_t *value;
+		uint8_t page_0[106];
+		read_sensor_data(BNO055_CHIP_ID_ADDR, &page_0, 106);
+		
+		uint8_t val[2] = {BNO055_PAGE_ID_ADDR, BNO055_PAGE_ONE}; //CHANGE PAGE
+		write_sensor_data(BNO055_PAGE_ID_ADDR, &val, 2);
+		
+		uint8_t page_1[31];
+		read_sensor_data(BNO055_CHIP_ID_ADDR, &page_1, 31);
+		
 	while (1)
 	{
 		ioport_set_pin_level(LED_TRANS,LOW);
+		delay_ms(500);
 		ioport_set_pin_level(LED_TRANS,HIGH);
+		delay_ms(500);
 	}
 
 	
@@ -64,7 +68,7 @@ int main (void)
 		//delay_ms(750);
 	//}
 	
-	//read_sensor_data(BNO055_GYRO_DATA_X_MSB_ADDR, value, 2);
+	
 
 	
 	/* Insert application code here, after the board has been initialized. */
