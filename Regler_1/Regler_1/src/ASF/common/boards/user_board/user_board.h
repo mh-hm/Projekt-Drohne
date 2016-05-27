@@ -72,10 +72,6 @@
 #define	GPIO_PA19				AVR32_PIN_PA19
 #define	GPIO_PA20				AVR32_PIN_PA20
 
-
-
-
-
 // External oscillator settings.
 // Uncomment and set correct values if external oscillator is used.
 

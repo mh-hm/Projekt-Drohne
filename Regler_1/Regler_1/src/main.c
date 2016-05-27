@@ -37,15 +37,36 @@ int main (void)
 {
 	/* Insert system clock initialization code here (sysclk_init()). */
 	
+	sysclk_init();
+	volatile uint_fast32_t val = sysclk_get_pba_hz();
 	board_init();
-	while(1)
+	
+
+	
+	uint_fast8_t *value;
+	while (1)
 	{
-			ioport_set_pin_level(LED_TRANS,HIGH);
-			delay_ms(100);
-			ioport_set_pin_level(LED_TRANS,LOW);
-			delay_ms(100);
+		ioport_set_pin_level(LED_TRANS,LOW);
+		ioport_set_pin_level(LED_TRANS,HIGH);
 	}
+
+	
+	//
+	//ioport_set_pin_dir(SCL_SENS,IOPORT_DIR_OUTPUT);
+	//ioport_set_pin_dir(SDA_SENS,IOPORT_DIR_OUTPUT);
+	
+	//while(1){
+		//ioport_set_pin_level(SCL_SENS, HIGH);
+		//ioport_set_pin_level(SDA_SENS, LOW);
+		//delay_ms(750);
+		//ioport_set_pin_level(SCL_SENS, LOW);
+		//ioport_set_pin_level(SDA_SENS, HIGH);
+		//delay_ms(750);
+	//}
+	
+	//read_sensor_data(BNO055_GYRO_DATA_X_MSB_ADDR, value, 2);
 
 	
 	/* Insert application code here, after the board has been initialized. */
 }
+
