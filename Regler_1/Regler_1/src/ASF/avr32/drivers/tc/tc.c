@@ -72,25 +72,25 @@ int tc_configure_interrupts(volatile avr32_tc_t *tc, unsigned int channel, const
     return TC_INVALID_ARGUMENT;
 
   // Enable the appropriate interrupts.
-  tc->channel[channel].ier = bitfield->etrgs << AVR32_TC_IDR_ETRGS_OFFSET |
-                             bitfield->ldrbs << AVR32_TC_IDR_LDRBS_OFFSET |
-                             bitfield->ldras << AVR32_TC_IDR_LDRAS_OFFSET |
-                             bitfield->cpcs << AVR32_TC_IDR_CPCS_OFFSET |
-                             bitfield->cpbs << AVR32_TC_IDR_CPBS_OFFSET |
-                             bitfield->cpas << AVR32_TC_IDR_CPAS_OFFSET |
-                             bitfield->lovrs << AVR32_TC_IDR_LOVRS_OFFSET |
-                             bitfield->covfs << AVR32_TC_IDR_COVFS_OFFSET;
+  tc->channel[channel].ier = bitfield->etrgs << AVR32_TC_ETRGS_OFFSET |
+                             bitfield->ldrbs << AVR32_TC_LDRBS_OFFSET |
+                             bitfield->ldras << AVR32_TC_LDRAS_OFFSET |
+                             bitfield->cpcs << AVR32_TC_CPCS_OFFSET |
+                             bitfield->cpbs << AVR32_TC_CPBS_OFFSET |
+                             bitfield->cpas << AVR32_TC_CPAS_OFFSET |
+                             bitfield->lovrs << AVR32_TC_LOVRS_OFFSET |
+                             bitfield->covfs << AVR32_TC_COVFS_OFFSET;
 
   // Disable the appropriate interrupts.
   if (global_interrupt_enabled) Disable_global_interrupt();
-  tc->channel[channel].idr = (~bitfield->etrgs & 1) << AVR32_TC_IDR_ETRGS_OFFSET |
-                             (~bitfield->ldrbs & 1) << AVR32_TC_IDR_LDRBS_OFFSET |
-                             (~bitfield->ldras & 1) << AVR32_TC_IDR_LDRAS_OFFSET |
-                             (~bitfield->cpcs & 1) << AVR32_TC_IDR_CPCS_OFFSET |
-                             (~bitfield->cpbs & 1) << AVR32_TC_IDR_CPBS_OFFSET |
-                             (~bitfield->cpas & 1) << AVR32_TC_IDR_CPAS_OFFSET |
-                             (~bitfield->lovrs & 1) << AVR32_TC_IDR_LOVRS_OFFSET |
-                             (~bitfield->covfs & 1) << AVR32_TC_IDR_COVFS_OFFSET;
+  tc->channel[channel].idr = (~bitfield->etrgs & 1) << AVR32_TC_ETRGS_OFFSET |
+                             (~bitfield->ldrbs & 1) << AVR32_TC_LDRBS_OFFSET |
+                             (~bitfield->ldras & 1) << AVR32_TC_LDRAS_OFFSET |
+                             (~bitfield->cpcs & 1) << AVR32_TC_CPCS_OFFSET |
+                             (~bitfield->cpbs & 1) << AVR32_TC_CPBS_OFFSET |
+                             (~bitfield->cpas & 1) << AVR32_TC_CPAS_OFFSET |
+                             (~bitfield->lovrs & 1) << AVR32_TC_LOVRS_OFFSET |
+                             (~bitfield->covfs & 1) << AVR32_TC_COVFS_OFFSET;
   tc->channel[channel].sr;
   if (global_interrupt_enabled) Enable_global_interrupt();
 
