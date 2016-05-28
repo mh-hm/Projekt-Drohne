@@ -1,0 +1,1125 @@
+
+Regler 2.elf:     file format elf32-avr32
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .reset        00002004  80000000  80000000  00000400  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .rela.got     00000000  80002004  80002004  00002404  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .text         00000304  80002004  80002004  00002404  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .exception    00000200  80002400  80002400  00002800  2**9
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  4 .rodata       000000b4  80002600  80002600  00002a00  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  5 .dalign       00000004  800026b4  800026b4  00002ab4  2**0
+                  ALLOC
+  6 .balign       00000004  00000004  800026b8  00002c04  2**0
+                  ALLOC
+  7 .bss          000000f0  00000008  800026b8  00002c08  2**2
+                  ALLOC
+  8 .comment      00000030  00000000  00000000  00002ab4  2**0
+                  CONTENTS, READONLY
+  9 .debug_aranges 00000180  00000000  00000000  00002ae8  2**3
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_pubnames 000001c1  00000000  00000000  00002c68  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_info   00004407  00000000  00000000  00002e29  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_abbrev 00000aa8  00000000  00000000  00007230  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_line   000034cf  00000000  00000000  00007cd8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 14 .debug_frame  00000258  00000000  00000000  0000b1a8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 15 .debug_str    00001df6  00000000  00000000  0000b400  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 16 .debug_loc    00000727  00000000  00000000  0000d1f6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 17 .debug_macinfo 00514983  00000000  00000000  0000d91d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 18 .stack        00001000  00003000  00003000  00000400  2**0
+                  ALLOC
+ 19 .debug_ranges 00000200  00000000  00000000  005222a0  2**3
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .reset:
+
+80000000 <_trampoline>:
+
+  .global _trampoline
+  .type _trampoline, @function
+_trampoline:
+  // Jump to program start.
+  rjmp    program_start
+80000000:	e0 8f 10 00 	bral	80002000 <program_start>
+	...
+
+80002000 <program_start>:
+
+  .org  PROGRAM_START_OFFSET
+program_start:
+  // Jump to the C runtime startup routine.
+  lda.w   pc, _stext
+80002000:	fe cf fd ec 	sub	pc,pc,-532
+
+Disassembly of section .text:
+
+80002004 <write_sensor_data>:
+80002004:	d4 01       	pushm	lr
+80002006:	30 08       	mov	r8,0
+}
+
+status_code_t write_sensor_data(bno055_register_addr_t _addr, uint8_t *values, uint_fast8_t count)
+{
+	//TODO: WRITE START ADDR _addr_t TO SENSOR BEFOR WRITING
+	return twim_write(TWI_SENS, values, count++, BNO055_TWI_ADDR_SENSOR, false);
+80002008:	32 89       	mov	r9,40
+8000200a:	fe 7c 40 00 	mov	r12,-49152
+8000200e:	f0 1f 00 02 	mcall	80002014 <write_sensor_data+0x10>
+}
+80002012:	d8 02       	popm	pc
+80002014:	80 00       	ld.sh	r0,r0[0x0]
+80002016:	20 50       	sub	r0,5
+
+80002018 <read_sensor_data>:
+	ioport_set_pin_level(RST_SENS, HIGH);
+	delay_ms(700);							//SENSOR STARTUP TIME
+	twim_master_init(TWI_SENS, &_twi_opt);
+}
+
+status_code_t read_sensor_data(bno055_register_addr_t _addr, uint8_t *values, uint_fast32_t count){
+80002018:	d4 01       	pushm	lr
+	//TODO: WRITE START ADDR _addr_t TO SENSOR BEFOR READING
+	return twim_read(TWI_SENS, values, count,BNO055_TWI_ADDR_SENSOR,false);
+8000201a:	30 08       	mov	r8,0
+8000201c:	32 89       	mov	r9,40
+8000201e:	fe 7c 40 00 	mov	r12,-49152
+80002022:	f0 1f 00 02 	mcall	80002028 <read_sensor_data+0x10>
+}
+80002026:	d8 02       	popm	pc
+80002028:	80 00       	ld.sh	r0,r0[0x0]
+8000202a:	21 04       	sub	r4,16
+
+8000202c <twim_status>:
+/**
+ * \brief Information about the current status of the TWI Bus
+ */
+uint8_t twim_status ( void )
+{
+	uint32_t status = twim_inst->sr;
+8000202c:	48 38       	lddpc	r8,80002038 <twim_status+0xc>
+8000202e:	70 08       	ld.w	r8,r8[0x0]
+80002030:	70 7c       	ld.w	r12,r8[0x1c]
+		) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+80002032:	f9 dc c0 81 	bfextu	r12,r12,0x4,0x1
+80002036:	5e fc       	retal	r12
+80002038:	00 00       	add	r0,r0
+8000203a:	00 08       	add	r8,r0
+
+8000203c <twim_disable_interrupt>:
+ *
+ * \param twim         Base address of the TWIM (i.e. &AVR32_TWI).
+ */
+void twim_disable_interrupt (volatile avr32_twim_t *twim)
+{
+	bool global_interrupt_enabled = cpu_irq_is_enabled ();
+8000203c:	e1 b8 00 00 	mfsr	r8,0x0
+	if (global_interrupt_enabled) {
+80002040:	e6 18 00 01 	andh	r8,0x1,COH
+80002044:	c0 21       	brne	80002048 <twim_disable_interrupt+0xc>
+		cpu_irq_disable ();
+80002046:	d3 03       	ssrf	0x10
+	}
+	// Clear the interrupt flags
+	twim->idr = ~0UL;
+80002048:	3f f8       	mov	r8,-1
+8000204a:	99 98       	st.w	r12[0x24],r8
+	// Clear the status flags
+	twim->scr = ~0UL;
+8000204c:	99 b8       	st.w	r12[0x2c],r8
+}
+8000204e:	5e fc       	retal	r12
+
+80002050 <twim_write>:
+ * \retval STATUS_OK      If all bytes were send successfully
+ * \retval ERR_IO_ERROR   NACK received or Bus Arbitration lost
+ */
+status_code_t twim_write (volatile avr32_twim_t *twim, uint8_t const *buffer,
+		uint32_t nbytes, uint32_t saddr, bool tenbit)
+{
+80002050:	eb cd 40 fe 	pushm	r1-r7,lr
+80002054:	18 97       	mov	r7,r12
+80002056:	16 93       	mov	r3,r11
+80002058:	14 95       	mov	r5,r10
+8000205a:	12 92       	mov	r2,r9
+8000205c:	10 91       	mov	r1,r8
+	// Reset the TWIM module to clear the THR register
+	twim->cr = AVR32_TWIM_CR_MEN_MASK;
+8000205e:	30 14       	mov	r4,1
+80002060:	99 04       	st.w	r12[0x0],r4
+	twim->cr = AVR32_TWIM_CR_SWRST_MASK;
+80002062:	e0 68 00 80 	mov	r8,128
+80002066:	99 08       	st.w	r12[0x0],r8
+	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
+80002068:	30 28       	mov	r8,2
+8000206a:	99 08       	st.w	r12[0x0],r8
+	// Set pointer to TWIM instance for IT
+	twim_inst = twim;
+8000206c:	49 e6       	lddpc	r6,800020e4 <twim_write+0x94>
+8000206e:	8d 0c       	st.w	r6[0x0],r12
+	// Disable the TWIM interrupts
+	twim_disable_interrupt (twim_inst);
+80002070:	f0 1f 00 1e 	mcall	800020e8 <twim_write+0x98>
+	// get a pointer to applicative data
+	twim_tx_data = buffer;
+80002074:	49 e8       	lddpc	r8,800020ec <twim_write+0x9c>
+80002076:	91 03       	st.w	r8[0x0],r3
+	// set the number of bytes to transmit
+	twim_tx_nb_bytes = nbytes;
+80002078:	49 e8       	lddpc	r8,800020f0 <twim_write+0xa0>
+8000207a:	91 05       	st.w	r8[0x0],r5
+	// Set next transfer to false
+	twim_next = false;
+8000207c:	30 09       	mov	r9,0
+8000207e:	49 e8       	lddpc	r8,800020f4 <twim_write+0xa4>
+80002080:	b0 89       	st.b	r8[0x0],r9
+	// Initialize bus transfer status
+	transfer_status = TWI_SUCCESS;
+80002082:	49 e9       	lddpc	r9,800020f8 <twim_write+0xa8>
+80002084:	30 08       	mov	r8,0
+80002086:	93 08       	st.w	r9[0x0],r8
+	// set the command to start the transfer
+	twim_inst->cmdr = (saddr << AVR32_TWIM_CMDR_SADR_OFFSET)
+80002088:	6c 08       	ld.w	r8,r6[0x0]
+8000208a:	b1 65       	lsl	r5,0x10
+8000208c:	e8 15 e0 00 	orl	r5,0xe000
+80002090:	eb e2 10 12 	or	r2,r5,r2<<0x1
+80002094:	e5 e1 10 b1 	or	r1,r2,r1<<0xb
+80002098:	91 31       	st.w	r8[0xc],r1
+			| (AVR32_TWIM_CMDR_START_MASK)
+			| (AVR32_TWIM_CMDR_STOP_MASK)
+			| ((tenbit ? 1 : 0) << AVR32_TWIM_CMDR_TENBIT_OFFSET)
+			| (0 << AVR32_TWIM_CMDR_READ_OFFSET);
+	// mask NACK and TXRDY interrupts
+	twim_it_mask = AVR32_TWIM_IER_NAK_MASK | AVR32_TWIM_IER_TXRDY_MASK;
+8000209a:	49 9a       	lddpc	r10,800020fc <twim_write+0xac>
+8000209c:	e0 6b 03 02 	mov	r11,770
+800020a0:	95 0b       	st.w	r10[0x0],r11
+	// update IMR through IER
+	twim_inst->ier = twim_it_mask;
+800020a2:	74 0a       	ld.w	r10,r10[0x0]
+800020a4:	91 8a       	st.w	r8[0x20],r10
+	// Enable master transfer
+	twim_inst->cr = AVR32_TWIM_CR_MEN_MASK;
+800020a6:	91 04       	st.w	r8[0x0],r4
+	// Enable all interrupts
+	cpu_irq_enable ();
+800020a8:	d5 03       	csrf	0x10
+	// send data
+	while (!(transfer_status) && !(twim_status ())) {
+800020aa:	72 08       	ld.w	r8,r9[0x0]
+800020ac:	58 08       	cp.w	r8,0
+800020ae:	c0 80       	breq	800020be <twim_write+0x6e>
+800020b0:	c0 b8       	rjmp	800020c6 <twim_write+0x76>
+		cpu_relax();
+800020b2:	fe cf ff fc 	sub	pc,pc,-4
+	// Enable master transfer
+	twim_inst->cr = AVR32_TWIM_CR_MEN_MASK;
+	// Enable all interrupts
+	cpu_irq_enable ();
+	// send data
+	while (!(transfer_status) && !(twim_status ())) {
+800020b6:	6c 08       	ld.w	r8,r6[0x0]
+800020b8:	58 08       	cp.w	r8,0
+800020ba:	c0 30       	breq	800020c0 <twim_write+0x70>
+800020bc:	c0 58       	rjmp	800020c6 <twim_write+0x76>
+800020be:	48 f6       	lddpc	r6,800020f8 <twim_write+0xa8>
+800020c0:	f0 1f 00 10 	mcall	80002100 <twim_write+0xb0>
+800020c4:	cf 70       	breq	800020b2 <twim_write+0x62>
+		cpu_relax();
+	}
+#if AVR32_TWIM_H_VERSION > 101	// Removed in twim100 module due to IC bug
+	// Disable master transfer
+	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
+800020c6:	30 28       	mov	r8,2
+800020c8:	8f 08       	st.w	r7[0x0],r8
+#endif
+	if (transfer_status == TWI_RECEIVE_NACK
+			|| transfer_status == TWI_ARBITRATION_LOST) {
+800020ca:	48 c8       	lddpc	r8,800020f8 <twim_write+0xa8>
+800020cc:	70 08       	ld.w	r8,r8[0x0]
+	}
+#if AVR32_TWIM_H_VERSION > 101	// Removed in twim100 module due to IC bug
+	// Disable master transfer
+	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
+#endif
+	if (transfer_status == TWI_RECEIVE_NACK
+800020ce:	5b c8       	cp.w	r8,-4
+800020d0:	c0 70       	breq	800020de <twim_write+0x8e>
+			|| transfer_status == TWI_ARBITRATION_LOST) {
+800020d2:	48 a8       	lddpc	r8,800020f8 <twim_write+0xa8>
+800020d4:	70 08       	ld.w	r8,r8[0x0]
+	}
+#if AVR32_TWIM_H_VERSION > 101	// Removed in twim100 module due to IC bug
+	// Disable master transfer
+	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
+#endif
+	if (transfer_status == TWI_RECEIVE_NACK
+800020d6:	5b e8       	cp.w	r8,-2
+800020d8:	c0 30       	breq	800020de <twim_write+0x8e>
+800020da:	e3 cf 80 fe 	ldm	sp++,r1-r7,pc,r12=0
+800020de:	e3 cf c0 fe 	ldm	sp++,r1-r7,pc,r12=-1
+800020e2:	00 00       	add	r0,r0
+800020e4:	00 00       	add	r0,r0
+800020e6:	00 08       	add	r8,r0
+800020e8:	80 00       	ld.sh	r0,r0[0x0]
+800020ea:	20 3c       	sub	r12,3
+800020ec:	00 00       	add	r0,r0
+800020ee:	00 18       	sub	r8,r0
+800020f0:	00 00       	add	r0,r0
+800020f2:	00 24       	rsub	r4,r0
+800020f4:	00 00       	add	r0,r0
+800020f6:	00 20       	rsub	r0,r0
+800020f8:	00 00       	add	r0,r0
+800020fa:	00 14       	sub	r4,r0
+800020fc:	00 00       	add	r0,r0
+800020fe:	00 1c       	sub	r12,r0
+80002100:	80 00       	ld.sh	r0,r0[0x0]
+80002102:	20 2c       	sub	r12,2
+
+80002104 <twim_read>:
+ * \retval STATUS_OK      If all bytes were read successfully
+ * \retval ERR_IO_ERROR   NACK received or Bus Arbitration lost
+ */
+status_code_t twim_read (volatile avr32_twim_t *twim, uint8_t *buffer,
+		uint32_t nbytes, uint32_t saddr, bool tenbit)
+{
+80002104:	eb cd 40 f8 	pushm	r3-r7,lr
+80002108:	18 97       	mov	r7,r12
+8000210a:	16 95       	mov	r5,r11
+8000210c:	14 96       	mov	r6,r10
+8000210e:	12 93       	mov	r3,r9
+80002110:	10 94       	mov	r4,r8
+	// Reset the TWIM module to clear the THR register
+	twim->cr = AVR32_TWIM_CR_MEN_MASK;
+80002112:	30 18       	mov	r8,1
+80002114:	99 08       	st.w	r12[0x0],r8
+	twim->cr = AVR32_TWIM_CR_SWRST_MASK;
+80002116:	e0 68 00 80 	mov	r8,128
+8000211a:	99 08       	st.w	r12[0x0],r8
+	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
+8000211c:	30 28       	mov	r8,2
+8000211e:	99 08       	st.w	r12[0x0],r8
+	// Set pointer to TWIM instance for IT
+	twim_inst = twim;
+80002120:	4a 78       	lddpc	r8,800021bc <twim_read+0xb8>
+80002122:	91 0c       	st.w	r8[0x0],r12
+	// Disable the TWIM interrupts
+	twim_disable_interrupt (twim_inst);
+80002124:	f0 1f 00 27 	mcall	800021c0 <twim_read+0xbc>
+	// get a pointer to applicative data
+	twim_rx_data = buffer;
+80002128:	4a 78       	lddpc	r8,800021c4 <twim_read+0xc0>
+8000212a:	91 05       	st.w	r8[0x0],r5
+	// get a copy of nb bytes to read
+	twim_rx_nb_bytes = nbytes;
+8000212c:	4a 78       	lddpc	r8,800021c8 <twim_read+0xc4>
+8000212e:	91 06       	st.w	r8[0x0],r6
+	// Set next transfer to false
+	twim_next = false;
+80002130:	30 09       	mov	r9,0
+80002132:	4a 78       	lddpc	r8,800021cc <twim_read+0xc8>
+80002134:	b0 89       	st.b	r8[0x0],r9
+	// Initialize bus transfer status
+	transfer_status = TWI_SUCCESS;
+80002136:	30 09       	mov	r9,0
+80002138:	4a 68       	lddpc	r8,800021d0 <twim_read+0xcc>
+8000213a:	91 09       	st.w	r8[0x0],r9
+	//tenbit need special handling
+	if (tenbit)	{
+8000213c:	58 04       	cp.w	r4,0
+8000213e:	c0 f0       	breq	8000215c <twim_read+0x58>
+		twim_inst->cmdr = (saddr << AVR32_TWIM_CMDR_SADR_OFFSET)
+80002140:	49 f8       	lddpc	r8,800021bc <twim_read+0xb8>
+80002142:	70 08       	ld.w	r8,r8[0x0]
+80002144:	a1 73       	lsl	r3,0x1
+80002146:	06 99       	mov	r9,r3
+80002148:	e8 19 a8 00 	orl	r9,0xa800
+8000214c:	91 39       	st.w	r8[0xc],r9
+				| (AVR32_TWIM_CMDR_START_MASK)
+				| (0 << AVR32_TWIM_CMDR_STOP_OFFSET)
+				| (AVR32_TWIM_CMDR_TENBIT_MASK)
+				| (0 << AVR32_TWIM_CMDR_READ_OFFSET);
+
+		twim_inst->ncmdr = (saddr << AVR32_TWIM_CMDR_SADR_OFFSET)
+8000214e:	b1 66       	lsl	r6,0x10
+80002150:	e8 16 f8 01 	orl	r6,0xf801
+80002154:	ed e3 10 03 	or	r3,r6,r3
+80002158:	91 43       	st.w	r8[0x10],r3
+8000215a:	c0 98       	rjmp	8000216c <twim_read+0x68>
+				| (AVR32_TWIM_CMDR_STOP_MASK)
+				| (AVR32_TWIM_CMDR_TENBIT_MASK)
+				| (AVR32_TWIM_CMDR_REPSAME_MASK)
+				| (AVR32_TWIM_CMDR_READ_MASK);
+	} else {
+		twim_inst->cmdr = (saddr << AVR32_TWIM_CMDR_SADR_OFFSET)
+8000215c:	49 88       	lddpc	r8,800021bc <twim_read+0xb8>
+8000215e:	70 08       	ld.w	r8,r8[0x0]
+80002160:	b1 66       	lsl	r6,0x10
+80002162:	e8 16 e0 01 	orl	r6,0xe001
+80002166:	ed e3 10 13 	or	r3,r6,r3<<0x1
+8000216a:	91 33       	st.w	r8[0xc],r3
+				| (AVR32_TWIM_CMDR_STOP_MASK)
+				| (0 << AVR32_TWIM_CMDR_TENBIT_OFFSET)
+				| (AVR32_TWIM_CMDR_READ_MASK);
+	}
+	// mask NACK and RXRDY interrupts
+	twim_it_mask = AVR32_TWIM_IER_STD_MASK | AVR32_TWIM_IER_RXRDY_MASK;
+8000216c:	49 a9       	lddpc	r9,800021d4 <twim_read+0xd0>
+8000216e:	e0 68 07 01 	mov	r8,1793
+80002172:	93 08       	st.w	r9[0x0],r8
+	// update IMR through IER
+	twim_inst->ier = twim_it_mask;
+80002174:	49 28       	lddpc	r8,800021bc <twim_read+0xb8>
+80002176:	70 08       	ld.w	r8,r8[0x0]
+80002178:	72 09       	ld.w	r9,r9[0x0]
+8000217a:	91 89       	st.w	r8[0x20],r9
+	// Enable master transfer
+	twim_inst->cr = AVR32_TWIM_CR_MEN_MASK;
+8000217c:	30 19       	mov	r9,1
+8000217e:	91 09       	st.w	r8[0x0],r9
+	// Enable all interrupts
+	cpu_irq_enable ();
+80002180:	d5 03       	csrf	0x10
+	// get data
+	while (!(transfer_status) && !(twim_status ())) {
+80002182:	49 48       	lddpc	r8,800021d0 <twim_read+0xcc>
+80002184:	70 08       	ld.w	r8,r8[0x0]
+80002186:	58 08       	cp.w	r8,0
+80002188:	c0 80       	breq	80002198 <twim_read+0x94>
+8000218a:	c0 b8       	rjmp	800021a0 <twim_read+0x9c>
+		cpu_relax();
+8000218c:	fe cf ff fc 	sub	pc,pc,-4
+	// Enable master transfer
+	twim_inst->cr = AVR32_TWIM_CR_MEN_MASK;
+	// Enable all interrupts
+	cpu_irq_enable ();
+	// get data
+	while (!(transfer_status) && !(twim_status ())) {
+80002190:	6c 08       	ld.w	r8,r6[0x0]
+80002192:	58 08       	cp.w	r8,0
+80002194:	c0 30       	breq	8000219a <twim_read+0x96>
+80002196:	c0 58       	rjmp	800021a0 <twim_read+0x9c>
+80002198:	48 e6       	lddpc	r6,800021d0 <twim_read+0xcc>
+8000219a:	f0 1f 00 10 	mcall	800021d8 <twim_read+0xd4>
+8000219e:	cf 70       	breq	8000218c <twim_read+0x88>
+		cpu_relax();
+	}
+	// Disable master transfer
+	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
+800021a0:	30 28       	mov	r8,2
+800021a2:	8f 08       	st.w	r7[0x0],r8
+	//Check for nack
+	if (transfer_status == TWI_RECEIVE_NACK
+			|| transfer_status == TWI_ARBITRATION_LOST) {
+800021a4:	48 b8       	lddpc	r8,800021d0 <twim_read+0xcc>
+800021a6:	70 08       	ld.w	r8,r8[0x0]
+		cpu_relax();
+	}
+	// Disable master transfer
+	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
+	//Check for nack
+	if (transfer_status == TWI_RECEIVE_NACK
+800021a8:	5b c8       	cp.w	r8,-4
+800021aa:	c0 70       	breq	800021b8 <twim_read+0xb4>
+			|| transfer_status == TWI_ARBITRATION_LOST) {
+800021ac:	48 98       	lddpc	r8,800021d0 <twim_read+0xcc>
+800021ae:	70 08       	ld.w	r8,r8[0x0]
+		cpu_relax();
+	}
+	// Disable master transfer
+	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
+	//Check for nack
+	if (transfer_status == TWI_RECEIVE_NACK
+800021b0:	5b e8       	cp.w	r8,-2
+800021b2:	c0 30       	breq	800021b8 <twim_read+0xb4>
+800021b4:	e3 cf 80 f8 	ldm	sp++,r3-r7,pc,r12=0
+800021b8:	e3 cf c0 f8 	ldm	sp++,r3-r7,pc,r12=-1
+800021bc:	00 00       	add	r0,r0
+800021be:	00 08       	add	r8,r0
+800021c0:	80 00       	ld.sh	r0,r0[0x0]
+800021c2:	20 3c       	sub	r12,3
+800021c4:	00 00       	add	r0,r0
+800021c6:	00 0c       	add	r12,r0
+800021c8:	00 00       	add	r0,r0
+800021ca:	00 10       	sub	r0,r0
+800021cc:	00 00       	add	r0,r0
+800021ce:	00 20       	rsub	r0,r0
+800021d0:	00 00       	add	r0,r0
+800021d2:	00 14       	sub	r4,r0
+800021d4:	00 00       	add	r0,r0
+800021d6:	00 1c       	sub	r12,r0
+800021d8:	80 00       	ld.sh	r0,r0[0x0]
+800021da:	20 2c       	sub	r12,2
+
+800021dc <_get_interrupt_handler>:
+__int_handler _get_interrupt_handler(uint32_t int_level)
+{
+	/* ICR3 is mapped first, ICR0 last.
+	Code in exception.S puts int_level in R12 which is used by the compiler
+	to pass a single argument to a function. */
+	uint32_t int_grp = AVR32_INTC.icr[AVR32_INTC_INT3 - int_level];
+800021dc:	fe 78 10 00 	mov	r8,-61440
+800021e0:	e0 69 00 83 	mov	r9,131
+800021e4:	f2 0c 01 0c 	sub	r12,r9,r12
+800021e8:	f0 0c 03 29 	ld.w	r9,r8[r12<<0x2]
+	uint32_t int_req = AVR32_INTC.irr[int_grp];
+800021ec:	f2 ca ff c0 	sub	r10,r9,-64
+800021f0:	f0 0a 03 28 	ld.w	r8,r8[r10<<0x2]
+	exception.S will provide the interrupt handler with a clean interrupt
+	stack frame, with nothing more pushed onto the stack. The interrupt
+	handler must manage the `rete' instruction, which can be done using
+	pure assembly, inline assembly or the `__attribute__((__interrupt__))'
+	C function attribute.*/
+	return (int_req)
+800021f4:	58 08       	cp.w	r8,0
+800021f6:	c0 21       	brne	800021fa <_get_interrupt_handler+0x1e>
+800021f8:	5e fd       	retal	0
+		? _int_handler_table[int_grp]._int_line_handler_table[32
+800021fa:	f0 08 12 00 	clz	r8,r8
+800021fe:	48 5a       	lddpc	r10,80002210 <_get_interrupt_handler+0x34>
+80002200:	f4 09 00 39 	add	r9,r10,r9<<0x3
+80002204:	f0 08 11 1f 	rsub	r8,r8,31
+80002208:	72 19       	ld.w	r9,r9[0x4]
+	exception.S will provide the interrupt handler with a clean interrupt
+	stack frame, with nothing more pushed onto the stack. The interrupt
+	handler must manage the `rete' instruction, which can be done using
+	pure assembly, inline assembly or the `__attribute__((__interrupt__))'
+	C function attribute.*/
+	return (int_req)
+8000220a:	f2 08 03 2c 	ld.w	r12,r9[r8<<0x2]
+		? _int_handler_table[int_grp]._int_line_handler_table[32
+			- clz(int_req) - 1]
+		: NULL;
+}
+8000220e:	5e fc       	retal	r12
+80002210:	80 00       	ld.sh	r0,r0[0x0]
+80002212:	26 00       	sub	r0,96
+
+80002214 <_stext>:
+
+  .global _stext
+  .type _stext, @function
+_stext:
+  // Set initial stack pointer.
+  lda.w   sp, _estack
+80002214:	e0 6d 40 00 	mov	sp,16384
+
+  // Set up EVBA so interrupts can be enabled.
+  lda.w   r0, _evba
+  mtsr    AVR32_EVBA, r0
+80002218:	fe c0 fe 18 	sub	r0,pc,-488
+
+  // Enable the exception processing.
+  csrf    AVR32_SR_EM_OFFSET
+8000221c:	e3 b0 00 01 	mtsr	0x4,r0
+
+  // Load initialized data having a global lifetime from the data LMA.
+  lda.w   r0, _data
+  lda.w   r1, _edata
+80002220:	d5 53       	csrf	0x15
+  cp      r0, r1
+80002222:	30 40       	mov	r0,4
+  brhs    idata_load_loop_end
+80002224:	30 81       	mov	r1,8
+  lda.w   r2, _data_lma
+80002226:	02 30       	cp.w	r0,r1
+idata_load_loop:
+  ld.d    r4, r2++
+80002228:	c0 72       	brcc	80002236 <idata_load_loop_end>
+  st.d    r0++, r4
+8000222a:	fe c2 fb 72 	sub	r2,pc,-1166
+
+8000222e <idata_load_loop>:
+  cp      r0, r1
+  brlo    idata_load_loop
+8000222e:	a5 05       	ld.d	r4,r2++
+idata_load_loop_end:
+
+  // Clear uninitialized data having a global lifetime in the blank static storage section.
+  lda.w   r0, __bss_start
+80002230:	a1 24       	st.d	r0++,r4
+  lda.w   r1, _end
+80002232:	02 30       	cp.w	r0,r1
+  cp      r0, r1
+80002234:	cf d3       	brcs	8000222e <idata_load_loop>
+
+80002236 <idata_load_loop_end>:
+  brhs    udata_clear_loop_end
+80002236:	30 80       	mov	r0,8
+  mov     r2, 0
+80002238:	e0 61 00 f8 	mov	r1,248
+  mov     r3, 0
+udata_clear_loop:
+  st.d    r0++, r2
+8000223c:	02 30       	cp.w	r0,r1
+  cp      r0, r1
+8000223e:	c0 62       	brcc	8000224a <udata_clear_loop_end>
+  brlo    udata_clear_loop
+80002240:	30 02       	mov	r2,0
+  // Safety: Set the default "return" @ to the exit routine address.
+  lda.w   lr, exit
+#endif
+
+  // Start the show.
+  lda.w   pc, main
+80002242:	30 03       	mov	r3,0
+
+80002244 <udata_clear_loop>:
+80002244:	a1 22       	st.d	r0++,r2
+80002246:	02 30       	cp.w	r0,r1
+80002248:	cf e3       	brcs	80002244 <udata_clear_loop>
+
+8000224a <udata_clear_loop_end>:
+8000224a:	fe cf ff f6 	sub	pc,pc,-10
+8000224e:	d7 03       	nop
+
+80002250 <board_init>:
+80002250:	5e fc       	retal	r12
+80002252:	d7 03       	nop
+
+80002254 <main>:
+80002254:	d4 01       	pushm	lr
+80002256:	fa cd 00 90 	sub	sp,sp,144
+8000225a:	f0 1f 00 28 	mcall	800022f8 <main+0xa4>
+8000225e:	36 aa       	mov	r10,106
+80002260:	fa cb ff dc 	sub	r11,sp,-36
+int main (void)
+{
+	board_init();		
+
+		uint8_t page_0[106];
+		read_sensor_data(BNO055_CHIP_ID_ADDR, &page_0, 106);
+80002264:	30 0c       	mov	r12,0
+80002266:	f0 1f 00 26 	mcall	800022fc <main+0xa8>
+		
+		uint8_t val[2] = {BNO055_PAGE_ID_ADDR, BNO055_PAGE_ONE}; //CHANGE PAGE
+8000226a:	4a 68       	lddpc	r8,80002300 <main+0xac>
+8000226c:	90 08       	ld.sh	r8,r8[0x0]
+8000226e:	fb 58 00 20 	st.h	sp[32],r8
+		write_sensor_data(BNO055_PAGE_ID_ADDR, &val, 2);
+80002272:	30 2a       	mov	r10,2
+80002274:	fa cb ff e0 	sub	r11,sp,-32
+80002278:	30 7c       	mov	r12,7
+8000227a:	f0 1f 00 23 	mcall	80002304 <main+0xb0>
+		
+		uint8_t page_1[31];
+		read_sensor_data(BNO055_CHIP_ID_ADDR, &page_1, 31);
+8000227e:	31 fa       	mov	r10,31
+80002280:	1a 9b       	mov	r11,sp
+80002282:	30 0c       	mov	r12,0
+80002284:	f0 1f 00 1e 	mcall	800022fc <main+0xa8>
+{
+	if (level) {
+		arch_ioport_pin_to_base(pin)->ovrs
+			= arch_ioport_pin_to_mask(pin);
+	} else {
+		arch_ioport_pin_to_base(pin)->ovrc
+80002288:	fe 7e 28 00 	mov	lr,-55296
+8000228c:	fc 1c 00 80 	movh	r12,0x80
+ * \param  cpu_time: (output) internal information used by the timer API.
+ */
+__always_inline static void cpu_set_timeout(unsigned long delay, t_cpu_time *cpu_time)
+{
+  cpu_time->delay_start_cycle = Get_system_register(AVR32_COUNT);
+  cpu_time->delay_end_cycle   = cpu_time->delay_start_cycle + delay;
+80002290:	e0 6b e1 c0 	mov	r11,57792
+80002294:	ea 1b 00 e4 	orh	r11,0xe4
+80002298:	fd 4c 00 58 	st.w	lr[88],r12
+ * \param  delay:   (input) delay in CPU cycles before timeout.
+ * \param  cpu_time: (output) internal information used by the timer API.
+ */
+__always_inline static void cpu_set_timeout(unsigned long delay, t_cpu_time *cpu_time)
+{
+  cpu_time->delay_start_cycle = Get_system_register(AVR32_COUNT);
+8000229c:	e1 b8 00 42 	mfsr	r8,0x108
+  cpu_time->delay_end_cycle   = cpu_time->delay_start_cycle + delay;
+800022a0:	f0 0b 00 0a 	add	r10,r8,r11
+ *
+ * \return true if timeout occurred, otherwise false.
+ */
+__always_inline static unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
+{
+  unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
+800022a4:	e1 b9 00 42 	mfsr	r9,0x108
+  // Test if the timeout as already occurred.
+  else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
+    return true;
+
+  // If the ending cycle count of this timeout is wrapped, ...
+  else if (cpu_time->delay_start_cycle > cpu_time->delay_end_cycle)
+800022a8:	14 38       	cp.w	r8,r10
+800022aa:	e0 88 00 08 	brls	800022ba <main+0x66>
+  {
+    if (current_cycle_count < cpu_time->delay_start_cycle && current_cycle_count > cpu_time->delay_end_cycle)
+800022ae:	12 38       	cp.w	r8,r9
+800022b0:	fe 98 ff fa 	brls	800022a4 <main+0x50>
+800022b4:	12 3a       	cp.w	r10,r9
+800022b6:	c1 93       	brcs	800022e8 <main+0x94>
+800022b8:	cf 6b       	rjmp	800022a4 <main+0x50>
+    }
+    return false;
+  }
+  else
+  {
+    if (current_cycle_count < cpu_time->delay_start_cycle || current_cycle_count > cpu_time->delay_end_cycle)
+800022ba:	12 38       	cp.w	r8,r9
+800022bc:	e0 8b 00 16 	brhi	800022e8 <main+0x94>
+800022c0:	12 3a       	cp.w	r10,r9
+800022c2:	c1 33       	brcs	800022e8 <main+0x94>
+800022c4:	cf 0b       	rjmp	800022a4 <main+0x50>
+ *
+ * \return true if timeout occurred, otherwise false.
+ */
+__always_inline static unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
+{
+  unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
+800022c6:	e1 ba 00 42 	mfsr	r10,0x108
+  // Test if the timeout as already occurred.
+  else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
+    return true;
+
+  // If the ending cycle count of this timeout is wrapped, ...
+  else if (cpu_time->delay_start_cycle > cpu_time->delay_end_cycle)
+800022ca:	12 38       	cp.w	r8,r9
+800022cc:	e0 88 00 08 	brls	800022dc <main+0x88>
+  {
+    if (current_cycle_count < cpu_time->delay_start_cycle && current_cycle_count > cpu_time->delay_end_cycle)
+800022d0:	14 38       	cp.w	r8,r10
+800022d2:	fe 98 ff fa 	brls	800022c6 <main+0x72>
+800022d6:	14 39       	cp.w	r9,r10
+800022d8:	ce 03       	brcs	80002298 <main+0x44>
+800022da:	cf 6b       	rjmp	800022c6 <main+0x72>
+    }
+    return false;
+  }
+  else
+  {
+    if (current_cycle_count < cpu_time->delay_start_cycle || current_cycle_count > cpu_time->delay_end_cycle)
+800022dc:	14 38       	cp.w	r8,r10
+800022de:	fe 9b ff dd 	brhi	80002298 <main+0x44>
+800022e2:	14 39       	cp.w	r9,r10
+800022e4:	cd a3       	brcs	80002298 <main+0x44>
+800022e6:	cf 0b       	rjmp	800022c6 <main+0x72>
+
+__always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
+		bool level)
+{
+	if (level) {
+		arch_ioport_pin_to_base(pin)->ovrs
+800022e8:	fd 4c 00 54 	st.w	lr[84],r12
+ * \param  delay:   (input) delay in CPU cycles before timeout.
+ * \param  cpu_time: (output) internal information used by the timer API.
+ */
+__always_inline static void cpu_set_timeout(unsigned long delay, t_cpu_time *cpu_time)
+{
+  cpu_time->delay_start_cycle = Get_system_register(AVR32_COUNT);
+800022ec:	e1 b8 00 42 	mfsr	r8,0x108
+  cpu_time->delay_end_cycle   = cpu_time->delay_start_cycle + delay;
+800022f0:	f0 0b 00 09 	add	r9,r8,r11
+800022f4:	ce 9b       	rjmp	800022c6 <main+0x72>
+800022f6:	00 00       	add	r0,r0
+800022f8:	80 00       	ld.sh	r0,r0[0x0]
+800022fa:	22 50       	sub	r0,37
+800022fc:	80 00       	ld.sh	r0,r0[0x0]
+800022fe:	20 18       	sub	r8,1
+80002300:	80 00       	ld.sh	r0,r0[0x0]
+80002302:	26 b0       	sub	r0,107
+80002304:	80 00       	ld.sh	r0,r0[0x0]
+80002306:	20 04       	sub	r4,0
+
+Disassembly of section .exception:
+
+80002400 <_evba>:
+_evba:
+
+	.org  0x000
+	// Unrecoverable Exception.
+_handle_Unrecoverable_Exception:
+	rjmp $
+80002400:	c0 08       	rjmp	80002400 <_evba>
+	...
+
+80002404 <_handle_TLB_Multiple_Hit>:
+
+	.org  0x004
+	// TLB Multiple Hit.
+_handle_TLB_Multiple_Hit:
+	rjmp $
+80002404:	c0 08       	rjmp	80002404 <_handle_TLB_Multiple_Hit>
+	...
+
+80002408 <_handle_Bus_Error_Data_Fetch>:
+
+	.org  0x008
+	// Bus Error Data Fetch.
+_handle_Bus_Error_Data_Fetch:
+	rjmp $
+80002408:	c0 08       	rjmp	80002408 <_handle_Bus_Error_Data_Fetch>
+	...
+
+8000240c <_handle_Bus_Error_Instruction_Fetch>:
+
+	.org  0x00C
+	// Bus Error Instruction Fetch.
+_handle_Bus_Error_Instruction_Fetch:
+	rjmp $
+8000240c:	c0 08       	rjmp	8000240c <_handle_Bus_Error_Instruction_Fetch>
+	...
+
+80002410 <_handle_NMI>:
+
+	.org  0x010
+	// NMI.
+_handle_NMI:
+	rjmp $
+80002410:	c0 08       	rjmp	80002410 <_handle_NMI>
+	...
+
+80002414 <_handle_Instruction_Address>:
+
+	.org  0x014
+	// Instruction Address.
+_handle_Instruction_Address:
+	rjmp $
+80002414:	c0 08       	rjmp	80002414 <_handle_Instruction_Address>
+	...
+
+80002418 <_handle_ITLB_Protection>:
+
+	.org  0x018
+	// ITLB Protection.
+_handle_ITLB_Protection:
+	rjmp $
+80002418:	c0 08       	rjmp	80002418 <_handle_ITLB_Protection>
+	...
+
+8000241c <_handle_Breakpoint>:
+
+	.org  0x01C
+	// Breakpoint.
+_handle_Breakpoint:
+	rjmp $
+8000241c:	c0 08       	rjmp	8000241c <_handle_Breakpoint>
+	...
+
+80002420 <_handle_Illegal_Opcode>:
+
+	.org  0x020
+	// Illegal Opcode.
+_handle_Illegal_Opcode:
+	rjmp $
+80002420:	c0 08       	rjmp	80002420 <_handle_Illegal_Opcode>
+	...
+
+80002424 <_handle_Unimplemented_Instruction>:
+
+	.org  0x024
+	// Unimplemented Instruction.
+_handle_Unimplemented_Instruction:
+	rjmp $
+80002424:	c0 08       	rjmp	80002424 <_handle_Unimplemented_Instruction>
+	...
+
+80002428 <_handle_Privilege_Violation>:
+
+	.org  0x028
+	// Privilege Violation.
+_handle_Privilege_Violation:
+	rjmp $
+80002428:	c0 08       	rjmp	80002428 <_handle_Privilege_Violation>
+	...
+
+8000242c <_handle_Floating_Point>:
+
+	.org  0x02C
+	// Floating-Point: UNUSED IN AVR32UC and AVR32AP.
+_handle_Floating_Point:
+	rjmp $
+8000242c:	c0 08       	rjmp	8000242c <_handle_Floating_Point>
+	...
+
+80002430 <_handle_Coprocessor_Absent>:
+
+	.org  0x030
+	// Coprocessor Absent: UNUSED IN AVR32UC.
+_handle_Coprocessor_Absent:
+	rjmp $
+80002430:	c0 08       	rjmp	80002430 <_handle_Coprocessor_Absent>
+	...
+
+80002434 <_handle_Data_Address_Read>:
+
+	.org  0x034
+	// Data Address (Read).
+_handle_Data_Address_Read:
+	rjmp $
+80002434:	c0 08       	rjmp	80002434 <_handle_Data_Address_Read>
+	...
+
+80002438 <_handle_Data_Address_Write>:
+
+	.org  0x038
+	// Data Address (Write).
+_handle_Data_Address_Write:
+	rjmp $
+80002438:	c0 08       	rjmp	80002438 <_handle_Data_Address_Write>
+	...
+
+8000243c <_handle_DTLB_Protection_Read>:
+
+	.org  0x03C
+	// DTLB Protection (Read).
+_handle_DTLB_Protection_Read:
+	rjmp $
+8000243c:	c0 08       	rjmp	8000243c <_handle_DTLB_Protection_Read>
+	...
+
+80002440 <_handle_DTLB_Protection_Write>:
+
+	.org  0x040
+	// DTLB Protection (Write).
+_handle_DTLB_Protection_Write:
+	rjmp $
+80002440:	c0 08       	rjmp	80002440 <_handle_DTLB_Protection_Write>
+	...
+
+80002444 <_handle_DTLB_Modified>:
+
+	.org  0x044
+	// DTLB Modified: UNUSED IN AVR32UC.
+_handle_DTLB_Modified:
+	rjmp $
+80002444:	c0 08       	rjmp	80002444 <_handle_DTLB_Modified>
+	...
+
+80002450 <_handle_ITLB_Miss>:
+
+	.org  0x050
+	// ITLB Miss.
+_handle_ITLB_Miss:
+	rjmp $
+80002450:	c0 08       	rjmp	80002450 <_handle_ITLB_Miss>
+	...
+
+80002460 <_handle_DTLB_Miss_Read>:
+
+	.org  0x060
+	// DTLB Miss (Read).
+_handle_DTLB_Miss_Read:
+	rjmp $
+80002460:	c0 08       	rjmp	80002460 <_handle_DTLB_Miss_Read>
+	...
+
+80002470 <_handle_DTLB_Miss_Write>:
+
+	.org  0x070
+	// DTLB Miss (Write).
+_handle_DTLB_Miss_Write:
+	rjmp $
+80002470:	c0 08       	rjmp	80002470 <_handle_DTLB_Miss_Write>
+	...
+
+80002500 <_handle_Supervisor_Call>:
+
+	.org  0x100
+	// Supervisor Call.
+_handle_Supervisor_Call:
+	rjmp $
+80002500:	c0 08       	rjmp	80002500 <_handle_Supervisor_Call>
+80002502:	d7 03       	nop
+
+80002504 <_int0>:
+	 * RSR_INTx by the CPU upon interrupt entry. No other register is saved
+	 * by hardware.
+	 */
+	pushm   r8-r12, lr
+#endif
+	// Pass the int_level parameter to the _get_interrupt_handler function.
+80002504:	30 0c       	mov	r12,0
+80002506:	c6 be       	rcall	800021dc <_get_interrupt_handler>
+80002508:	58 0c       	cp.w	r12,0
+8000250a:	f8 0f 17 10 	movne	pc,r12
+8000250e:	d6 03       	rete
+
+80002510 <_int1>:
+	popm    r8-r12, lr
+#endif
+	/*
+	 * If this was a spurious interrupt (R12 == NULL), return from event
+	 * handler.
+	 */
+80002510:	30 1c       	mov	r12,1
+	 * RSR_INTx by the CPU upon interrupt entry. No other register is saved
+	 * by hardware.
+	 */
+	pushm   r8-r12, lr
+#endif
+	// Pass the int_level parameter to the _get_interrupt_handler function.
+80002512:	c6 5e       	rcall	800021dc <_get_interrupt_handler>
+80002514:	58 0c       	cp.w	r12,0
+80002516:	f8 0f 17 10 	movne	pc,r12
+8000251a:	d6 03       	rete
+
+8000251c <_int2>:
+8000251c:	30 2c       	mov	r12,2
+	popm    r8-r12, lr
+#endif
+	/*
+	 * If this was a spurious interrupt (R12 == NULL), return from event
+	 * handler.
+	 */
+8000251e:	c5 fe       	rcall	800021dc <_get_interrupt_handler>
+	 * RSR_INTx by the CPU upon interrupt entry. No other register is saved
+	 * by hardware.
+	 */
+	pushm   r8-r12, lr
+#endif
+	// Pass the int_level parameter to the _get_interrupt_handler function.
+80002520:	58 0c       	cp.w	r12,0
+80002522:	f8 0f 17 10 	movne	pc,r12
+80002526:	d6 03       	rete
+
+80002528 <_int3>:
+80002528:	30 3c       	mov	r12,3
+8000252a:	c5 9e       	rcall	800021dc <_get_interrupt_handler>
+	popm    r8-r12, lr
+#endif
+	/*
+	 * If this was a spurious interrupt (R12 == NULL), return from event
+	 * handler.
+	 */
+8000252c:	58 0c       	cp.w	r12,0
+	 * RSR_INTx by the CPU upon interrupt entry. No other register is saved
+	 * by hardware.
+	 */
+	pushm   r8-r12, lr
+#endif
+	// Pass the int_level parameter to the _get_interrupt_handler function.
+8000252e:	f8 0f 17 10 	movne	pc,r12
+80002532:	d6 03       	rete
+80002534:	d7 03       	nop
+80002536:	d7 03       	nop
+80002538:	d7 03       	nop
+	popm    r8-r12, lr
+#endif
+	/*
+	 * If this was a spurious interrupt (R12 == NULL), return from event
+	 * handler.
+	 */
+8000253a:	d7 03       	nop
+8000253c:	d7 03       	nop
+8000253e:	d7 03       	nop
+80002540:	d7 03       	nop
+80002542:	d7 03       	nop
+80002544:	d7 03       	nop
+80002546:	d7 03       	nop
+80002548:	d7 03       	nop
+8000254a:	d7 03       	nop
+8000254c:	d7 03       	nop
+8000254e:	d7 03       	nop
+80002550:	d7 03       	nop
+80002552:	d7 03       	nop
+80002554:	d7 03       	nop
+80002556:	d7 03       	nop
+80002558:	d7 03       	nop
+8000255a:	d7 03       	nop
+8000255c:	d7 03       	nop
+8000255e:	d7 03       	nop
+80002560:	d7 03       	nop
+80002562:	d7 03       	nop
+80002564:	d7 03       	nop
+80002566:	d7 03       	nop
+80002568:	d7 03       	nop
+8000256a:	d7 03       	nop
+8000256c:	d7 03       	nop
+8000256e:	d7 03       	nop
+80002570:	d7 03       	nop
+80002572:	d7 03       	nop
+80002574:	d7 03       	nop
+80002576:	d7 03       	nop
+80002578:	d7 03       	nop
+8000257a:	d7 03       	nop
+8000257c:	d7 03       	nop
+8000257e:	d7 03       	nop
+80002580:	d7 03       	nop
+80002582:	d7 03       	nop
+80002584:	d7 03       	nop
+80002586:	d7 03       	nop
+80002588:	d7 03       	nop
+8000258a:	d7 03       	nop
+8000258c:	d7 03       	nop
+8000258e:	d7 03       	nop
+80002590:	d7 03       	nop
+80002592:	d7 03       	nop
+80002594:	d7 03       	nop
+80002596:	d7 03       	nop
+80002598:	d7 03       	nop
+8000259a:	d7 03       	nop
+8000259c:	d7 03       	nop
+8000259e:	d7 03       	nop
+800025a0:	d7 03       	nop
+800025a2:	d7 03       	nop
+800025a4:	d7 03       	nop
+800025a6:	d7 03       	nop
+800025a8:	d7 03       	nop
+800025aa:	d7 03       	nop
+800025ac:	d7 03       	nop
+800025ae:	d7 03       	nop
+800025b0:	d7 03       	nop
+800025b2:	d7 03       	nop
+800025b4:	d7 03       	nop
+800025b6:	d7 03       	nop
+800025b8:	d7 03       	nop
+800025ba:	d7 03       	nop
+800025bc:	d7 03       	nop
+800025be:	d7 03       	nop
+800025c0:	d7 03       	nop
+800025c2:	d7 03       	nop
+800025c4:	d7 03       	nop
+800025c6:	d7 03       	nop
+800025c8:	d7 03       	nop
+800025ca:	d7 03       	nop
+800025cc:	d7 03       	nop
+800025ce:	d7 03       	nop
+800025d0:	d7 03       	nop
+800025d2:	d7 03       	nop
+800025d4:	d7 03       	nop
+800025d6:	d7 03       	nop
+800025d8:	d7 03       	nop
+800025da:	d7 03       	nop
+800025dc:	d7 03       	nop
+800025de:	d7 03       	nop
+800025e0:	d7 03       	nop
+800025e2:	d7 03       	nop
+800025e4:	d7 03       	nop
+800025e6:	d7 03       	nop
+800025e8:	d7 03       	nop
+800025ea:	d7 03       	nop
+800025ec:	d7 03       	nop
+800025ee:	d7 03       	nop
+800025f0:	d7 03       	nop
+800025f2:	d7 03       	nop
+800025f4:	d7 03       	nop
+800025f6:	d7 03       	nop
+800025f8:	d7 03       	nop
+800025fa:	d7 03       	nop
+800025fc:	d7 03       	nop
+800025fe:	d7 03       	nop
