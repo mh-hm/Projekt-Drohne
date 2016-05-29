@@ -32,17 +32,34 @@ void sensor_init(void){
 	
 	delay_ms(5);
 	ioport_set_pin_level(RST_SENS, HIGH);
-	delay_ms(700);							//SENSOR STARTUP TIME
+	delay_ms(BNO055_STARTUP_TIME_MS);							//SENSOR STARTUP TIME
 	twim_master_init(TWI_SENS, &_twi_opt);
+	
+	//Konfigurieren des Sensores
+	write_sensor_data(BNO055_OPR_MODE_ADDR, BNO055_OPERATION_MODE_NDOF);
+	delay_ms(19);												//SENSOR SWITCHING OPERATION MODE TIME
+	
+	//REMAP X AS Y
+	write_sensor_data(BNO055_AXIS_MAP_CONFIG_ADDR, BNO055_REMAP_X_Y,1);											//AXIS REMAPPING
+	write_sensor_data(BNO055_AXIS_MAP_SIGN_ADDR, (BNO055_REMAP_AXIS_POSITIVE)&(BNO055_REMAP_AXIS_POSITIVE)&(BNO055_REMAP_AXIS_POSITIVE), 1);														//AXIS REMAPPING SIGN
+	
+	//Output Data Format
+	uint_fast8_t _units = (BNO055_ACCEL_UNIT_MSQ << BNO055_ACCEL_UNIT_POS) & \
+		(BNO055_GYRO_UNIT_RPS << BNO055_GYRO_UNIT_POS) & \		//????????
+		(BNO055_EULER_UNIT_DEG << BNO055_EULER_UNIT_POS) & \	//????????
+		(BNO055_TEMP_UNIT_CELSIUS << BNO055_TEMP_UNIT_POS); 
+	write_sensor_data(BNO055_UNIT_SEL_ADDR, _units, 1);					
 }
 
 status_code_t read_sensor_data(bno055_register_addr_t _addr, uint8_t *values, uint_fast32_t count){
-	//TODO: WRITE START ADDR _addr_t TO SENSOR BEFOR READING
+	//TODO: WRITE START ADDR _addr_t TO SENSOR BEFOR READIN
+	twim_write(TWI_SENS, _addr, 1, BNO055_TWI_ADDR_SENSOR, false);
 	return twim_read(TWI_SENS, values, count,BNO055_TWI_ADDR_SENSOR,false);
 }
 
 status_code_t write_sensor_data(bno055_register_addr_t _addr, uint8_t *values, uint_fast8_t count)
 {
 	//TODO: WRITE START ADDR _addr_t TO SENSOR BEFOR WRITING
-	return twim_write(TWI_SENS, values, count++, BNO055_TWI_ADDR_SENSOR, false);
+	twim_write(TWI_SENS, _addr, 1, BNO055_TWI_ADDR_SENSOR, false);
+	return twim_write(TWI_SENS, values, count, BNO055_TWI_ADDR_SENSOR, false);
 }

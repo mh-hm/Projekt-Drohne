@@ -9,6 +9,7 @@
 #ifndef SENSOR_H_
 #define SENSOR_H_
 
+#define BNO055_STARTUP_TIME_MS 700
 #include "asf.h"
 #include "bno055.h"
 #include "user_board.h"
