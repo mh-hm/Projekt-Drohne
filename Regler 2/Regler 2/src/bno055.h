@@ -215,8 +215,6 @@ typedef enum bno055_register_addr_t
 #define BNO055_RETURN_FUNCTION_TYPE	s8
 
 /* Compile switch definition for Float and double*/
-#define BNO055_FLOAT_ENABLE
-#define BNO055_DOUBLE_ENABLE
 /**************************************************************/
 /**\name	STRUCTURE DEFINITIONS                         */
 /**************************************************************/
