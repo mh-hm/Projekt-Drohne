@@ -24,9 +24,10 @@ typedef struct{
 }sensor_offset_t;
 
 typedef struct{
-		uint_fast16_t   motor_timer_period;
-		uint_fast16_t	motor_timer_value_min;
-		uint_fast16_t	motor_timer_value_max;
+		uint_fast16_t   motor_esc_timer_period;
+		uint_fast16_t	motor_esc_timer_value_min;
+		uint_fast16_t	motor_esc_timer_value_max;
+		uint_fast16_t	motor_esc_timer_value_interval; //Regel-Interval
 		pid_settings_t	pid_yaw;
 		pid_settings_t	pid_pitch;
 		pid_settings_t	pid_roll;
