@@ -19,7 +19,7 @@
 
 #include <conf_board.h>
 
-#define LED_TRANS		AVR32_PIN_PA23
+#define LED_TRANS				AVR32_PIN_PA23
 
 //ESC:
 //<Hannes,Jonas>
@@ -41,7 +41,7 @@
 
 #define SPI_ARDU				&AVR32_SPI
 #define SPI_ARDU_MODE			SPI_MODE_0
-#define SPI_ARDU_SPEED
+#define SPI_ARDU_IRQ_LEVEL		1
 
 //SENSOR:
 #define ADDR0_SENS_LEVEL		IOPORT_PIN_LEVEL_LOW //ADDRESS SELECTION PIN
