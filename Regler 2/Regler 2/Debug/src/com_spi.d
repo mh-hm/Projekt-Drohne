@@ -88,7 +88,8 @@ src/com_spi.d src/com_spi.o src/com_spi.o: ../src/com_spi.c ../src/asf.h \
  ../src/ASF/avr32/drivers/tc/tc.h ../src/ASF/avr32/drivers/twim/twim.h \
  ../src/config/conf_twim.h ../src/ASF/common/services/serial/serial.h \
  ../src/ASF/common/services/serial/uc3_usart/usart_serial.h \
- ../src/ASF/avr32/drivers/usart/usart.h ../src/config/conf_usart_serial.h
+ ../src/ASF/avr32/drivers/usart/usart.h ../src/config/conf_usart_serial.h \
+ ../src/com_spi.h
 
 ../src/asf.h:
 
@@ -285,3 +286,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bi
 ../src/ASF/avr32/drivers/usart/usart.h:
 
 ../src/config/conf_usart_serial.h:
+
+../src/com_spi.h:

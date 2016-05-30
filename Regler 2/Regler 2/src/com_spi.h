@@ -9,9 +9,11 @@
 #ifndef COM_SPI_H_
 #define COM_SPI_H_
 
+
+
 spi_status_t com_spi_init(void);
 
-void com_spi_txrd_int(void);
+void com_spi_txrd_int_handler(void);
 
 
 
