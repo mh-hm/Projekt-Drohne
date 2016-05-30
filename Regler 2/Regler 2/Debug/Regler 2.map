@@ -328,27 +328,27 @@ Discarded input sections
  .text          0x00000000        0x0 src/motor_control.o
  .data          0x00000000        0x0 src/motor_control.o
  .bss           0x00000000        0x0 src/motor_control.o
- .debug_abbrev  0x00000000       0xe7 src/motor_control.o
- .debug_info    0x00000000      0x18a src/motor_control.o
- .debug_line    0x00000000      0xb98 src/motor_control.o
+ .debug_abbrev  0x00000000      0x203 src/motor_control.o
+ .debug_info    0x00000000      0xd8d src/motor_control.o
+ .debug_line    0x00000000      0xbbd src/motor_control.o
  .debug_macinfo
-                0x00000000   0x101961 src/motor_control.o
- .text.motor_init
-                0x00000000        0x2 src/motor_control.o
+                0x00000000   0x101974 src/motor_control.o
  .text.motor_start
-                0x00000000        0x2 src/motor_control.o
- .text.get_motor_speed
                 0x00000000        0x2 src/motor_control.o
  .text.motor_stop
                 0x00000000        0x2 src/motor_control.o
- .debug_frame   0x00000000       0x50 src/motor_control.o
- .debug_loc     0x00000000       0x26 src/motor_control.o
+ .text.get_motor_speed
+                0x00000000       0x34 src/motor_control.o
+ .text.motor_init
+                0x00000000       0xa4 src/motor_control.o
+ .debug_frame   0x00000000       0x70 src/motor_control.o
+ .debug_loc     0x00000000       0x70 src/motor_control.o
  .debug_pubnames
                 0x00000000       0x54 src/motor_control.o
  .debug_aranges
                 0x00000000       0x38 src/motor_control.o
  .debug_ranges  0x00000000       0x30 src/motor_control.o
- .debug_str     0x00000000      0x1aa src/motor_control.o
+ .debug_str     0x00000000      0x49f src/motor_control.o
  .comment       0x00000000       0x31 src/motor_control.o
  .text          0x00000000        0x0 src/sensor.o
  .data          0x00000000        0x0 src/sensor.o
@@ -363,7 +363,7 @@ Discarded input sections
                 0x00000000   0x10195c src/settings_t.o
  .debug_pubnames
                 0x00000000       0x1a src/settings_t.o
- .debug_str     0x00000000      0x1b8 src/settings_t.o
+ .debug_str     0x00000000      0x1c8 src/settings_t.o
  .comment       0x00000000       0x31 src/settings_t.o
  COMMON         0x00000000       0x44 src/settings_t.o
  .text          0x00000000        0x0 src/ASF/avr32/drivers/tc/tc.o
@@ -439,7 +439,7 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x30 src/ASF/common/services/spi/uc3_spi/spi_master.o
  .debug_ranges  0x00000000       0x58 src/ASF/common/services/spi/uc3_spi/spi_master.o
- .debug_str     0x00000000      0x6e0 src/ASF/common/services/spi/uc3_spi/spi_master.o
+ .debug_str     0x00000000      0x6f0 src/ASF/common/services/spi/uc3_spi/spi_master.o
  .comment       0x00000000       0x31 src/ASF/common/services/spi/uc3_spi/spi_master.o
  .text          0x00000000        0x0 src/ASF/common/services/sleepmgr/uc3/sleepmgr.o
  .data          0x00000000        0x0 src/ASF/common/services/sleepmgr/uc3/sleepmgr.o
@@ -473,7 +473,7 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x28 src/ASF/common/services/serial/usart_serial.o
  .debug_ranges  0x00000000       0x20 src/ASF/common/services/serial/usart_serial.o
- .debug_str     0x00000000      0x7f1 src/ASF/common/services/serial/usart_serial.o
+ .debug_str     0x00000000      0x801 src/ASF/common/services/serial/usart_serial.o
  .comment       0x00000000       0x31 src/ASF/common/services/serial/usart_serial.o
  .text          0x00000000        0x0 src/ASF/common/services/clock/uc3d/osc.o
  .data          0x00000000        0x0 src/ASF/common/services/clock/uc3d/osc.o
@@ -501,7 +501,7 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x30 src/ASF/common/services/clock/uc3d/pll.o
  .debug_ranges  0x00000000       0x28 src/ASF/common/services/clock/uc3d/pll.o
- .debug_str     0x00000000      0x7af src/ASF/common/services/clock/uc3d/pll.o
+ .debug_str     0x00000000      0x7bf src/ASF/common/services/clock/uc3d/pll.o
  .comment       0x00000000       0x31 src/ASF/common/services/clock/uc3d/pll.o
  .text          0x00000000        0x0 src/ASF/common/services/clock/uc3d/sysclk.o
  .data          0x00000000        0x0 src/ASF/common/services/clock/uc3d/sysclk.o
@@ -635,7 +635,7 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x38 src/ASF/avr32/drivers/twis/twis.o
  .debug_ranges  0x00000000       0x30 src/ASF/avr32/drivers/twis/twis.o
- .debug_str     0x00000000      0x514 src/ASF/avr32/drivers/twis/twis.o
+ .debug_str     0x00000000      0x524 src/ASF/avr32/drivers/twis/twis.o
  .comment       0x00000000       0x31 src/ASF/avr32/drivers/twis/twis.o
  .text          0x00000000        0x0 src/ASF/avr32/drivers/usart/usart.o
  .data          0x00000000        0x0 src/ASF/avr32/drivers/usart/usart.o
@@ -1339,22 +1339,22 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr32/avr32-gnu-toolchain
  .debug_abbrev  0x00001715      0x218 src/ASF/common/boards/user_board/init.o
  .debug_abbrev  0x0000192d      0x32f src/main.o
 
-.debug_line     0x00000000     0x6f63
+.debug_line     0x00000000     0x6f62
  *(.debug_line)
  .debug_line    0x00000000      0xca5 src/ASF/avr32/drivers/flashcdw/flashcdw.o
  .debug_line    0x00000ca5      0x95e src/ASF/avr32/drivers/gpio/gpio.o
- .debug_line    0x00001603      0xb9b src/com_spi.o
- .debug_line    0x0000219e      0xc23 src/sensor.o
- .debug_line    0x00002dc1      0x77d src/ASF/common/services/clock/uc3d/osc.o
- .debug_line    0x0000353e      0x874 src/ASF/common/services/clock/uc3d/sysclk.o
- .debug_line    0x00003db2      0x7f2 src/ASF/avr32/drivers/spi/spi.o
- .debug_line    0x000045a4      0x8d8 src/ASF/avr32/drivers/twim/twim.o
- .debug_line    0x00004e7c      0x109 src/ASF/avr32/drivers/intc/exception.o
- .debug_line    0x00004f85      0x6b5 src/ASF/avr32/drivers/intc/intc.o
- .debug_line    0x0000563a       0xf2 src/ASF/avr32/utils/startup/startup_uc3.o
- .debug_line    0x0000572c       0x67 src/ASF/avr32/utils/startup/trampoline_uc3.o
- .debug_line    0x00005793      0xb8b src/ASF/common/boards/user_board/init.o
- .debug_line    0x0000631e      0xc45 src/main.o
+ .debug_line    0x00001603      0xb9a src/com_spi.o
+ .debug_line    0x0000219d      0xc23 src/sensor.o
+ .debug_line    0x00002dc0      0x77d src/ASF/common/services/clock/uc3d/osc.o
+ .debug_line    0x0000353d      0x874 src/ASF/common/services/clock/uc3d/sysclk.o
+ .debug_line    0x00003db1      0x7f2 src/ASF/avr32/drivers/spi/spi.o
+ .debug_line    0x000045a3      0x8d8 src/ASF/avr32/drivers/twim/twim.o
+ .debug_line    0x00004e7b      0x109 src/ASF/avr32/drivers/intc/exception.o
+ .debug_line    0x00004f84      0x6b5 src/ASF/avr32/drivers/intc/intc.o
+ .debug_line    0x00005639       0xf2 src/ASF/avr32/utils/startup/startup_uc3.o
+ .debug_line    0x0000572b       0x67 src/ASF/avr32/utils/startup/trampoline_uc3.o
+ .debug_line    0x00005792      0xb8b src/ASF/common/boards/user_board/init.o
+ .debug_line    0x0000631d      0xc45 src/main.o
 
 .debug_frame    0x00000000      0xeac
  *(.debug_frame)
@@ -1370,30 +1370,30 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr32/avr32-gnu-toolchain
  .debug_frame   0x00000e24       0x28 src/ASF/common/boards/user_board/init.o
  .debug_frame   0x00000e4c       0x60 src/main.o
 
-.debug_str      0x00000000     0x3e8b
+.debug_str      0x00000000     0x3e54
  *(.debug_str)
  .debug_str     0x00000000      0xd75 src/ASF/avr32/drivers/flashcdw/flashcdw.o
                                 0xe6e (size before relaxing)
  .debug_str     0x00000d75      0x5a1 src/ASF/avr32/drivers/gpio/gpio.o
                                 0x6e2 (size before relaxing)
- .debug_str     0x00001316      0x755 src/com_spi.o
-                                0xadd (size before relaxing)
- .debug_str     0x00001a6b     0x1113 src/sensor.o
-                               0x1868 (size before relaxing)
- .debug_str     0x00002b7e      0x646 src/ASF/common/services/clock/uc3d/osc.o
-                                0x7a4 (size before relaxing)
- .debug_str     0x000031c4      0x42e src/ASF/common/services/clock/uc3d/sysclk.o
-                                0xbb6 (size before relaxing)
- .debug_str     0x000035f2      0x1f0 src/ASF/avr32/drivers/spi/spi.o
+ .debug_str     0x00001316      0x71e src/com_spi.o
+                                0xaed (size before relaxing)
+ .debug_str     0x00001a34     0x1113 src/sensor.o
+                               0x1878 (size before relaxing)
+ .debug_str     0x00002b47      0x646 src/ASF/common/services/clock/uc3d/osc.o
+                                0x7b4 (size before relaxing)
+ .debug_str     0x0000318d      0x42e src/ASF/common/services/clock/uc3d/sysclk.o
+                                0xbc6 (size before relaxing)
+ .debug_str     0x000035bb      0x1f0 src/ASF/avr32/drivers/spi/spi.o
                                 0x660 (size before relaxing)
- .debug_str     0x000037e2      0x239 src/ASF/avr32/drivers/twim/twim.o
-                                0x713 (size before relaxing)
- .debug_str     0x00003a1b      0x3b3 src/ASF/avr32/drivers/intc/intc.o
+ .debug_str     0x000037ab      0x239 src/ASF/avr32/drivers/twim/twim.o
+                                0x723 (size before relaxing)
+ .debug_str     0x000039e4      0x3b3 src/ASF/avr32/drivers/intc/intc.o
                                 0x4bf (size before relaxing)
- .debug_str     0x00003dce       0x47 src/ASF/common/boards/user_board/init.o
-                                0x4a4 (size before relaxing)
- .debug_str     0x00003e15       0x76 src/main.o
-                               0x16c2 (size before relaxing)
+ .debug_str     0x00003d97       0x47 src/ASF/common/boards/user_board/init.o
+                                0x4b4 (size before relaxing)
+ .debug_str     0x00003dde       0x76 src/main.o
+                               0x16d2 (size before relaxing)
 
 .debug_loc      0x00000000     0x240c
  *(.debug_loc)
