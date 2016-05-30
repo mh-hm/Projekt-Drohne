@@ -32,12 +32,12 @@ spi_status_t com_spi_init(void)
 	spi_initSlave(SPI_ARDU,8,SPI_MODE_0);
 	spi_enable(SPI_ARDU);
 	
-	bool global_interrupt_enabled = cpu_irq_is_enabled ();
-	if (global_interrupt_enabled) cpu_irq_disable();
+	//bool global_interrupt_enabled = cpu_irq_is_enabled ();
+	//if (global_interrupt_enabled) cpu_irq_disable();
 	
 	//irq_register_handler(com_spi_interrupt_handler, AVR32_SPI_IRQ, SPI_ARDU_IRQ_LEVEL);
 	//(*SPI_ARDU).ier = AVR32_SPI_IER_TDRE_MASK; //enable Interrupt
-	cpu_irq_enable();
+	//cpu_irq_enable();
 	
 	return SPI_OK;
 }
