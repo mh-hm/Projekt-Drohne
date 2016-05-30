@@ -10,6 +10,8 @@ src\ASF\avr32\drivers\pm\pm_uc3d.c
 
 src\ASF\avr32\drivers\scif\scif_uc3d.c
 
+src\com_spi.c
+
 src\motor_control.c
 
 src\sensor.c

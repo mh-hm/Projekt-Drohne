@@ -33,6 +33,7 @@
 #include "motor_control.h"
 #include "sensor.h"
 #include "bno055.h"
+#include "com_spi.h"
 
 uint8_t page_0[106];
 uint8_t page_1[31];
@@ -70,12 +71,14 @@ void read_sensor(void)
 int main (void)
 {
 	board_init();		
-	
 
 
 	while (1)
 	{
 		read_sensor();
+		spi_put(SPI_ARDU,(uint8_t) eul.h);
+		while (!spi_is_tx_ready(SPI_ARDU));
+		spi_put(SPI_ARDU,(uint8_t) (eul.h >> 8));
 		ioport_set_pin_level(LED_TRANS,LOW);
 		ioport_set_pin_level(LED_B_SENS, LED_SENS_OFF);
 		ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);

@@ -20,7 +20,7 @@ typedef uint_fast64_t	u64;
 /********************************************************/
 /**\name	I2C ADDRESS DEFINITION FOR BNO055           */
 /********************************************************/
-#if (ADDR0_SENS_LEVEL == LOW)
+#if (ADDR0_SENS_LEVEL == IOPORT_PIN_LEVEL_LOW)
 	#define BNO055_TWI_ADDR_SENSOR		0x28
 #else
 	#define BNO055_TWI_ADDR_SENSOR		0x29

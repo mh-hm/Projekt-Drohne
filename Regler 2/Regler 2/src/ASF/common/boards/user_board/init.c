@@ -12,13 +12,16 @@
 #include <board.h>
 #include <conf_board.h>
 #include "sensor.h"
+#include "com_spi.h"
 
 void board_init(void)
 {
 	sysclk_init();
+	INTC_init_interrupts();
 	ioport_init();
 	sensor_init();
-	
+	com_spi_init();
+	//ioport_set_pin_dir(RST_ARDU_REG, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(LED_TRANS, IOPORT_DIR_OUTPUT);
 	
 }

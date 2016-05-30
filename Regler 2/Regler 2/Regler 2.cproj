@@ -499,6 +499,12 @@
     <Compile Include="src\ASF\avr32\drivers\scif\scif_uc3d.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\com_spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\com_spi.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\motor_control.c">
       <SubType>compile</SubType>
     </Compile>
