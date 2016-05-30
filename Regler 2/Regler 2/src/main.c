@@ -76,9 +76,9 @@ int main (void)
 	while (1)
 	{
 		read_sensor();
-		spi_put(SPI_ARDU,(uint8_t) eul.h);
-		while (!spi_is_tx_ready(SPI_ARDU));
-		spi_put(SPI_ARDU,(uint8_t) (eul.h >> 8));
+		//spi_put(SPI_ARDU,(uint8_t) eul.h);
+		//while (!spi_is_tx_ready(SPI_ARDU));
+		//spi_put(SPI_ARDU,(uint8_t) (eul.h >> 8));
 		ioport_set_pin_level(LED_TRANS,LOW);
 		ioport_set_pin_level(LED_B_SENS, LED_SENS_OFF);
 		ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);
