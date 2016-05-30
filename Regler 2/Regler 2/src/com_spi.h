@@ -13,8 +13,6 @@
 
 spi_status_t com_spi_init(void);
 
-void com_spi_txrd_int_handler(void);
-
 
 
 #endif /* COM_SPI_H_ */
