@@ -9,17 +9,18 @@
 #ifndef SENSOR_H_
 #define SENSOR_H_
 
-#define BNO055_STARTUP_TIME_MS 700
+
 #include "asf.h"
 #include "bno055.h"
 #include "user_board.h"
 
-
 void sensor_init(void);
+
+void sensor_led_init(void);
 /*
 	read_Sensor_Data liest von der Registeraddresse _addr count values aus
 */
-status_code_t read_sensor_data(bno055_register_addr_t _addr, uint8_t *values, uint_fast32_t count);
+status_code_t read_sensor_data(bno055_register_addr_t _addr, const uint8_t *values, uint32_t count);
 
 /*
 	write_Sensor_Data schreibt an der Registeraddresse _addr count values 

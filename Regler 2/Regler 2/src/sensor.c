@@ -13,6 +13,8 @@ void sensor_init(void){
 	ioport_set_pin_dir(RST_SENS, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(INT_SENS, IOPORT_DIR_INPUT);
 	
+	sensor_led_init();
+	
 	//TODO: CHECK BOOT_SENS PIN LEVEL (NOT HIGH??)
 	
 	//ioport_set_pin_level(BOOT_SENS, HIGH);
@@ -45,20 +47,38 @@ void sensor_init(void){
 	write_sensor_data(BNO055_AXIS_MAP_SIGN_ADDR, &val, 1);														//AXIS REMAPPING SIGN
 	
 	//Output Data Format
-	uint_fast8_t _units = (BNO055_ACCEL_UNIT_MSQ << BNO055_ACCEL_UNIT_POS) & \
-		(BNO055_GYRO_UNIT_RPS << BNO055_GYRO_UNIT_POS) & \		
-		(BNO055_EULER_UNIT_DEG << BNO055_EULER_UNIT_POS) & \	
+	val = (BNO055_ACCEL_UNIT_MSQ << BNO055_ACCEL_UNIT_POS) & \
+		(BNO055_GYRO_UNIT_RPS << BNO055_GYRO_UNIT_POS) & \
+		(BNO055_EULER_UNIT_DEG << BNO055_EULER_UNIT_POS) & \
 		(BNO055_TEMP_UNIT_CELSIUS << BNO055_TEMP_UNIT_POS); 
-	write_sensor_data(BNO055_UNIT_SEL_ADDR, &_units, 1);
+	write_sensor_data(BNO055_UNIT_SEL_ADDR, &val, 1);
 	
 	val = BNO055_OPERATION_MODE_NDOF;
 	write_sensor_data(BNO055_OPR_MODE_ADDR, &val,1);
-	delay_ms(19);												//SENSOR SWITCHING OPERATION MODE TIME
+	delay_ms(BNO055_SWITCH_OP_TIME_MS);												//SENSOR SWITCHING OPERATION MODE TIME
 }
 
-status_code_t read_sensor_data(bno055_register_addr_t _addr, uint8_t *values, uint_fast32_t count){
-	//TODO: write _addr first
-	return twim_read(TWI_SENS, values, count,BNO055_TWI_ADDR_SENSOR,false);
+void sensor_led_init(void)
+{
+	ioport_set_pin_level(LED_B_SENS, LED_SENS_OFF);
+	ioport_set_pin_level(LED_G_SENS, LED_SENS_OFF);
+	ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);
+	ioport_set_pin_dir(LED_R_SENS, IOPORT_DIR_OUTPUT);
+	ioport_set_pin_dir(LED_G_SENS, IOPORT_DIR_OUTPUT);
+	ioport_set_pin_dir(LED_B_SENS, IOPORT_DIR_OUTPUT);
+}
+
+status_code_t read_sensor_data(bno055_register_addr_t _addr, const uint8_t *values, uint32_t count){
+	twim_package_t pack;
+	pack.addr[0] = _addr;
+	pack.addr_length = 1;
+	pack.buffer = values;
+	pack.chip = BNO055_TWI_ADDR_SENSOR;
+	pack.length = count;
+	pack.no_wait = false;
+	
+	return twim_read_packet(TWI_SENS, &pack);
+	//return twim_read(TWI_SENS, values, count,BNO055_TWI_ADDR_SENSOR,false);
 }
 
 status_code_t write_sensor_data(bno055_register_addr_t _addr, uint8_t *values, uint_fast8_t count)

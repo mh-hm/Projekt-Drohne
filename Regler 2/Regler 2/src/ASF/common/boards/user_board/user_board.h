@@ -58,6 +58,9 @@
 #define	LED_G_SENS				AVR32_PIN_PA17
 #define LED_B_SENS				AVR32_PIN_PA14
 
+#define LED_SENS_ON				LOW
+#define LED_SENS_OFF			HIGH
+
 //GPIO, ADC
 
 #define ADC0					AVR32_PIN_PA03

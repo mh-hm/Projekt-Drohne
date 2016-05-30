@@ -14,6 +14,9 @@ typedef uint_fast16_t	u16;
 typedef uint_fast32_t	u32;
 typedef uint_fast64_t	u64;
 
+#define BNO055_STARTUP_TIME_MS 700
+#define BNO055_SWITCH_OP_TIME_MS 20
+
 /********************************************************/
 /**\name	I2C ADDRESS DEFINITION FOR BNO055           */
 /********************************************************/
