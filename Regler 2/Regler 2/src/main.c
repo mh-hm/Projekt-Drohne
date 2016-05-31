@@ -45,6 +45,24 @@ int main (void)
 	{
 		sensor_euler = read_sensor_euler();
 		
+		if (sensor_euler.r < 45*16 && sensor_euler.r > 0)
+		{
+			uint_fast32_t val;
+			val = (set.motor_esc_timer_value_interval * sensor_euler.r)/(45*16) + set.motor_esc_timer_value_min;
+			
+			tc_write_ra(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, val);
+			tc_write_ra(TIMER_ESC, TIMER_ESC_3_4_CHANNEL, val);
+			tc_write_rb(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, val);
+			tc_write_rb(TIMER_ESC, TIMER_ESC_3_4_CHANNEL, val);
+		}
+		else
+		{
+			tc_write_ra(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, set.motor_esc_timer_value_min);
+			tc_write_ra(TIMER_ESC, TIMER_ESC_3_4_CHANNEL, set.motor_esc_timer_value_min);
+			tc_write_rb(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, set.motor_esc_timer_value_min);
+			tc_write_rb(TIMER_ESC, TIMER_ESC_3_4_CHANNEL, set.motor_esc_timer_value_min);
+		}
+		
 		ioport_set_pin_level(LED_TRANS,LOW);
 		ioport_set_pin_level(LED_B_SENS, LED_SENS_OFF);
 		ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);
