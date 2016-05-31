@@ -39,4 +39,6 @@ extern settings_t set;
 
 void settings_init(void);
 
+void settings_save(void);
+
 #endif /* SETTINGS_H_ */

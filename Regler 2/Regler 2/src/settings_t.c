@@ -12,7 +12,7 @@ settings_t set;
 void settings_init(void)
 {
 	
-	if (flashcdw_quick_user_page_read(void))
+	if (flashcdw_quick_user_page_read())
 	{
 		//User page empty -> default values
 		set.motor_esc_timer_period = 3750;
@@ -26,7 +26,10 @@ void settings_init(void)
 		//uint_fast32_t *pageaddr;
 		//pageaddr = AVR32_USER_PAGE_ADDRESS;
 		//uint16_t val = &pageaddr;
-	}
-	
-	
+	}	
+}
+
+void settings_save(void)
+{
+	flashcdw_memcpy(&set, AVR32_USER_PAGE_ADDRESS, AVR32_USER_PAGE_SIZE, true);
 }
