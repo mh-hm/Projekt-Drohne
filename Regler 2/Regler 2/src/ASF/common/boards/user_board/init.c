@@ -25,7 +25,7 @@ void board_init(void)
 	settings_init();
 	
 	sensor_init();
-	motor_init();
+	motor_init();	
 	com_spi_init();
 	//ioport_set_pin_dir(RST_ARDU_REG, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(LED_TRANS, IOPORT_DIR_OUTPUT);
