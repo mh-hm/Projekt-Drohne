@@ -27,19 +27,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  11 .debug_abbrev 00002212  00000000  00000000  00015f6d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_line   00008e65  00000000  00000000  0001817f  2**0
+ 12 .debug_line   00008e67  00000000  00000000  0001817f  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_frame  00001068  00000000  00000000  00020fe4  2**2
+ 13 .debug_frame  00001068  00000000  00000000  00020fe8  2**2
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_str    000042fb  00000000  00000000  0002204c  2**0
+ 14 .debug_str    000042fb  00000000  00000000  00022050  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_loc    0000287b  00000000  00000000  00026347  2**0
+ 15 .debug_loc    0000287b  00000000  00000000  0002634b  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_macinfo 00e1a5c7  00000000  00000000  00028bc2  2**0
+ 16 .debug_macinfo 00e1b215  00000000  00000000  00028bc6  2**0
                   CONTENTS, READONLY, DEBUGGING
  17 .stack        00001000  00003000  00003000  00000400  2**0
                   ALLOC
- 18 .debug_ranges 00000890  00000000  00000000  00e43190  2**3
+ 18 .debug_ranges 00000890  00000000  00000000  00e43de0  2**3
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .reset:
@@ -510,11 +510,11 @@ __always_inline static void arch_ioport_set_pin_dir(ioport_pin_t pin,
 8000221a:	30 fb       	mov	r11,15
 8000221c:	30 2c       	mov	r12,2
 8000221e:	f0 1f 00 30 	mcall	800022dc <motor_init+0xec>
-	ioport_set_pin_dir(ESC4_SIGNAL, IOPORT_DIR_OUTPUT);
-	
-	sysclk_enable_peripheral_clock(TIMER_ESC);
-	
-	static const gpio_map_t TIMER_GPIO_MAP =	{{ESC1_SIGNAL, 0},{ESC2_SIGNAL, 0},{ESC3_SIGNAL, 0},{ESC4_SIGNAL, 0}};	 //TODO: DEFINE FUNCTION_A 0
+		{ESC1_SIGNAL, ESC1_SIGNAL_PER_FUNC},
+		{ESC2_SIGNAL, ESC2_SIGNAL_PER_FUNC},
+		{ESC3_SIGNAL, ESC3_SIGNAL_PER_FUNC},
+		{ESC4_SIGNAL, ESC4_SIGNAL_PER_FUNC}
+												};
 	gpio_enable_module(TIMER_GPIO_MAP,4);
 80002222:	30 4b       	mov	r11,4
 80002224:	4a fc       	lddpc	r12,800022e0 <motor_init+0xf0>
@@ -811,12 +811,12 @@ void sensor_init(void){
 	
 	sysclk_enable_peripheral_clock(TWI_SENS);
 	
-	static const gpio_map_t TWI_GPIO_MAP =	{{SDA_SENS, 0},{SCL_SENS, 0}};	 //TODO: DEFINE FUNCTION_A 0
+	static const gpio_map_t TWI_GPIO_MAP =	{{SDA_SENS, SDA_SENS_PER_FUNC},{SCL_SENS, SCL_SENS_PER_FUNC}};
 	gpio_enable_module(TWI_GPIO_MAP,2);
 800023d6:	30 2b       	mov	r11,2
 800023d8:	4c 5c       	lddpc	r12,800024ec <sensor_init+0x14c>
 800023da:	f0 1f 00 46 	mcall	800024f0 <sensor_init+0x150>
-		
+	
 	twim_options_t _twi_opt;
 	_twi_opt.chip = BNO055_TWI_ADDR_SENSOR;
 800023de:	32 88       	mov	r8,40
@@ -1042,24 +1042,27 @@ __always_inline static void cpu_set_timeout(unsigned long delay, t_cpu_time *cpu
 800024fa:	23 2c       	sub	r12,50
 
 800024fc <settings_init>:
-settings_t set;
-
-void settings_init(void)
 {
-	//TODO: Read user page
-	set.motor_esc_timer_period = 3750;
+	
+	//if (flashcdw_quick_user_page_read(void))
+	//{
+		//User page empty -> default values
+		set.motor_esc_timer_period = 3750;
 800024fc:	48 78       	lddpc	r8,80002518 <settings_init+0x1c>
 800024fe:	e0 69 0e a6 	mov	r9,3750
 80002502:	91 09       	st.w	r8[0x0],r9
-	set.motor_esc_timer_value_max = 1875;
+		set.motor_esc_timer_value_max = 1875;
 80002504:	e0 69 07 53 	mov	r9,1875
 80002508:	91 29       	st.w	r8[0x8],r9
-	set.motor_esc_timer_value_min = 937;
+		set.motor_esc_timer_value_min = 937;
 8000250a:	e0 69 03 a9 	mov	r9,937
 8000250e:	91 19       	st.w	r8[0x4],r9
-	set.motor_esc_timer_value_interval = set.motor_esc_timer_value_max - set.motor_esc_timer_value_min;
+		set.motor_esc_timer_value_interval = set.motor_esc_timer_value_max - set.motor_esc_timer_value_min;
 80002510:	e0 69 03 aa 	mov	r9,938
 80002514:	91 39       	st.w	r8[0xc],r9
+		//pageaddr = AVR32_USER_PAGE_ADDRESS;
+		//uint16_t val = &pageaddr;
+	//}
 	
 	
 80002516:	5e fc       	retal	r12
@@ -2811,7 +2814,7 @@ void board_init(void)
 	
 	sensor_init();
 80002d4e:	f0 1f 00 0b 	mcall	80002d78 <board_init+0x40>
-	motor_init();
+	motor_init();	
 80002d52:	f0 1f 00 0b 	mcall	80002d7c <board_init+0x44>
 	com_spi_init();
 80002d56:	f0 1f 00 0b 	mcall	80002d80 <board_init+0x48>
