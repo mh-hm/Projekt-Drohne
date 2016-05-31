@@ -15,6 +15,11 @@
 
 void motor_init(void)
 {
+	ioport_set_pin_dir(ESC1_SIGNAL, IOPORT_DIR_OUTPUT);
+	ioport_set_pin_dir(ESC2_SIGNAL, IOPORT_DIR_OUTPUT);
+	ioport_set_pin_dir(ESC3_SIGNAL, IOPORT_DIR_OUTPUT);
+	ioport_set_pin_dir(ESC4_SIGNAL, IOPORT_DIR_OUTPUT);
+
 	//for TIMER_ESC_1_2_CHANNEL (x = channel = [0/1/2])
 	tc_waveform_opt_t opt;
 	opt.acpa = TC_EVT_EFFECT_CLEAR; //clear TIOAx on RA-Compare [Duty-Cycle]
