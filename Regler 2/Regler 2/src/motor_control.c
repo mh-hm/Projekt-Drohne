@@ -41,6 +41,9 @@ void motor_init(void)
 	//TIMER_CLOCK3 PBA Clock / 8
 	//TIMER_CLOCK4 PBA Clock / 32
 	//TIMER_CLOCK5 PBA Clock / 128
+	
+	//Tipp: sysclk_get_pba_hz();
+	
 	opt.tcclks = TC_CLOCK_SOURCE_TC4;
 	// PBA-Clock [30 MHz] / 32
 	// --> 0.00106667 ms pro Schritt; bei 4ms für 0 bis RC
