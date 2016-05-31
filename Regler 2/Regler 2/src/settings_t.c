@@ -12,24 +12,35 @@ settings_t set;
 void settings_init(void)
 {
 	
+<<<<<<< HEAD
 	if (flashcdw_quick_user_page_read())
 	{
+=======
+	//if (flashcdw_quick_user_page_read(void))
+	//{
+>>>>>>> origin/master
 		//User page empty -> default values
 		set.motor_esc_timer_period = 3750;
 		set.motor_esc_timer_value_max = 1875;
 		set.motor_esc_timer_value_min = 937;
 		set.motor_esc_timer_value_interval = set.motor_esc_timer_value_max - set.motor_esc_timer_value_min;
-	}	
-	else
-	{
+	//}	
+	//else
+	//{
 		//TODO: Read user page
 		//uint_fast32_t *pageaddr;
 		//pageaddr = AVR32_USER_PAGE_ADDRESS;
 		//uint16_t val = &pageaddr;
+<<<<<<< HEAD
 	}	
 }
 
 void settings_save(void)
 {
 	flashcdw_memcpy(&set, AVR32_USER_PAGE_ADDRESS, AVR32_USER_PAGE_SIZE, true);
+=======
+	//}
+	
+	
+>>>>>>> origin/master
 }

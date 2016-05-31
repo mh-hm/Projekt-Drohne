@@ -23,9 +23,9 @@ void sensor_init(void){
 	
 	sysclk_enable_peripheral_clock(TWI_SENS);
 	
-	static const gpio_map_t TWI_GPIO_MAP =	{{SDA_SENS, 0},{SCL_SENS, 0}};	 //TODO: DEFINE FUNCTION_A 0
+	static const gpio_map_t TWI_GPIO_MAP =	{{SDA_SENS, SDA_SENS_PER_FUNC},{SCL_SENS, SCL_SENS_PER_FUNC}};
 	gpio_enable_module(TWI_GPIO_MAP,2);
-		
+	
 	twim_options_t _twi_opt;
 	_twi_opt.chip = BNO055_TWI_ADDR_SENSOR;
 	_twi_opt.pba_hz = sysclk_get_pba_hz();
