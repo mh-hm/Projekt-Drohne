@@ -37,4 +37,6 @@ typedef struct{
 
 extern settings_t set;
 
+void settings_init(void);
+
 #endif /* SETTINGS_H_ */

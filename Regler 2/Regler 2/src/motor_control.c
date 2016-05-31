@@ -56,12 +56,6 @@ void motor_init(void)
 	tc_init_waveform(TIMER_ESC, &opt); //init waveform channel_esc_3_4
 	
 	
-	//###
-	set.motor_esc_timer_period = 3750;
-	set.motor_esc_timer_value_max = 1875;
-	set.motor_esc_timer_value_min = 937;
-	set.motor_esc_timer_value_interval = set.motor_esc_timer_value_max - set.motor_esc_timer_value_min;
-	
 	tc_write_rc(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, set.motor_esc_timer_period);
 	tc_write_rc(TIMER_ESC, TIMER_ESC_3_4_CHANNEL, set.motor_esc_timer_period);
 	
@@ -72,8 +66,8 @@ void motor_init(void)
 	
 	
 	//tc_sync_start(TIMER_ESC);
-	tc_start (TIMER_ESC, TIMER_ESC_1_2_CHANNEL) //Start timer-channel for ESC1 & ESC2
-	tc_start (TIMER_ESC, TIMER_ESC_3_4_CHANNEL) //Start timer-channel for ESC3 & ESC4
+	tc_start (TIMER_ESC, TIMER_ESC_1_2_CHANNEL); //Start timer-channel for ESC1 & ESC2
+	tc_start (TIMER_ESC, TIMER_ESC_3_4_CHANNEL); //Start timer-channel for ESC3 & ESC4
 };
 
 //Start Motor with defined speed or change speed.
