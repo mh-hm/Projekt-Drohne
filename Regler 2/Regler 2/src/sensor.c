@@ -88,4 +88,83 @@ status_code_t write_sensor_data(bno055_register_addr_t _addr, uint8_t *values, u
 	for (uint_fast8_t i = 0; i< count; i++) _values[i+1] = values[i];
 	
 	return twim_write(TWI_SENS, &_values, count + 1, BNO055_TWI_ADDR_SENSOR, false);
-}
+};
+
+struct bno055_accel_t read_sensor_accel(void)
+{
+	uint_fast8_t buf[6];
+	struct bno055_accel_t _acc;
+	read_sensor_data(BNO055_ACCEL_DATA_X_LSB_ADDR, &buf,6);
+	_acc.x = (((int16_t) buf[1]) << 8) + ((int16_t) buf[0]);
+	_acc.y = (((int16_t) buf[3]) << 8) + ((int16_t) buf[2]);
+	_acc.z = (((int16_t) buf[5]) << 8) + ((int16_t) buf[4]);
+	return _acc;
+};
+
+struct bno055_gyro_t read_sensor_gyro(void)
+{
+	uint_fast8_t buf[6];
+	struct bno055_gyro_t _gyro;
+	read_sensor_data(BNO055_GYRO_DATA_X_LSB_ADDR, &buf,6);
+	_gyro.x = (((int16_t) buf[1]) << 8) + ((int16_t) buf[0]);
+	_gyro.y = (((int16_t) buf[3]) << 8) + ((int16_t) buf[2]);
+	_gyro.z = (((int16_t) buf[5]) << 8) + ((int16_t) buf[4]);
+	return _gyro;
+};
+
+struct bno055_mag_t read_sensor_mag(void)
+{
+	uint_fast8_t buf[6];
+	struct bno055_mag_t _mag;
+	read_sensor_data(BNO055_MAG_DATA_X_LSB_ADDR, &buf,6);
+	_mag.x = (((int16_t) buf[1]) << 8) + ((int16_t) buf[0]);
+	_mag.y = (((int16_t) buf[3]) << 8) + ((int16_t) buf[2]);
+	_mag.z = (((int16_t) buf[5]) << 8) + ((int16_t) buf[4]);
+	return _mag;
+};
+
+struct bno055_euler_t read_sensor_euler(void)
+{
+	uint8_t buf[6];
+	struct bno055_euler_t _eul;
+	read_sensor_data(BNO055_EULER_H_LSB_ADDR, &buf,6);
+	_eul.h = (((int16_t) buf[1]) << 8) + ((int16_t) buf[0]);
+	_eul.r = (((int16_t) buf[3]) << 8) + ((int16_t) buf[2]);
+	_eul.p = (((int16_t) buf[5]) << 8) + ((int16_t) buf[4]);
+	return _eul;
+};
+
+
+
+//uint8_t page_0[106];
+//uint8_t page_1[31];
+//struct bno055_accel_t acc;
+//struct bno055_gyro_t gyr;
+//struct bno055_euler_t eul;
+//
+//void read_sensor(void)
+//{
+	////!!! Works only if start Adresse for read is 0
+	//uint8_t val = BNO055_PAGE_ZERO; //CHANGE PAGE
+	//write_sensor_data(BNO055_PAGE_ID_ADDR, &val, 1);
+	//
+	//
+	//read_sensor_data(BNO055_CHIP_ID_ADDR, &page_0, 106);
+	//
+	//acc.x = ((int16_t) page_0[BNO055_ACCEL_DATA_X_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_ACCEL_DATA_X_LSB_ADDR];
+	//acc.y = ((int16_t) page_0[BNO055_ACCEL_DATA_Y_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_ACCEL_DATA_Y_LSB_ADDR];
+	//acc.z = ((int16_t) page_0[BNO055_ACCEL_DATA_Z_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_ACCEL_DATA_Z_LSB_ADDR];
+	//
+	//eul.h = ((int16_t) page_0[BNO055_EULER_H_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_EULER_H_LSB_ADDR];
+	//eul.p = ((int16_t) page_0[BNO055_EULER_P_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_EULER_P_LSB_ADDR];
+	//eul.r = ((int16_t) page_0[BNO055_EULER_R_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_EULER_R_LSB_ADDR];
+	//
+	//gyr.x = ((int16_t) page_0[BNO055_GYRO_DATA_X_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_GYRO_DATA_X_LSB_ADDR];
+	//gyr.y = ((int16_t) page_0[BNO055_GYRO_DATA_Y_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_GYRO_DATA_Y_LSB_ADDR];
+	//gyr.z = ((int16_t) page_0[BNO055_GYRO_DATA_Z_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_GYRO_DATA_Z_LSB_ADDR];
+	//
+	//val = BNO055_PAGE_ONE; //CHANGE PAGE
+	//write_sensor_data(BNO055_PAGE_ID_ADDR, &val, 1);
+	//
+	//read_sensor_data(BNO055_CHIP_ID_ADDR, &page_1, 20);
+//}

@@ -318,7 +318,7 @@ struct bno055_mag_offset_t {
 s16 x;/**< Mag offset x data */
 s16 y;/**< Mag offset y data */
 s16 z;/**< Mag offset z data */
-s16 r;/**< Mag radius x data */
+s16 r;/**< Mag radius r data */
 };
 /*!
 * @brief struct for soft iron calibration matrix

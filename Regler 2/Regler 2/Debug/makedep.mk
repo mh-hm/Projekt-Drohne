@@ -14,6 +14,8 @@ src\com_spi.c
 
 src\motor_control.c
 
+src\pid.c
+
 src\sensor.c
 
 src\settings_t.c

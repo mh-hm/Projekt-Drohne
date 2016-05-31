@@ -85,6 +85,7 @@ C_SRCS +=  \
 ../src/ASF/avr32/drivers/scif/scif_uc3d.c \
 ../src/com_spi.c \
 ../src/motor_control.c \
+../src/pid.c \
 ../src/sensor.c \
 ../src/settings_t.c \
 ../src/ASF/avr32/drivers/tc/tc.c \
@@ -121,6 +122,7 @@ src/ASF/avr32/drivers/pm/pm_uc3d.o \
 src/ASF/avr32/drivers/scif/scif_uc3d.o \
 src/com_spi.o \
 src/motor_control.o \
+src/pid.o \
 src/sensor.o \
 src/settings_t.o \
 src/ASF/avr32/drivers/tc/tc.o \
@@ -150,6 +152,7 @@ src/ASF/avr32/drivers/pm/pm_uc3d.o \
 src/ASF/avr32/drivers/scif/scif_uc3d.o \
 src/com_spi.o \
 src/motor_control.o \
+src/pid.o \
 src/sensor.o \
 src/settings_t.o \
 src/ASF/avr32/drivers/tc/tc.o \
@@ -179,6 +182,7 @@ src/ASF/avr32/drivers/pm/pm_uc3d.d \
 src/ASF/avr32/drivers/scif/scif_uc3d.d \
 src/com_spi.d \
 src/motor_control.d \
+src/pid.d \
 src/sensor.d \
 src/settings_t.d \
 src/ASF/avr32/drivers/tc/tc.d \
@@ -208,6 +212,7 @@ src/ASF/avr32/drivers/pm/pm_uc3d.d \
 src/ASF/avr32/drivers/scif/scif_uc3d.d \
 src/com_spi.d \
 src/motor_control.d \
+src/pid.d \
 src/sensor.d \
 src/settings_t.d \
 src/ASF/avr32/drivers/tc/tc.d \
@@ -280,6 +285,13 @@ src/com_spi.o: ../src/com_spi.c
 	
 
 src/motor_control.o: ../src/motor_control.c
+	@echo Building file: $<
+	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.40\include\ATUC64D4" -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/cpu/cycle_counter" -I"../src/ASF/avr32/drivers/flashcdw" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/avr32/drivers/pwma" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/avr32/drivers/usart" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/delay" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/serial/uc3_usart" -I"../src/ASF/common/services/serial" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/tc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/pid.o: ../src/pid.c
 	@echo Building file: $<
 	@echo Invoking: AVR32/GNU C Compiler : 4.4.7
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bin\avr32-gcc.exe$(QUOTE)  -x c -DDEBUG -DBOARD=USER_BOARD  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\UC3D_DFP\1.0.40\include\ATUC64D4" -I"../common/applications/user_application/user_board/config" -I"../src/ASF/avr32/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/avr32/utils/preprocessor" -I"../src/ASF/avr32/drivers/intc" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/avr32/drivers/cpu/cycle_counter" -I"../src/ASF/avr32/drivers/flashcdw" -I"../src/ASF/avr32/drivers/gpio" -I"../src/ASF/avr32/drivers/pwma" -I"../src/ASF/avr32/drivers/spi" -I"../src/ASF/avr32/drivers/twim" -I"../src/ASF/avr32/drivers/usart" -I"../src/ASF/avr32/drivers/pm" -I"../src/ASF/avr32/drivers/scif" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/delay" -I"../src/ASF/common/services/ioport" -I"../src/ASF/common/services/serial/uc3_usart" -I"../src/ASF/common/services/serial" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/common/services/spi/uc3_spi" -I"../src/ASF/common/services/spi" -I"../src/ASF/avr32/drivers/tc"  -O1 -fdata-sections -ffunction-sections -masm-addr-pseudos -g3 -Wall -mpart=uc64d4 -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -mno-cond-exec-before-reload -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
