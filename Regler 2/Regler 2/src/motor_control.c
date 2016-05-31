@@ -19,6 +19,11 @@ void motor_init(void)
 	ioport_set_pin_dir(ESC2_SIGNAL, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(ESC3_SIGNAL, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(ESC4_SIGNAL, IOPORT_DIR_OUTPUT);
+	
+	sysclk_enable_peripheral_clock(TIMER_ESC);
+	
+	static const gpio_map_t TIMER_GPIO_MAP =	{{ESC1_SIGNAL, 0},{ESC2_SIGNAL, 0},{ESC3_SIGNAL, 0},{ESC4_SIGNAL, 0}};	 //TODO: DEFINE FUNCTION_A 0
+	gpio_enable_module(TIMER_GPIO_MAP,4);
 
 	//for TIMER_ESC_1_2_CHANNEL (x = channel = [0/1/2])
 	tc_waveform_opt_t opt;
