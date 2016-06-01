@@ -12,13 +12,21 @@
 #include <settings_t.h>
 
 
-pid_settings_t settings;
-uint_fast32_t e_old;
-uint_fast32_t e_int;
-uint_fast32_t time_since_start;
-uint_fast32_t last_cycle_count;
+pid_settings_t settings;				//Konstanten des Reglers
 
-uint_fast32_t get_time_since_last_pid();
+
+//e_old und e_int zu settings hinzufügen da sie nur vom Regler benötigt werden und außerhalb des Reglers nicht benötigt werden ?????????=
+bno055_euler_t set_point;				//Führungsgröße der Regelstrecke (Sollwert)
+bno055_euler_t e_old;					//Abspeichern der letzten Regelabweichung um das Differential zu bilden
+bno055_euler_t e_int;					//Aufsummieren der Regelabweichungen zum Integrieren
+bno055_euler_t old_e;					
+
+uint_fast32_t time_since_start;			//Laufzeit des Reglers (Zum Integrieren und Differenzieren)
+uint_fast32_t last_cycle_count;			//Variable zur bestimmen der Laufzeit
+
+uint_fast32_t get_time_since_last_pid(void);
+bno055_euler_t calculate_actuating_variables(bno055_euler_t w, bno055_euler_t *old_e);
+void actuate();
 
 
 
