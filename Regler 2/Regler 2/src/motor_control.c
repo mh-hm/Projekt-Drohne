@@ -99,15 +99,16 @@ bool motor_start(motor_pos _motor_pos, uint_fast16_t *speed)
 };
 
 //return Array speed[] from all motors
-uint_fast16_t *get_motor_speed(void)
+motorspeed get_motor_speed(void)
 {
 	//#####
-	uint_fast16_t ESC1, ESC2, ESC3, ESC4;
-	ESC1 = tc_read_ra(TIMER_ESC, TIMER_ESC_1_2_CHANNEL);
-	ESC2 = tc_read_rb(TIMER_ESC, TIMER_ESC_1_2_CHANNEL);
-	ESC3 = tc_read_ra(TIMER_ESC, TIMER_ESC_3_4_CHANNEL);
-	ESC4 = tc_read_rb(TIMER_ESC, TIMER_ESC_3_4_CHANNEL);
-	return 0;
+	motorspeed speed = {0,0,0,0};
+	speed.esc0 = tc_read_ra(TIMER_ESC, TIMER_ESC_1_2_CHANNEL);
+	speed.esc1 = tc_read_rb(TIMER_ESC, TIMER_ESC_1_2_CHANNEL);
+	speed.esc2 = tc_read_ra(TIMER_ESC, TIMER_ESC_3_4_CHANNEL);
+	speed.esc3 = tc_read_rb(TIMER_ESC, TIMER_ESC_3_4_CHANNEL);
+	
+	return speed;
 };
 
 

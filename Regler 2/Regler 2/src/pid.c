@@ -8,8 +8,10 @@
 #include <asf.h>
 #include "bno055.h"
 #include "sensor.h"
+#include "pid.h"
+#include "motor_control.h"
 
-#ifdef MARKUS
+
 
 
 uint_fast32_t get_time_since_last_pid(void)
@@ -28,54 +30,65 @@ uint_fast32_t get_time_since_last_pid(void)
 	}
 }
 	
-//Integrieren und speichern des old Values muss auserhalb der Funktion erfolgen
-bno055_euler_t calculate_actuating_variables(bno055_euler_t w)
+
+struct bno055_euler_t set_point = {0,0,0};
+uint_fast32_t throotle = 0;
+	
+//w ist Sollwert, x ist Istwert
+int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, int_fast32_t x, pid_tmp *_tmp)
 {
 	time_since_start += get_time_since_last_pid();		//Laufzeit des Reglers berechnen
 	
-	bno055_euler_t y;
-	bno055_euler_t e;
+	int_fast32_t e,y;
 	
+	e = w - x;			//Berechnen der Regelabweichung
 	
-	e.h = set_point.h - w.h;
-	e.p = set_point.p - w.p;
-	e.r = set_point.r - w.r;					//Berechnen der Regelabweichung
-	
-	e_int.h += e.h;
-	e_int.p += e.p;
-	e_int.r += e.r;
-	
+	_tmp->e_int += e;	
 	
 	//Berechnen der Regelstrecke mit Proportional-, Integral- und Differentionsanteil
 	// y = KP * e + KI * INT(e,dt) + KD (de/dt)
-	y.h = settings.p * e.h + \
-	settings.i *e_int.h * time_since_start + \
-	settings.d *(set_point.h - old_e->h)/time_since_start;
-	
-	y.p = settings.p * e.p + \
-	settings.i *e_int.p * time_since_start + \
-	settings.d *(set_point.p - old_e->p)/time_since_start;
-	
-	y.r = settings.p * e.r + \
-	settings.i *e_int.r * time_since_start + \
-	settings.d *(set_point.r - old_e->r)/time_since_start;
+	y = _set.p * e;
+	y += _set.i * _tmp->e_int * time_since_start;
+	y += _set.d *(e - _tmp->e_old)/time_since_start;
 	
 	//Speichern des Wertes für die nächste Regelung
-	old_e.h = e.h;
-	old_e.p = e.p;
-	old_e.r = e.r;	
-	
-	return e;
+	_tmp->e_old = e;
+		
+	return y;
 }
 	
 void actuate()
 {
-	bno055_euler_t w = read_sensor_euler();
-	bno055_euler_t y = calculate_actuating_variables(w);
+	struct bno055_euler_t x;
+	x = read_sensor_euler();
+	struct bno055_euler_t y = {0,0,0};
+	uint_fast32_t _thr = 0;
+	
+	static pid_tmp p_tmp = {0,0};
+	static pid_tmp h_tmp = {0,0};
+	static pid_tmp r_tmp = {0,0};
+	static pid_tmp thr_tmp = {0,0};
+	
+	y.p = calculate_actuating_variable(set.pid_pitch, set_point.p, x.p, &p_tmp);
+	y.r = calculate_actuating_variable(set.pid_roll, set_point.r, x.r, &r_tmp);
+	y.h = calculate_actuating_variable(set.pid_yaw, set_point.h, x.h, &h_tmp);
+	int_fast32_t throttle = calculate_actuating_variable(set.pid_throttle, throotle, _thr, &thr_tmp);
 	
 	//Motor Drehzal auslesen und y zu denn richtigen motoren addieren oder subtrahieren
+	uint_fast32_t _esc0 = y.r + y.h +  y.p + _thr;
+	uint_fast32_t _esc1 = (-y.r) + y.h +  (-y.p) + _thr;
+	uint_fast32_t _esc2 = y.r + (-y.h) +  y.p + _thr;
+	uint_fast32_t _esc3 =(-y.r) + (-y.h) +  (-y.p) + _thr;
+	
+	motorspeed speed = get_motor_speed();
+	speed.esc0 += _esc0;
+	speed.esc1 += _esc1;
+	speed.esc2 += _esc2;
+	speed.esc3 += _esc3;
+	
+	motor_start(MOTOR_POS_FL, speed.esc0);
+	motor_start(MOTOR_POS_FR, speed.esc1);
+	motor_start(MOTOR_POS_BL, speed.esc2);
+	motor_start(MOTOR_POS_BR, speed.esc3);
 	
 }
-#endif
-
-

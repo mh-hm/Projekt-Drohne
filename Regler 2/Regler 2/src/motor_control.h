@@ -19,6 +19,15 @@ typedef enum motor_pos{
 	MOTOR_POS_ALL = 4
 	}motor_pos;
 
+typedef struct motorspeed
+{
+	uint_fast32_t esc0;
+	uint_fast32_t esc1;
+	uint_fast32_t esc2;
+	uint_fast32_t esc3;
+}motorspeed;
+
+
 void motor_init(void);
 
 bool motor_start(motor_pos _motor_pos, uint_fast16_t *speed);
@@ -26,7 +35,7 @@ bool motor_start(motor_pos _motor_pos, uint_fast16_t *speed);
 //Speed as Array[] with speed[0] as Speed if _motor_pos != MOTOR_POS_ALL
 //else Speed[MOTOR_POS_FR] = Speed of MOTOR FRONT RIGHT ...
 
-uint_fast16_t *get_motor_speed(void);
+motorspeed get_motor_speed(void);
 //return Array speed[] from all motors
 
 bool motor_stop(motor_pos _motor_pos);
