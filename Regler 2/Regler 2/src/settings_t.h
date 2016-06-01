@@ -25,8 +25,7 @@ typedef struct{
 
 
 //TODO: motor_esc_timer_value_interval wird vom Regler nicht benötigt
-//TODO: pid_jaw, pid_pitch, pid_roll werden vom selben Regler gesteuert, haben also die selben Werte
-//TODO: pid_throttle ist kein PID Regler sondern nur ein Faktor mit dem die Drehzahlen der Motoren erhöht oder gesenkt wird
+//TODO: sensor_offset sollte nicht benötigt werden 
 typedef struct{
 		uint_fast16_t   motor_esc_timer_period;
 		uint_fast16_t	motor_esc_timer_value_min;
