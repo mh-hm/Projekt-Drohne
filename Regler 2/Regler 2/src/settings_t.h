@@ -28,10 +28,6 @@ typedef struct{
 //TODO: pid_jaw, pid_pitch, pid_roll werden vom selben Regler gesteuert, haben also die selben Werte
 //TODO: pid_throttle ist kein PID Regler sondern nur ein Faktor mit dem die Drehzahlen der Motoren erhöht oder gesenkt wird
 typedef struct{
-		uint_fast16_t   motor_esc_timer_period;
-		uint_fast16_t	motor_esc_timer_value_min;
-		uint_fast16_t	motor_esc_timer_value_max;
-		uint_fast16_t	motor_esc_timer_value_interval; //Regel-Interval
 		pid_settings_t	pid_yaw;
 		pid_settings_t	pid_pitch;
 		pid_settings_t	pid_roll;

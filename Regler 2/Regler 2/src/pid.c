@@ -80,15 +80,14 @@ void actuate()
 	uint_fast32_t _esc2 = y.r + (-y.h) +  y.p + _thr;
 	uint_fast32_t _esc3 =(-y.r) + (-y.h) +  (-y.p) + _thr;
 	
-	motorspeed speed = get_motor_speed();
-	speed.esc0 += _esc0;
-	speed.esc1 += _esc1;
-	speed.esc2 += _esc2;
-	speed.esc3 += _esc3;
+	//TODO: check
+	motor_speeds_t speed = get_motor_speeds();
+	speed.position[MOTOR_POS_FL] += _esc0;
+	speed.position[MOTOR_POS_FR] += _esc1;
+	speed.position[MOTOR_POS_BL] += _esc2;
+	speed.position[MOTOR_POS_BR] += _esc3;
+	//Funktion zum Inkrementeiren/Dekrementeiren kommt noch
 	
-	motor_start(MOTOR_POS_FL, speed.esc0);
-	motor_start(MOTOR_POS_FR, speed.esc1);
-	motor_start(MOTOR_POS_BL, speed.esc2);
-	motor_start(MOTOR_POS_BR, speed.esc3);
-	
+	//TODO: check
+	set_motor_speeds(speed);
 }

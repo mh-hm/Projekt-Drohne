@@ -10,7 +10,10 @@ time_since_start    0x4               src/pid.o
 sensor_euler        0xc               src/main.o
 sleepmgr_locks      0x7               src/ASF/common/services/sleepmgr/uc3/sleepmgr.o
 last_cycle_count    0x4               src/pid.o
-set                 0x4c              src/settings_t.o
+set                 0x3c              src/settings_t.o
+esc_timer_values    0x10              src/motor_control.o
+esc_timer_compare_values
+                    0x10              src/motor_control.o
 
 Discarded input sections
 
@@ -312,44 +315,46 @@ Discarded input sections
  .text          0x00000000        0x0 src/motor_control.o
  .data          0x00000000        0x0 src/motor_control.o
  .bss           0x00000000        0x0 src/motor_control.o
- .text.motor_start
-                0x00000000        0x2 src/motor_control.o
+ .text.motor_speeds_pref
+                0x00000000        0xe src/motor_control.o
+ .text.set_motors_speed
+                0x00000000       0x34 src/motor_control.o
+ .text.get_motor_speeds
+                0x00000000       0x38 src/motor_control.o
  .text.motor_stop
-                0x00000000        0x2 src/motor_control.o
- .text.get_motor_speed
-                0x00000000       0x48 src/motor_control.o
+                0x00000000       0x28 src/motor_control.o
  .text          0x00000000        0x0 src/pid.o
  .data          0x00000000        0x0 src/pid.o
  .bss           0x00000000        0x0 src/pid.o
- .debug_abbrev  0x00000000      0x213 src/pid.o
- .debug_info    0x00000000      0x52b src/pid.o
- .debug_line    0x00000000      0xbe9 src/pid.o
+ .debug_abbrev  0x00000000      0x21c src/pid.o
+ .debug_info    0x00000000      0x55a src/pid.o
+ .debug_line    0x00000000      0xbe8 src/pid.o
  .debug_macinfo
-                0x00000000   0x10ba5a src/pid.o
+                0x00000000   0x10bb6e src/pid.o
  .text.get_time_since_last_pid
                 0x00000000       0x78 src/pid.o
  .text.calculate_actuating_variable
                 0x00000000       0x58 src/pid.o
- .text.actuate  0x00000000      0x110 src/pid.o
- .bss.h_tmp.14487
+ .text.actuate  0x00000000      0x104 src/pid.o
+ .bss.thr_tmp.14495
+                0x00000000        0x8 src/pid.o
+ .bss.h_tmp.14493
                 0x00000000        0x8 src/pid.o
  .bss.throotle  0x00000000        0x4 src/pid.o
- .bss.p_tmp.14486
+ .bss.p_tmp.14492
                 0x00000000        0x8 src/pid.o
- .bss.r_tmp.14488
-                0x00000000        0x8 src/pid.o
- .bss.thr_tmp.14489
+ .bss.r_tmp.14494
                 0x00000000        0x8 src/pid.o
  .bss.set_point
                 0x00000000        0xc src/pid.o
  .debug_frame   0x00000000       0x9c src/pid.o
- .debug_loc     0x00000000      0x121 src/pid.o
+ .debug_loc     0x00000000      0x12c src/pid.o
  .debug_pubnames
-                0x00000000       0xa0 src/pid.o
+                0x00000000       0xd2 src/pid.o
  .debug_aranges
                 0x00000000       0x30 src/pid.o
  .debug_ranges  0x00000000       0x28 src/pid.o
- .debug_str     0x00000000      0x3b6 src/pid.o
+ .debug_str     0x00000000      0x39b src/pid.o
  .comment       0x00000000       0x31 src/pid.o
  COMMON         0x00000000        0x8 src/pid.o
  .text          0x00000000        0x0 src/sensor.o
@@ -382,8 +387,6 @@ Discarded input sections
                 0x00000000        0x8 src/ASF/avr32/drivers/tc/tc.o
  .text.tc_sync_start
                 0x00000000       0x12 src/ASF/avr32/drivers/tc/tc.o
- .text.tc_read_sr
-                0x00000000       0x12 src/ASF/avr32/drivers/tc/tc.o
  .text.tc_read_tc
                 0x00000000       0x16 src/ASF/avr32/drivers/tc/tc.o
  .text.tc_read_ra
@@ -392,8 +395,6 @@ Discarded input sections
                 0x00000000       0x16 src/ASF/avr32/drivers/tc/tc.o
  .text.tc_read_rc
                 0x00000000       0x16 src/ASF/avr32/drivers/tc/tc.o
- .text.tc_configure_interrupts
-                0x00000000      0x108 src/ASF/avr32/drivers/tc/tc.o
  .text          0x00000000        0x0 src/ASF/common/services/spi/uc3_spi/spi_master.o
  .data          0x00000000        0x0 src/ASF/common/services/spi/uc3_spi/spi_master.o
  .bss           0x00000000        0x0 src/ASF/common/services/spi/uc3_spi/spi_master.o
@@ -401,7 +402,7 @@ Discarded input sections
  .debug_info    0x00000000     0x1353 src/ASF/common/services/spi/uc3_spi/spi_master.o
  .debug_line    0x00000000      0x8d1 src/ASF/common/services/spi/uc3_spi/spi_master.o
  .debug_macinfo
-                0x00000000    0xffeb2 src/ASF/common/services/spi/uc3_spi/spi_master.o
+                0x00000000    0xfffc6 src/ASF/common/services/spi/uc3_spi/spi_master.o
  .text.spi_read_packet
                 0x00000000       0x50 src/ASF/common/services/spi/uc3_spi/spi_master.o
  .text.spi_write_packet
@@ -415,7 +416,7 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x30 src/ASF/common/services/spi/uc3_spi/spi_master.o
  .debug_ranges  0x00000000       0x58 src/ASF/common/services/spi/uc3_spi/spi_master.o
- .debug_str     0x00000000      0x6e0 src/ASF/common/services/spi/uc3_spi/spi_master.o
+ .debug_str     0x00000000      0x6f1 src/ASF/common/services/spi/uc3_spi/spi_master.o
  .comment       0x00000000       0x31 src/ASF/common/services/spi/uc3_spi/spi_master.o
  .text          0x00000000        0x0 src/ASF/common/services/sleepmgr/uc3/sleepmgr.o
  .data          0x00000000        0x0 src/ASF/common/services/sleepmgr/uc3/sleepmgr.o
@@ -437,7 +438,7 @@ Discarded input sections
  .debug_info    0x00000000     0x22aa src/ASF/common/services/serial/usart_serial.o
  .debug_line    0x00000000      0x863 src/ASF/common/services/serial/usart_serial.o
  .debug_macinfo
-                0x00000000   0x10021d src/ASF/common/services/serial/usart_serial.o
+                0x00000000   0x100331 src/ASF/common/services/serial/usart_serial.o
  .text.usart_serial_read_packet
                 0x00000000       0x24 src/ASF/common/services/serial/usart_serial.o
  .text.usart_serial_write_packet
@@ -449,7 +450,7 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x28 src/ASF/common/services/serial/usart_serial.o
  .debug_ranges  0x00000000       0x20 src/ASF/common/services/serial/usart_serial.o
- .debug_str     0x00000000      0x7f1 src/ASF/common/services/serial/usart_serial.o
+ .debug_str     0x00000000      0x802 src/ASF/common/services/serial/usart_serial.o
  .comment       0x00000000       0x31 src/ASF/common/services/serial/usart_serial.o
  .text          0x00000000        0x0 src/ASF/common/services/clock/uc3d/osc.o
  .data          0x00000000        0x0 src/ASF/common/services/clock/uc3d/osc.o
@@ -463,7 +464,7 @@ Discarded input sections
  .debug_info    0x00000000     0x15cd src/ASF/common/services/clock/uc3d/pll.o
  .debug_line    0x00000000      0x7bc src/ASF/common/services/clock/uc3d/pll.o
  .debug_macinfo
-                0x00000000    0xff63b src/ASF/common/services/clock/uc3d/pll.o
+                0x00000000    0xff74f src/ASF/common/services/clock/uc3d/pll.o
  .text.pll_disable
                 0x00000000       0x30 src/ASF/common/services/clock/uc3d/pll.o
  .text.pll_enable
@@ -477,7 +478,7 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x30 src/ASF/common/services/clock/uc3d/pll.o
  .debug_ranges  0x00000000       0x28 src/ASF/common/services/clock/uc3d/pll.o
- .debug_str     0x00000000      0x7af src/ASF/common/services/clock/uc3d/pll.o
+ .debug_str     0x00000000      0x7c0 src/ASF/common/services/clock/uc3d/pll.o
  .comment       0x00000000       0x31 src/ASF/common/services/clock/uc3d/pll.o
  .text          0x00000000        0x0 src/ASF/common/services/clock/uc3d/sysclk.o
  .data          0x00000000        0x0 src/ASF/common/services/clock/uc3d/sysclk.o
@@ -591,7 +592,7 @@ Discarded input sections
  .debug_info    0x00000000      0xf43 src/ASF/avr32/drivers/twis/twis.o
  .debug_line    0x00000000      0x7b7 src/ASF/avr32/drivers/twis/twis.o
  .debug_macinfo
-                0x00000000    0xfeb50 src/ASF/avr32/drivers/twis/twis.o
+                0x00000000    0xfec64 src/ASF/avr32/drivers/twis/twis.o
  .text.twis_slave_interrupt_handler
                 0x00000000      0x10c src/ASF/avr32/drivers/twis/twis.o
  .text.twis_send_data_nack
@@ -611,7 +612,7 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x38 src/ASF/avr32/drivers/twis/twis.o
  .debug_ranges  0x00000000       0x30 src/ASF/avr32/drivers/twis/twis.o
- .debug_str     0x00000000      0x514 src/ASF/avr32/drivers/twis/twis.o
+ .debug_str     0x00000000      0x525 src/ASF/avr32/drivers/twis/twis.o
  .comment       0x00000000       0x31 src/ASF/avr32/drivers/twis/twis.o
  .text          0x00000000        0x0 src/ASF/avr32/drivers/usart/usart.o
  .data          0x00000000        0x0 src/ASF/avr32/drivers/usart/usart.o
@@ -878,7 +879,7 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr32/avr32-gnu-toolchain
 .plt
  *(.plt)
 
-.text           0x80002004     0x11b0
+.text           0x80002004     0x12cc
  *(.text .stub .text.* .gnu.linkonce.t.*)
  .text.flashcdw_set_wait_state
                 0x80002004        0xe src/ASF/avr32/drivers/flashcdw/flashcdw.o
@@ -932,139 +933,150 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr32/avr32-gnu-toolchain
  .text.com_spi_init
                 0x8000235c       0x5c src/com_spi.o
                 0x8000235c                com_spi_init
+ .text.t_c2_rc_isr
+                0x800023b8       0x44 src/motor_control.o
+                0x800023b8                t_c2_rc_isr
+ .text.t_c1_rc_isr
+                0x800023fc       0x44 src/motor_control.o
+                0x800023fc                t_c1_rc_isr
  .text.motor_init
-                0x800023b8      0x11c src/motor_control.o
-                0x800023b8                motor_init
+                0x80002440      0x188 src/motor_control.o
+                0x80002440                motor_init
  .text.sensor_led_init
-                0x800024d4       0x2a src/sensor.o
-                0x800024d4                sensor_led_init
- *fill*         0x800024fe        0x2 d703d703
+                0x800025c8       0x2a src/sensor.o
+                0x800025c8                sensor_led_init
+ *fill*         0x800025f2        0x2 d703d703
  .text.write_sensor_data
-                0x80002500       0x48 src/sensor.o
-                0x80002500                write_sensor_data
+                0x800025f4       0x48 src/sensor.o
+                0x800025f4                write_sensor_data
  .text.read_sensor_data
-                0x80002548       0x2c src/sensor.o
-                0x80002548                read_sensor_data
+                0x8000263c       0x2c src/sensor.o
+                0x8000263c                read_sensor_data
  .text.read_sensor_euler
-                0x80002574       0x3c src/sensor.o
-                0x80002574                read_sensor_euler
+                0x80002668       0x3c src/sensor.o
+                0x80002668                read_sensor_euler
  .text.sensor_init
-                0x800025b0      0x15c src/sensor.o
-                0x800025b0                sensor_init
+                0x800026a4      0x15c src/sensor.o
+                0x800026a4                sensor_init
  .text.settings_init
-                0x8000270c       0x40 src/settings_t.o
-                0x8000270c                settings_init
+                0x80002800       0x24 src/settings_t.o
+                0x80002800                settings_init
  .text.tc_init_waveform
-                0x8000274c       0x9c src/ASF/avr32/drivers/tc/tc.o
-                0x8000274c                tc_init_waveform
+                0x80002824       0x9c src/ASF/avr32/drivers/tc/tc.o
+                0x80002824                tc_init_waveform
  .text.tc_start
-                0x800027e8       0x12 src/ASF/avr32/drivers/tc/tc.o
-                0x800027e8                tc_start
+                0x800028c0       0x12 src/ASF/avr32/drivers/tc/tc.o
+                0x800028c0                tc_start
+ .text.tc_read_sr
+                0x800028d2       0x12 src/ASF/avr32/drivers/tc/tc.o
+                0x800028d2                tc_read_sr
  .text.tc_write_ra
-                0x800027fa       0x34 src/ASF/avr32/drivers/tc/tc.o
-                0x800027fa                tc_write_ra
+                0x800028e4       0x34 src/ASF/avr32/drivers/tc/tc.o
+                0x800028e4                tc_write_ra
  .text.tc_write_rb
-                0x8000282e       0x34 src/ASF/avr32/drivers/tc/tc.o
-                0x8000282e                tc_write_rb
+                0x80002918       0x34 src/ASF/avr32/drivers/tc/tc.o
+                0x80002918                tc_write_rb
  .text.tc_write_rc
-                0x80002862       0x34 src/ASF/avr32/drivers/tc/tc.o
-                0x80002862                tc_write_rc
+                0x8000294c       0x34 src/ASF/avr32/drivers/tc/tc.o
+                0x8000294c                tc_write_rc
+ .text.tc_configure_interrupts
+                0x80002980      0x108 src/ASF/avr32/drivers/tc/tc.o
+                0x80002980                tc_configure_interrupts
  .text.osc_priv_enable_rc120m
-                0x80002896       0x2c src/ASF/common/services/clock/uc3d/osc.o
-                0x80002896                osc_priv_enable_rc120m
+                0x80002a88       0x2c src/ASF/common/services/clock/uc3d/osc.o
+                0x80002a88                osc_priv_enable_rc120m
  .text.sysclk_set_source
-                0x800028c2       0x28 src/ASF/common/services/clock/uc3d/sysclk.o
-                0x800028c2                sysclk_set_source
+                0x80002ab4       0x28 src/ASF/common/services/clock/uc3d/sysclk.o
+                0x80002ab4                sysclk_set_source
  .text.sysclk_set_prescalers
-                0x800028ea       0x5c src/ASF/common/services/clock/uc3d/sysclk.o
-                0x800028ea                sysclk_set_prescalers
- *fill*         0x80002946        0x2 d703d703
+                0x80002adc       0x5c src/ASF/common/services/clock/uc3d/sysclk.o
+                0x80002adc                sysclk_set_prescalers
  .text.sysclk_init
-                0x80002948       0x40 src/ASF/common/services/clock/uc3d/sysclk.o
-                0x80002948                sysclk_init
+                0x80002b38       0x40 src/ASF/common/services/clock/uc3d/sysclk.o
+                0x80002b38                sysclk_init
  .text.sysclk_priv_enable_module
-                0x80002988       0x42 src/ASF/common/services/clock/uc3d/sysclk.o
-                0x80002988                sysclk_priv_enable_module
+                0x80002b78       0x42 src/ASF/common/services/clock/uc3d/sysclk.o
+                0x80002b78                sysclk_priv_enable_module
  .text.spi_initSlave
-                0x800029ca       0x46 src/ASF/avr32/drivers/spi/spi.o
-                0x800029ca                spi_initSlave
+                0x80002bba       0x46 src/ASF/avr32/drivers/spi/spi.o
+                0x80002bba                spi_initSlave
  .text.spi_enable
-                0x80002a10        0x6 src/ASF/avr32/drivers/spi/spi.o
-                0x80002a10                spi_enable
- *fill*         0x80002a16        0x2 d703d703
+                0x80002c00        0x6 src/ASF/avr32/drivers/spi/spi.o
+                0x80002c00                spi_enable
+ *fill*         0x80002c06        0x2 d703d703
  .text.twim_master_interrupt_handler
-                0x80002a18       0xdc src/ASF/avr32/drivers/twim/twim.o
+                0x80002c08       0xdc src/ASF/avr32/drivers/twim/twim.o
  .text.twim_set_speed
-                0x80002af4       0x62 src/ASF/avr32/drivers/twim/twim.o
-                0x80002af4                twim_set_speed
- *fill*         0x80002b56        0x2 d703d703
+                0x80002ce4       0x62 src/ASF/avr32/drivers/twim/twim.o
+                0x80002ce4                twim_set_speed
+ *fill*         0x80002d46        0x2 d703d703
  .text.twim_status
-                0x80002b58       0x10 src/ASF/avr32/drivers/twim/twim.o
-                0x80002b58                twim_status
+                0x80002d48       0x10 src/ASF/avr32/drivers/twim/twim.o
+                0x80002d48                twim_status
  .text.twim_disable_interrupt
-                0x80002b68       0x14 src/ASF/avr32/drivers/twim/twim.o
-                0x80002b68                twim_disable_interrupt
+                0x80002d58       0x14 src/ASF/avr32/drivers/twim/twim.o
+                0x80002d58                twim_disable_interrupt
  .text.twim_write
-                0x80002b7c       0xb4 src/ASF/avr32/drivers/twim/twim.o
-                0x80002b7c                twim_write
+                0x80002d6c       0xb4 src/ASF/avr32/drivers/twim/twim.o
+                0x80002d6c                twim_write
  .text.twim_probe
-                0x80002c30       0x1c src/ASF/avr32/drivers/twim/twim.o
-                0x80002c30                twim_probe
+                0x80002e20       0x1c src/ASF/avr32/drivers/twim/twim.o
+                0x80002e20                twim_probe
  .text.twim_read_packet
-                0x80002c4c      0x110 src/ASF/avr32/drivers/twim/twim.o
-                0x80002c4c                twim_read_packet
+                0x80002e3c      0x110 src/ASF/avr32/drivers/twim/twim.o
+                0x80002e3c                twim_read_packet
  .text.twim_master_init
-                0x80002d5c       0xc0 src/ASF/avr32/drivers/twim/twim.o
-                0x80002d5c                twim_master_init
+                0x80002f4c       0xc0 src/ASF/avr32/drivers/twim/twim.o
+                0x80002f4c                twim_master_init
  .text._unhandled_interrupt
-                0x80002e1c        0x2 src/ASF/avr32/drivers/intc/intc.o
- *fill*         0x80002e1e        0x2 d703d703
+                0x8000300c        0x2 src/ASF/avr32/drivers/intc/intc.o
+ *fill*         0x8000300e        0x2 d703d703
  .text.INTC_register_interrupt
-                0x80002e20       0x80 src/ASF/avr32/drivers/intc/intc.o
-                0x80002e20                INTC_register_interrupt
+                0x80003010       0x80 src/ASF/avr32/drivers/intc/intc.o
+                0x80003010                INTC_register_interrupt
  .text.INTC_init_interrupts
-                0x80002ea0       0x54 src/ASF/avr32/drivers/intc/intc.o
-                0x80002ea0                INTC_init_interrupts
+                0x80003090       0x54 src/ASF/avr32/drivers/intc/intc.o
+                0x80003090                INTC_init_interrupts
  .text._get_interrupt_handler
-                0x80002ef4       0x38 src/ASF/avr32/drivers/intc/intc.o
-                0x80002ef4                _get_interrupt_handler
- .text._stext   0x80002f2c       0x3c src/ASF/avr32/utils/startup/startup_uc3.o
+                0x800030e4       0x38 src/ASF/avr32/drivers/intc/intc.o
+                0x800030e4                _get_interrupt_handler
+ .text._stext   0x8000311c       0x3c src/ASF/avr32/utils/startup/startup_uc3.o
                                  0x50 (size before relaxing)
-                0x80002f2c                _stext
+                0x8000311c                _stext
  .text.board_init
-                0x80002f68       0x4c src/ASF/common/boards/user_board/init.o
-                0x80002f68                board_init
- .text.main     0x80002fb4      0x200 src/main.o
-                0x80002fb4                main
+                0x80003158       0x4c src/ASF/common/boards/user_board/init.o
+                0x80003158                board_init
+ .text.main     0x800031a4      0x12c src/main.o
+                0x800031a4                main
  *(.text.*personality*)
  *(.gnu.warning)
 
-.exception      0x80003200      0x200
- .exception     0x80003200      0x200 src/ASF/avr32/drivers/intc/exception.o
-                0x80003200                _evba
-                0x80003304                _int0
-                0x80003312                _int1
-                0x80003320                _int2
-                0x8000332e                _int3
+.exception      0x80003400      0x200
+ .exception     0x80003400      0x200 src/ASF/avr32/drivers/intc/exception.o
+                0x80003400                _evba
+                0x80003504                _int0
+                0x80003512                _int1
+                0x80003520                _int2
+                0x8000352e                _int3
 
 .fini
  *(.fini)
-                0x80003400                PROVIDE (__etext, .)
-                0x80003400                PROVIDE (_etext, .)
-                0x80003400                PROVIDE (etext, .)
+                0x80003600                PROVIDE (__etext, .)
+                0x80003600                PROVIDE (_etext, .)
+                0x80003600                PROVIDE (etext, .)
 
-.rodata         0x80003400      0x118
+.rodata         0x80003600      0x118
  *(.rodata .rodata.* .gnu.linkonce.r.*)
  .rodata.gpio_enable_module_pin
-                0x80003400       0x20 src/ASF/avr32/drivers/gpio/gpio.o
+                0x80003600       0x20 src/ASF/avr32/drivers/gpio/gpio.o
  .rodata.SPI_GPIO_MAP.14175
-                0x80003420       0x18 src/com_spi.o
- .rodata.TIMER_GPIO_MAP.14211
-                0x80003438       0x20 src/motor_control.o
+                0x80003620       0x18 src/com_spi.o
+ .rodata.TIMER_GPIO_MAP.14217
+                0x80003638       0x20 src/motor_control.o
  .rodata.TWI_GPIO_MAP.14376
-                0x80003458       0x10 src/sensor.o
+                0x80003658       0x10 src/sensor.o
  .rodata._int_handler_table
-                0x80003468       0xb0 src/ASF/avr32/drivers/intc/intc.o
+                0x80003668       0xb0 src/ASF/avr32/drivers/intc/intc.o
 
 .rodata1
  *(.rodata1)
@@ -1079,9 +1091,9 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr32/avr32-gnu-toolchain
  *(.gcc_except_table)
  *(.gcc_except_table.*)
 
-.dalign         0x80003518        0x0
-                0x80003518                . = ALIGN (0x8)
-                0x80003518                PROVIDE (_data_lma, .)
+.dalign         0x80003718        0x0
+                0x80003718                . = ALIGN (0x8)
+                0x80003718                PROVIDE (_data_lma, .)
                 0x00000004                PROVIDE (_data, ORIGIN (CPUSRAM))
                 0x00000004                . = ORIGIN (CPUSRAM)
 
@@ -1140,7 +1152,7 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr32/avr32-gnu-toolchain
  *(.got.plt)
  *(.got)
 
-.data           0x00000004        0x4 load address 0x80003518
+.data           0x00000004        0x4 load address 0x80003718
  *(.data .data.* .gnu.linkonce.d.*)
  .data.flashcdw_wait_until_ready
                 0x00000004        0x4 src/ASF/avr32/drivers/flashcdw/flashcdw.o
@@ -1150,14 +1162,14 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr32/avr32-gnu-toolchain
 .data1
  *(.data1)
 
-.balign         0x00000008        0x0 load address 0x8000351c
+.balign         0x00000008        0x0 load address 0x8000371c
                 0x00000008                . = ALIGN (0x8)
                 0x00000008                _edata = .
                 0x00000008                _edata = .
                 0x00000008                PROVIDE (edata, .)
                 0x00000008                __bss_start = .
 
-.bss            0x00000008      0x150 load address 0x8000351c
+.bss            0x00000008      0x160 load address 0x8000371c
  *(.dynbss)
  *(.bss .bss.* .gnu.linkonce.b.*)
  .bss.flashcdw_error_status
@@ -1226,16 +1238,19 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr32/avr32-gnu-toolchain
  .bss._int_line_handler_table_5
                 0x000000f8        0x4 src/ASF/avr32/drivers/intc/intc.o
  *(COMMON)
- COMMON         0x000000fc       0x4c src/settings_t.o
-                0x000000fc                set
- COMMON         0x00000148        0xc src/main.o
-                0x00000148                sensor_euler
-                0x00000158                . = ALIGN (0x8)
- *fill*         0x00000154        0x4 
-                0x00000158                . = ALIGN (0x8)
-                0x00000158                _end = .
-                0x00000158                PROVIDE (end, .)
-                0x00000158                __heap_start__ = ALIGN (0x8)
+ COMMON         0x000000fc       0x20 src/motor_control.o
+                0x000000fc                esc_timer_values
+                0x0000010c                esc_timer_compare_values
+ COMMON         0x0000011c       0x3c src/settings_t.o
+                0x0000011c                set
+ COMMON         0x00000158        0xc src/main.o
+                0x00000158                sensor_euler
+                0x00000168                . = ALIGN (0x8)
+ *fill*         0x00000164        0x4 
+                0x00000168                . = ALIGN (0x8)
+                0x00000168                _end = .
+                0x00000168                PROVIDE (end, .)
+                0x00000168                __heap_start__ = ALIGN (0x8)
                 0x00003000                . = ((ORIGIN (CPUSRAM) + 0x3ffc) - _stack_size)
                 0x00003000                __heap_end__ = .
 
@@ -1287,7 +1302,7 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr32/avr32-gnu-toolchain
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x758
+.debug_aranges  0x00000000      0x770
  *(.debug_aranges)
  .debug_aranges
                 0x00000000      0x258 src/ASF/avr32/drivers/flashcdw/flashcdw.o
@@ -1296,36 +1311,36 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr32/avr32-gnu-toolchain
  .debug_aranges
                 0x00000378       0x20 src/com_spi.o
  .debug_aranges
-                0x00000398       0x38 src/motor_control.o
+                0x00000398       0x50 src/motor_control.o
  .debug_aranges
-                0x000003d0       0x58 src/sensor.o
+                0x000003e8       0x58 src/sensor.o
  .debug_aranges
-                0x00000428       0x28 src/settings_t.o
+                0x00000440       0x28 src/settings_t.o
  .debug_aranges
-                0x00000450       0xa8 src/ASF/avr32/drivers/tc/tc.o
+                0x00000468       0xa8 src/ASF/avr32/drivers/tc/tc.o
  .debug_aranges
-                0x000004f8       0x28 src/ASF/common/services/clock/uc3d/osc.o
+                0x00000510       0x28 src/ASF/common/services/clock/uc3d/osc.o
  .debug_aranges
-                0x00000520       0x40 src/ASF/common/services/clock/uc3d/sysclk.o
+                0x00000538       0x40 src/ASF/common/services/clock/uc3d/sysclk.o
  .debug_aranges
-                0x00000560       0xa8 src/ASF/avr32/drivers/spi/spi.o
+                0x00000578       0xa8 src/ASF/avr32/drivers/spi/spi.o
  .debug_aranges
-                0x00000608       0x70 src/ASF/avr32/drivers/twim/twim.o
+                0x00000620       0x70 src/ASF/avr32/drivers/twim/twim.o
  .debug_aranges
-                0x00000678       0x20 src/ASF/avr32/drivers/intc/exception.o
+                0x00000690       0x20 src/ASF/avr32/drivers/intc/exception.o
  .debug_aranges
-                0x00000698       0x38 src/ASF/avr32/drivers/intc/intc.o
+                0x000006b0       0x38 src/ASF/avr32/drivers/intc/intc.o
  .debug_aranges
-                0x000006d0       0x28 src/ASF/avr32/utils/startup/startup_uc3.o
+                0x000006e8       0x28 src/ASF/avr32/utils/startup/startup_uc3.o
  .debug_aranges
-                0x000006f8       0x20 src/ASF/avr32/utils/startup/trampoline_uc3.o
+                0x00000710       0x20 src/ASF/avr32/utils/startup/trampoline_uc3.o
  .debug_aranges
-                0x00000718       0x20 src/ASF/common/boards/user_board/init.o
+                0x00000730       0x20 src/ASF/common/boards/user_board/init.o
  .debug_aranges
-                0x00000738       0x20 src/main.o
+                0x00000750       0x20 src/main.o
 
 .debug_pubnames
-                0x00000000     0x139e
+                0x00000000     0x1470
  *(.debug_pubnames)
  .debug_pubnames
                 0x00000000      0x950 src/ASF/avr32/drivers/flashcdw/flashcdw.o
@@ -1334,183 +1349,183 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr32/avr32-gnu-toolchain
  .debug_pubnames
                 0x00000cfa       0x23 src/com_spi.o
  .debug_pubnames
-                0x00000d1d       0x54 src/motor_control.o
+                0x00000d1d       0xc2 src/motor_control.o
  .debug_pubnames
-                0x00000d71       0xb6 src/sensor.o
+                0x00000ddf       0xb6 src/sensor.o
  .debug_pubnames
-                0x00000e27       0x3e src/settings_t.o
+                0x00000e95       0x3e src/settings_t.o
  .debug_pubnames
-                0x00000e65      0x164 src/ASF/avr32/drivers/tc/tc.o
+                0x00000ed3      0x164 src/ASF/avr32/drivers/tc/tc.o
  .debug_pubnames
-                0x00000fc9       0x49 src/ASF/common/services/clock/uc3d/osc.o
+                0x00001037       0x49 src/ASF/common/services/clock/uc3d/osc.o
  .debug_pubnames
-                0x00001012       0x8f src/ASF/common/services/clock/uc3d/sysclk.o
+                0x00001080       0x8f src/ASF/common/services/clock/uc3d/sysclk.o
  .debug_pubnames
-                0x000010a1      0x178 src/ASF/avr32/drivers/spi/spi.o
+                0x0000110f      0x178 src/ASF/avr32/drivers/spi/spi.o
  .debug_pubnames
-                0x00001219       0xd6 src/ASF/avr32/drivers/twim/twim.o
+                0x00001287       0xd6 src/ASF/avr32/drivers/twim/twim.o
  .debug_pubnames
-                0x000012ef       0x62 src/ASF/avr32/drivers/intc/intc.o
+                0x0000135d       0x62 src/ASF/avr32/drivers/intc/intc.o
  .debug_pubnames
-                0x00001351       0x21 src/ASF/common/boards/user_board/init.o
+                0x000013bf       0x53 src/ASF/common/boards/user_board/init.o
  .debug_pubnames
-                0x00001372       0x2c src/main.o
+                0x00001412       0x5e src/main.o
 
-.debug_info     0x00000000    0x11541
+.debug_info     0x00000000    0x10c4d
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000     0x1dd4 src/ASF/avr32/drivers/flashcdw/flashcdw.o
  .debug_info    0x00001dd4      0xf51 src/ASF/avr32/drivers/gpio/gpio.o
  .debug_info    0x00002d25     0x16cf src/com_spi.o
- .debug_info    0x000043f4     0x16d0 src/motor_control.o
- .debug_info    0x00005ac4     0x2086 src/sensor.o
- .debug_info    0x00007b4a      0x210 src/settings_t.o
- .debug_info    0x00007d5a     0x1183 src/ASF/avr32/drivers/tc/tc.o
- .debug_info    0x00008edd     0x14f9 src/ASF/common/services/clock/uc3d/osc.o
- .debug_info    0x0000a3d6     0x234e src/ASF/common/services/clock/uc3d/sysclk.o
- .debug_info    0x0000c724     0x1307 src/ASF/avr32/drivers/spi/spi.o
- .debug_info    0x0000da2b     0x122e src/ASF/avr32/drivers/twim/twim.o
- .debug_info    0x0000ec59       0x89 src/ASF/avr32/drivers/intc/exception.o
- .debug_info    0x0000ece2      0x5ef src/ASF/avr32/drivers/intc/intc.o
- .debug_info    0x0000f2d1       0x88 src/ASF/avr32/utils/startup/startup_uc3.o
- .debug_info    0x0000f359       0x8f src/ASF/avr32/utils/startup/trampoline_uc3.o
- .debug_info    0x0000f3e8      0x886 src/ASF/common/boards/user_board/init.o
- .debug_info    0x0000fc6e     0x18d3 src/main.o
+ .debug_info    0x000043f4     0x1793 src/motor_control.o
+ .debug_info    0x00005b87     0x2086 src/sensor.o
+ .debug_info    0x00007c0d      0x1dd src/settings_t.o
+ .debug_info    0x00007dea     0x1183 src/ASF/avr32/drivers/tc/tc.o
+ .debug_info    0x00008f6d     0x14f9 src/ASF/common/services/clock/uc3d/osc.o
+ .debug_info    0x0000a466     0x234e src/ASF/common/services/clock/uc3d/sysclk.o
+ .debug_info    0x0000c7b4     0x1307 src/ASF/avr32/drivers/spi/spi.o
+ .debug_info    0x0000dabb     0x122e src/ASF/avr32/drivers/twim/twim.o
+ .debug_info    0x0000ece9       0x89 src/ASF/avr32/drivers/intc/exception.o
+ .debug_info    0x0000ed72      0x5ef src/ASF/avr32/drivers/intc/intc.o
+ .debug_info    0x0000f361       0x88 src/ASF/avr32/utils/startup/startup_uc3.o
+ .debug_info    0x0000f3e9       0x8f src/ASF/avr32/utils/startup/trampoline_uc3.o
+ .debug_info    0x0000f478      0x921 src/ASF/common/boards/user_board/init.o
+ .debug_info    0x0000fd99      0xeb4 src/main.o
 
-.debug_abbrev   0x00000000     0x2273
+.debug_abbrev   0x00000000     0x2243
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x326 src/ASF/avr32/drivers/flashcdw/flashcdw.o
  .debug_abbrev  0x00000326      0x2f4 src/ASF/avr32/drivers/gpio/gpio.o
  .debug_abbrev  0x0000061a      0x28a src/com_spi.o
- .debug_abbrev  0x000008a4      0x314 src/motor_control.o
- .debug_abbrev  0x00000bb8      0x333 src/sensor.o
- .debug_abbrev  0x00000eeb       0xb4 src/settings_t.o
- .debug_abbrev  0x00000f9f      0x25c src/ASF/avr32/drivers/tc/tc.o
- .debug_abbrev  0x000011fb      0x1aa src/ASF/common/services/clock/uc3d/osc.o
- .debug_abbrev  0x000013a5      0x25d src/ASF/common/services/clock/uc3d/sysclk.o
- .debug_abbrev  0x00001602      0x281 src/ASF/avr32/drivers/spi/spi.o
- .debug_abbrev  0x00001883      0x284 src/ASF/avr32/drivers/twim/twim.o
- .debug_abbrev  0x00001b07       0x14 src/ASF/avr32/drivers/intc/exception.o
- .debug_abbrev  0x00001b1b      0x1f2 src/ASF/avr32/drivers/intc/intc.o
- .debug_abbrev  0x00001d0d       0x12 src/ASF/avr32/utils/startup/startup_uc3.o
- .debug_abbrev  0x00001d1f       0x14 src/ASF/avr32/utils/startup/trampoline_uc3.o
- .debug_abbrev  0x00001d33      0x218 src/ASF/common/boards/user_board/init.o
- .debug_abbrev  0x00001f4b      0x328 src/main.o
+ .debug_abbrev  0x000008a4      0x332 src/motor_control.o
+ .debug_abbrev  0x00000bd6      0x333 src/sensor.o
+ .debug_abbrev  0x00000f09       0xbb src/settings_t.o
+ .debug_abbrev  0x00000fc4      0x25c src/ASF/avr32/drivers/tc/tc.o
+ .debug_abbrev  0x00001220      0x1aa src/ASF/common/services/clock/uc3d/osc.o
+ .debug_abbrev  0x000013ca      0x25d src/ASF/common/services/clock/uc3d/sysclk.o
+ .debug_abbrev  0x00001627      0x281 src/ASF/avr32/drivers/spi/spi.o
+ .debug_abbrev  0x000018a8      0x284 src/ASF/avr32/drivers/twim/twim.o
+ .debug_abbrev  0x00001b2c       0x14 src/ASF/avr32/drivers/intc/exception.o
+ .debug_abbrev  0x00001b40      0x1f2 src/ASF/avr32/drivers/intc/intc.o
+ .debug_abbrev  0x00001d32       0x12 src/ASF/avr32/utils/startup/startup_uc3.o
+ .debug_abbrev  0x00001d44       0x14 src/ASF/avr32/utils/startup/trampoline_uc3.o
+ .debug_abbrev  0x00001d58      0x23f src/ASF/common/boards/user_board/init.o
+ .debug_abbrev  0x00001f97      0x2ac src/main.o
 
-.debug_line     0x00000000     0x8eb8
+.debug_line     0x00000000     0x8ef9
  *(.debug_line)
  .debug_line    0x00000000      0xca5 src/ASF/avr32/drivers/flashcdw/flashcdw.o
  .debug_line    0x00000ca5      0x95e src/ASF/avr32/drivers/gpio/gpio.o
  .debug_line    0x00001603      0xb7b src/com_spi.o
- .debug_line    0x0000217e      0xbda src/motor_control.o
- .debug_line    0x00002d58      0xc7a src/sensor.o
- .debug_line    0x000039d2      0xb78 src/settings_t.o
- .debug_line    0x0000454a      0x7db src/ASF/avr32/drivers/tc/tc.o
- .debug_line    0x00004d25      0x77d src/ASF/common/services/clock/uc3d/osc.o
- .debug_line    0x000054a2      0x874 src/ASF/common/services/clock/uc3d/sysclk.o
- .debug_line    0x00005d16      0x7f2 src/ASF/avr32/drivers/spi/spi.o
- .debug_line    0x00006508      0x8d8 src/ASF/avr32/drivers/twim/twim.o
- .debug_line    0x00006de0      0x109 src/ASF/avr32/drivers/intc/exception.o
- .debug_line    0x00006ee9      0x6b5 src/ASF/avr32/drivers/intc/intc.o
- .debug_line    0x0000759e       0xf2 src/ASF/avr32/utils/startup/startup_uc3.o
- .debug_line    0x00007690       0x67 src/ASF/avr32/utils/startup/trampoline_uc3.o
- .debug_line    0x000076f7      0xbb0 src/ASF/common/boards/user_board/init.o
- .debug_line    0x000082a7      0xc11 src/main.o
+ .debug_line    0x0000217e      0xc26 src/motor_control.o
+ .debug_line    0x00002da4      0xc7a src/sensor.o
+ .debug_line    0x00003a1e      0xb74 src/settings_t.o
+ .debug_line    0x00004592      0x7db src/ASF/avr32/drivers/tc/tc.o
+ .debug_line    0x00004d6d      0x77d src/ASF/common/services/clock/uc3d/osc.o
+ .debug_line    0x000054ea      0x874 src/ASF/common/services/clock/uc3d/sysclk.o
+ .debug_line    0x00005d5e      0x7f2 src/ASF/avr32/drivers/spi/spi.o
+ .debug_line    0x00006550      0x8d8 src/ASF/avr32/drivers/twim/twim.o
+ .debug_line    0x00006e28      0x109 src/ASF/avr32/drivers/intc/exception.o
+ .debug_line    0x00006f31      0x6b5 src/ASF/avr32/drivers/intc/intc.o
+ .debug_line    0x000075e6       0xf2 src/ASF/avr32/utils/startup/startup_uc3.o
+ .debug_line    0x000076d8       0x67 src/ASF/avr32/utils/startup/trampoline_uc3.o
+ .debug_line    0x0000773f      0xbb0 src/ASF/common/boards/user_board/init.o
+ .debug_line    0x000082ef      0xc0a src/main.o
 
-.debug_frame    0x00000000     0x10f0
+.debug_frame    0x00000000     0x1140
  *(.debug_frame)
  .debug_frame   0x00000000      0x754 src/ASF/avr32/drivers/flashcdw/flashcdw.o
  .debug_frame   0x00000754      0x244 src/ASF/avr32/drivers/gpio/gpio.o
  .debug_frame   0x00000998       0x2c src/com_spi.o
- .debug_frame   0x000009c4       0x78 src/motor_control.o
- .debug_frame   0x00000a3c       0xf0 src/sensor.o
- .debug_frame   0x00000b2c       0x40 src/settings_t.o
- .debug_frame   0x00000b6c      0x148 src/ASF/avr32/drivers/tc/tc.o
- .debug_frame   0x00000cb4       0x38 src/ASF/common/services/clock/uc3d/osc.o
- .debug_frame   0x00000cec       0x90 src/ASF/common/services/clock/uc3d/sysclk.o
- .debug_frame   0x00000d7c      0x158 src/ASF/avr32/drivers/spi/spi.o
- .debug_frame   0x00000ed4      0x14c src/ASF/avr32/drivers/twim/twim.o
- .debug_frame   0x00001020       0x64 src/ASF/avr32/drivers/intc/intc.o
- .debug_frame   0x00001084       0x28 src/ASF/common/boards/user_board/init.o
- .debug_frame   0x000010ac       0x44 src/main.o
+ .debug_frame   0x000009c4       0xc8 src/motor_control.o
+ .debug_frame   0x00000a8c       0xf0 src/sensor.o
+ .debug_frame   0x00000b7c       0x40 src/settings_t.o
+ .debug_frame   0x00000bbc      0x148 src/ASF/avr32/drivers/tc/tc.o
+ .debug_frame   0x00000d04       0x38 src/ASF/common/services/clock/uc3d/osc.o
+ .debug_frame   0x00000d3c       0x90 src/ASF/common/services/clock/uc3d/sysclk.o
+ .debug_frame   0x00000dcc      0x158 src/ASF/avr32/drivers/spi/spi.o
+ .debug_frame   0x00000f24      0x14c src/ASF/avr32/drivers/twim/twim.o
+ .debug_frame   0x00001070       0x64 src/ASF/avr32/drivers/intc/intc.o
+ .debug_frame   0x000010d4       0x28 src/ASF/common/boards/user_board/init.o
+ .debug_frame   0x000010fc       0x44 src/main.o
 
-.debug_str      0x00000000     0x439e
+.debug_str      0x00000000     0x43d0
  *(.debug_str)
  .debug_str     0x00000000      0xd65 src/ASF/avr32/drivers/flashcdw/flashcdw.o
                                 0xe5e (size before relaxing)
  .debug_str     0x00000d65      0x595 src/ASF/avr32/drivers/gpio/gpio.o
                                 0x6d2 (size before relaxing)
- .debug_str     0x000012fa      0x4fc src/com_spi.o
-                                0x881 (size before relaxing)
- .debug_str     0x000017f6      0x3e3 src/motor_control.o
-                                0x8ad (size before relaxing)
- .debug_str     0x00001bd9     0x1353 src/sensor.o
-                               0x1908 (size before relaxing)
- .debug_str     0x00002f2c       0x30 src/settings_t.o
-                                0x226 (size before relaxing)
- .debug_str     0x00002f5c      0x198 src/ASF/avr32/drivers/tc/tc.o
+ .debug_str     0x000012fa      0x544 src/com_spi.o
+                                0x892 (size before relaxing)
+ .debug_str     0x0000183e      0x3b4 src/motor_control.o
+                                0x8b2 (size before relaxing)
+ .debug_str     0x00001bf2     0x1319 src/sensor.o
+                               0x1919 (size before relaxing)
+ .debug_str     0x00002f0b       0x92 src/settings_t.o
+                                0x1bd (size before relaxing)
+ .debug_str     0x00002f9d      0x189 src/ASF/avr32/drivers/tc/tc.o
                                 0x4c6 (size before relaxing)
- .debug_str     0x000030f4      0x646 src/ASF/common/services/clock/uc3d/osc.o
-                                0x7a4 (size before relaxing)
- .debug_str     0x0000373a      0x42e src/ASF/common/services/clock/uc3d/sysclk.o
-                                0xbb6 (size before relaxing)
- .debug_str     0x00003b68      0x1f0 src/ASF/avr32/drivers/spi/spi.o
+ .debug_str     0x00003126      0x646 src/ASF/common/services/clock/uc3d/osc.o
+                                0x7b5 (size before relaxing)
+ .debug_str     0x0000376c      0x42e src/ASF/common/services/clock/uc3d/sysclk.o
+                                0xbc7 (size before relaxing)
+ .debug_str     0x00003b9a      0x1f0 src/ASF/avr32/drivers/spi/spi.o
                                 0x650 (size before relaxing)
- .debug_str     0x00003d58      0x239 src/ASF/avr32/drivers/twim/twim.o
-                                0x713 (size before relaxing)
- .debug_str     0x00003f91      0x3b3 src/ASF/avr32/drivers/intc/intc.o
+ .debug_str     0x00003d8a      0x239 src/ASF/avr32/drivers/twim/twim.o
+                                0x724 (size before relaxing)
+ .debug_str     0x00003fc3      0x3b3 src/ASF/avr32/drivers/intc/intc.o
                                 0x4af (size before relaxing)
- .debug_str     0x00004344       0x47 src/ASF/common/boards/user_board/init.o
-                                0x4b4 (size before relaxing)
- .debug_str     0x0000438b       0x13 src/main.o
-                                0x858 (size before relaxing)
+ .debug_str     0x00004376       0x47 src/ASF/common/boards/user_board/init.o
+                                0x523 (size before relaxing)
+ .debug_str     0x000043bd       0x13 src/main.o
+                                0x5b5 (size before relaxing)
 
-.debug_loc      0x00000000     0x2926
+.debug_loc      0x00000000     0x299b
  *(.debug_loc)
  .debug_loc     0x00000000     0x116d src/ASF/avr32/drivers/flashcdw/flashcdw.o
  .debug_loc     0x0000116d      0x3b4 src/ASF/avr32/drivers/gpio/gpio.o
  .debug_loc     0x00001521       0x1f src/com_spi.o
- .debug_loc     0x00001540       0x70 src/motor_control.o
- .debug_loc     0x000015b0      0x24d src/sensor.o
- .debug_loc     0x000017fd       0x3e src/settings_t.o
- .debug_loc     0x0000183b      0x3ff src/ASF/avr32/drivers/tc/tc.o
- .debug_loc     0x00001c3a       0x7e src/ASF/common/services/clock/uc3d/osc.o
- .debug_loc     0x00001cb8      0x247 src/ASF/common/services/clock/uc3d/sysclk.o
- .debug_loc     0x00001eff      0x3bd src/ASF/avr32/drivers/spi/spi.o
- .debug_loc     0x000022bc      0x4d5 src/ASF/avr32/drivers/twim/twim.o
- .debug_loc     0x00002791       0xd3 src/ASF/avr32/drivers/intc/intc.o
- .debug_loc     0x00002864       0x1f src/ASF/common/boards/user_board/init.o
- .debug_loc     0x00002883       0xa3 src/main.o
+ .debug_loc     0x00001540       0xe5 src/motor_control.o
+ .debug_loc     0x00001625      0x24d src/sensor.o
+ .debug_loc     0x00001872       0x3e src/settings_t.o
+ .debug_loc     0x000018b0      0x3ff src/ASF/avr32/drivers/tc/tc.o
+ .debug_loc     0x00001caf       0x7e src/ASF/common/services/clock/uc3d/osc.o
+ .debug_loc     0x00001d2d      0x247 src/ASF/common/services/clock/uc3d/sysclk.o
+ .debug_loc     0x00001f74      0x3bd src/ASF/avr32/drivers/spi/spi.o
+ .debug_loc     0x00002331      0x4d5 src/ASF/avr32/drivers/twim/twim.o
+ .debug_loc     0x00002806       0xd3 src/ASF/avr32/drivers/intc/intc.o
+ .debug_loc     0x000028d9       0x1f src/ASF/common/boards/user_board/init.o
+ .debug_loc     0x000028f8       0xa3 src/main.o
 
-.debug_macinfo  0x00000000   0xe1b215
+.debug_macinfo  0x00000000   0xe1bbc9
  *(.debug_macinfo)
  .debug_macinfo
                 0x00000000    0xfdbf2 src/ASF/avr32/drivers/flashcdw/flashcdw.o
  .debug_macinfo
                 0x000fdbf2    0xfdcac src/ASF/avr32/drivers/gpio/gpio.o
  .debug_macinfo
-                0x001fb89e   0x101ab9 src/com_spi.o
+                0x001fb89e   0x101bcd src/com_spi.o
  .debug_macinfo
-                0x002fd357   0x101ad2 src/motor_control.o
+                0x002fd46b   0x101be6 src/motor_control.o
  .debug_macinfo
-                0x003fee29   0x10ba1d src/sensor.o
+                0x003ff051   0x10bb31 src/sensor.o
  .debug_macinfo
-                0x0050a846   0x101aba src/settings_t.o
+                0x0050ab82   0x101bce src/settings_t.o
  .debug_macinfo
-                0x0060c300    0xfe391 src/ASF/avr32/drivers/tc/tc.o
+                0x0060c750    0xfe391 src/ASF/avr32/drivers/tc/tc.o
  .debug_macinfo
-                0x0070a691    0xff1bb src/ASF/common/services/clock/uc3d/osc.o
+                0x0070aae1    0xff2cf src/ASF/common/services/clock/uc3d/osc.o
  .debug_macinfo
-                0x0080984c   0x100050 src/ASF/common/services/clock/uc3d/sysclk.o
+                0x00809db0   0x100164 src/ASF/common/services/clock/uc3d/sysclk.o
  .debug_macinfo
-                0x0090989c    0xfdafa src/ASF/avr32/drivers/spi/spi.o
+                0x00909f14    0xfdafa src/ASF/avr32/drivers/spi/spi.o
  .debug_macinfo
-                0x00a07396    0xfec6a src/ASF/avr32/drivers/twim/twim.o
+                0x00a07a0e    0xfed7e src/ASF/avr32/drivers/twim/twim.o
  .debug_macinfo
-                0x00b06000    0xfdd59 src/ASF/avr32/drivers/intc/intc.o
+                0x00b0678c    0xfdd59 src/ASF/avr32/drivers/intc/intc.o
  .debug_macinfo
-                0x00c03d59   0x10ba5e src/ASF/common/boards/user_board/init.o
+                0x00c044e5   0x10bb72 src/ASF/common/boards/user_board/init.o
  .debug_macinfo
-                0x00d0f7b7   0x10ba5e src/main.o
+                0x00d10057   0x10bb72 src/main.o
 
 .debug_weaknames
  *(.debug_weaknames)
@@ -1541,19 +1556,19 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr32/avr32-gnu-toolchain
  *(.note.GNU-stack)
 OUTPUT(Regler 2.elf elf32-avr32)
 
-.debug_ranges   0x00000000      0x7f0
+.debug_ranges   0x00000000      0x8c8
  .debug_ranges  0x00000000      0x250 src/ASF/avr32/drivers/flashcdw/flashcdw.o
  .debug_ranges  0x00000250      0x118 src/ASF/avr32/drivers/gpio/gpio.o
  .debug_ranges  0x00000368       0x18 src/com_spi.o
- .debug_ranges  0x00000380       0x30 src/motor_control.o
- .debug_ranges  0x000003b0       0xb0 src/sensor.o
- .debug_ranges  0x00000460       0x20 src/settings_t.o
- .debug_ranges  0x00000480       0xa0 src/ASF/avr32/drivers/tc/tc.o
- .debug_ranges  0x00000520       0x20 src/ASF/common/services/clock/uc3d/osc.o
- .debug_ranges  0x00000540       0x38 src/ASF/common/services/clock/uc3d/sysclk.o
- .debug_ranges  0x00000578       0xa0 src/ASF/avr32/drivers/spi/spi.o
- .debug_ranges  0x00000618       0x68 src/ASF/avr32/drivers/twim/twim.o
- .debug_ranges  0x00000680       0x48 src/ASF/avr32/drivers/intc/intc.o
- .debug_ranges  0x000006c8       0x20 src/ASF/avr32/utils/startup/startup_uc3.o
- .debug_ranges  0x000006e8       0x18 src/ASF/common/boards/user_board/init.o
- .debug_ranges  0x00000700       0xf0 src/main.o
+ .debug_ranges  0x00000380       0x48 src/motor_control.o
+ .debug_ranges  0x000003c8       0xb0 src/sensor.o
+ .debug_ranges  0x00000478       0x20 src/settings_t.o
+ .debug_ranges  0x00000498       0xa0 src/ASF/avr32/drivers/tc/tc.o
+ .debug_ranges  0x00000538       0x20 src/ASF/common/services/clock/uc3d/osc.o
+ .debug_ranges  0x00000558       0x38 src/ASF/common/services/clock/uc3d/sysclk.o
+ .debug_ranges  0x00000590       0xa0 src/ASF/avr32/drivers/spi/spi.o
+ .debug_ranges  0x00000630       0x68 src/ASF/avr32/drivers/twim/twim.o
+ .debug_ranges  0x00000698       0x48 src/ASF/avr32/drivers/intc/intc.o
+ .debug_ranges  0x000006e0       0x20 src/ASF/avr32/utils/startup/startup_uc3.o
+ .debug_ranges  0x00000700       0x18 src/ASF/common/boards/user_board/init.o
+ .debug_ranges  0x00000718      0x1b0 src/main.o
