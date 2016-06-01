@@ -7,7 +7,7 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
   1 .rela.got     00000000  80002004  80002004  00002404  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  2 .text         000010d0  80002004  80002004  00002404  2**2
+  2 .text         000011b4  80002004  80002004  00002404  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
   3 .exception    00000200  80003200  80003200  00003600  2**9
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
@@ -23,23 +23,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_pubnames 0000139e  00000000  00000000  00004390  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_info   00010a53  00000000  00000000  0000572e  2**0
+ 10 .debug_info   0001150c  00000000  00000000  0000572e  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_abbrev 000021ee  00000000  00000000  00016181  2**0
+ 11 .debug_abbrev 0000227a  00000000  00000000  00016c3a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_line   00008eb0  00000000  00000000  0001836f  2**0
+ 12 .debug_line   00008eb7  00000000  00000000  00018eb4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_frame  000010e4  00000000  00000000  00021220  2**2
+ 13 .debug_frame  000010e4  00000000  00000000  00021d6c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_str    0000434b  00000000  00000000  00022304  2**0
+ 14 .debug_str    0000434c  00000000  00000000  00022e50  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_loc    00002926  00000000  00000000  0002664f  2**0
+ 15 .debug_loc    00002926  00000000  00000000  0002719c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_macinfo 00e1b215  00000000  00000000  00028f75  2**0
+ 16 .debug_macinfo 00e1b215  00000000  00000000  00029ac2  2**0
                   CONTENTS, READONLY, DEBUGGING
  17 .stack        00001000  00003000  00003000  00000400  2**0
                   ALLOC
- 18 .debug_ranges 000008b0  00000000  00000000  00e44190  2**3
+ 18 .debug_ranges 000007f0  00000000  00000000  00e44cd8  2**3
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .reset:
@@ -60,7 +60,7 @@ _trampoline:
 program_start:
   // Jump to the C runtime startup routine.
   lda.w   pc, _stext
-80002000:	fe cf f0 e0 	sub	pc,pc,-3872
+80002000:	fe cf f0 d0 	sub	pc,pc,-3888
 
 Disassembly of section .text:
 
@@ -863,11 +863,11 @@ static inline void sysclk_enable_pba_module(unsigned int index)
 800023a8:	80 00       	ld.sh	r0,r0[0x0]
 800023aa:	23 2c       	sub	r12,50
 800023ac:	80 00       	ld.sh	r0,r0[0x0]
-800023ae:	29 7c       	sub	r12,-105
+800023ae:	29 8c       	sub	r12,-104
 800023b0:	80 00       	ld.sh	r0,r0[0x0]
-800023b2:	29 be       	sub	lr,-101
+800023b2:	29 ce       	sub	lr,-100
 800023b4:	80 00       	ld.sh	r0,r0[0x0]
-800023b6:	2a 04       	sub	r4,-96
+800023b6:	2a 14       	sub	r4,-95
 
 800023b8 <motor_init>:
 #include "asf.h"
@@ -895,7 +895,7 @@ __always_inline static void arch_ioport_set_pin_dir(ioport_pin_t pin,
 800023de:	f1 49 00 44 	st.w	r8[68],r9
 800023e2:	30 fb       	mov	r11,15
 800023e4:	30 2c       	mov	r12,2
-800023e6:	f0 1f 00 30 	mcall	800024a4 <motor_init+0xec>
+800023e6:	f0 1f 00 33 	mcall	800024b0 <motor_init+0xf8>
 		{ESC1_SIGNAL, ESC1_SIGNAL_PER_FUNC},
 		{ESC2_SIGNAL, ESC2_SIGNAL_PER_FUNC},
 		{ESC3_SIGNAL, ESC3_SIGNAL_PER_FUNC},
@@ -903,8 +903,8 @@ __always_inline static void arch_ioport_set_pin_dir(ioport_pin_t pin,
 												};
 	gpio_enable_module(TIMER_GPIO_MAP,4);
 800023ea:	30 4b       	mov	r11,4
-800023ec:	4a fc       	lddpc	r12,800024a8 <motor_init+0xf0>
-800023ee:	f0 1f 00 30 	mcall	800024ac <motor_init+0xf4>
+800023ec:	4b 2c       	lddpc	r12,800024b4 <motor_init+0xfc>
+800023ee:	f0 1f 00 33 	mcall	800024b8 <motor_init+0x100>
 
 	//for TIMER_ESC_1_2_CHANNEL (x = channel = [0/1/2])
 	tc_waveform_opt_t opt;
@@ -956,7 +956,7 @@ __always_inline static void arch_ioport_set_pin_dir(ioport_pin_t pin,
 	tc_init_waveform(TIMER_ESC, &opt); //init waveform channel_esc_1_2
 8000242a:	1a 9b       	mov	r11,sp
 8000242c:	fe 7c 50 00 	mov	r12,-45056
-80002430:	f0 1f 00 20 	mcall	800024b0 <motor_init+0xf8>
+80002430:	f0 1f 00 23 	mcall	800024bc <motor_init+0x104>
 	
 	
 	//edit for TIMER_ESC_3_4_CHANNEL
@@ -965,2596 +965,2700 @@ __always_inline static void arch_ioport_set_pin_dir(ioport_pin_t pin,
 	tc_init_waveform(TIMER_ESC, &opt); //init waveform channel_esc_3_4
 80002436:	1a 9b       	mov	r11,sp
 80002438:	fe 7c 50 00 	mov	r12,-45056
-8000243c:	f0 1f 00 1d 	mcall	800024b0 <motor_init+0xf8>
+8000243c:	f0 1f 00 20 	mcall	800024bc <motor_init+0x104>
 	
 	
 	tc_write_rc(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, set.motor_esc_timer_period);
-80002440:	49 d6       	lddpc	r6,800024b4 <motor_init+0xfc>
-80002442:	8c 9a       	ld.uh	r10,r6[0x2]
-80002444:	0a 9b       	mov	r11,r5
-80002446:	fe 7c 50 00 	mov	r12,-45056
-8000244a:	f0 1f 00 1c 	mcall	800024b8 <motor_init+0x100>
+80002440:	4a 06       	lddpc	r6,800024c0 <motor_init+0x108>
+80002442:	6c 0a       	ld.w	r10,r6[0x0]
+80002444:	5c 7a       	castu.h	r10
+80002446:	0a 9b       	mov	r11,r5
+80002448:	fe 7c 50 00 	mov	r12,-45056
+8000244c:	f0 1f 00 1e 	mcall	800024c4 <motor_init+0x10c>
 	tc_write_rc(TIMER_ESC, TIMER_ESC_3_4_CHANNEL, set.motor_esc_timer_period);
-8000244e:	8c 9a       	ld.uh	r10,r6[0x2]
-80002450:	0e 9b       	mov	r11,r7
-80002452:	fe 7c 50 00 	mov	r12,-45056
-80002456:	f0 1f 00 19 	mcall	800024b8 <motor_init+0x100>
+80002450:	6c 0a       	ld.w	r10,r6[0x0]
+80002452:	5c 7a       	castu.h	r10
+80002454:	0e 9b       	mov	r11,r7
+80002456:	fe 7c 50 00 	mov	r12,-45056
+8000245a:	f0 1f 00 1b 	mcall	800024c4 <motor_init+0x10c>
 	
 	tc_write_ra(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, set.motor_esc_timer_value_min);
-8000245a:	8c ba       	ld.uh	r10,r6[0x6]
-8000245c:	0a 9b       	mov	r11,r5
-8000245e:	fe 7c 50 00 	mov	r12,-45056
-80002462:	f0 1f 00 17 	mcall	800024bc <motor_init+0x104>
+8000245e:	6c 1a       	ld.w	r10,r6[0x4]
+80002460:	5c 7a       	castu.h	r10
+80002462:	0a 9b       	mov	r11,r5
+80002464:	fe 7c 50 00 	mov	r12,-45056
+80002468:	f0 1f 00 18 	mcall	800024c8 <motor_init+0x110>
 	tc_write_ra(TIMER_ESC, TIMER_ESC_3_4_CHANNEL, set.motor_esc_timer_value_min);
-80002466:	8c ba       	ld.uh	r10,r6[0x6]
-80002468:	0e 9b       	mov	r11,r7
-8000246a:	fe 7c 50 00 	mov	r12,-45056
-8000246e:	f0 1f 00 14 	mcall	800024bc <motor_init+0x104>
+8000246c:	6c 1a       	ld.w	r10,r6[0x4]
+8000246e:	5c 7a       	castu.h	r10
+80002470:	0e 9b       	mov	r11,r7
+80002472:	fe 7c 50 00 	mov	r12,-45056
+80002476:	f0 1f 00 15 	mcall	800024c8 <motor_init+0x110>
 	tc_write_rb(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, set.motor_esc_timer_value_min);
-80002472:	8c ba       	ld.uh	r10,r6[0x6]
-80002474:	0a 9b       	mov	r11,r5
-80002476:	fe 7c 50 00 	mov	r12,-45056
-8000247a:	f0 1f 00 12 	mcall	800024c0 <motor_init+0x108>
+8000247a:	6c 1a       	ld.w	r10,r6[0x4]
+8000247c:	5c 7a       	castu.h	r10
+8000247e:	0a 9b       	mov	r11,r5
+80002480:	fe 7c 50 00 	mov	r12,-45056
+80002484:	f0 1f 00 12 	mcall	800024cc <motor_init+0x114>
 	tc_write_rb(TIMER_ESC, TIMER_ESC_3_4_CHANNEL, set.motor_esc_timer_value_min);
-8000247e:	8c ba       	ld.uh	r10,r6[0x6]
-80002480:	0e 9b       	mov	r11,r7
-80002482:	fe 7c 50 00 	mov	r12,-45056
-80002486:	f0 1f 00 0f 	mcall	800024c0 <motor_init+0x108>
+80002488:	6c 1a       	ld.w	r10,r6[0x4]
+8000248a:	5c 7a       	castu.h	r10
+8000248c:	0e 9b       	mov	r11,r7
+8000248e:	fe 7c 50 00 	mov	r12,-45056
+80002492:	f0 1f 00 0f 	mcall	800024cc <motor_init+0x114>
 	
 	
 	//tc_sync_start(TIMER_ESC);
 	tc_start (TIMER_ESC, TIMER_ESC_1_2_CHANNEL); //Start timer-channel for ESC1 & ESC2
-8000248a:	0a 9b       	mov	r11,r5
-8000248c:	fe 7c 50 00 	mov	r12,-45056
-80002490:	f0 1f 00 0d 	mcall	800024c4 <motor_init+0x10c>
+80002496:	0a 9b       	mov	r11,r5
+80002498:	fe 7c 50 00 	mov	r12,-45056
+8000249c:	f0 1f 00 0d 	mcall	800024d0 <motor_init+0x118>
 	tc_start (TIMER_ESC, TIMER_ESC_3_4_CHANNEL); //Start timer-channel for ESC3 & ESC4
-80002494:	0e 9b       	mov	r11,r7
-80002496:	fe 7c 50 00 	mov	r12,-45056
-8000249a:	f0 1f 00 0b 	mcall	800024c4 <motor_init+0x10c>
+800024a0:	0e 9b       	mov	r11,r7
+800024a2:	fe 7c 50 00 	mov	r12,-45056
+800024a6:	f0 1f 00 0b 	mcall	800024d0 <motor_init+0x118>
 };
-8000249e:	2f ed       	sub	sp,-8
-800024a0:	e3 cd 80 e0 	ldm	sp++,r5-r7,pc
-800024a4:	80 00       	ld.sh	r0,r0[0x0]
-800024a6:	29 7c       	sub	r12,-105
-800024a8:	80 00       	ld.sh	r0,r0[0x0]
-800024aa:	34 38       	mov	r8,67
-800024ac:	80 00       	ld.sh	r0,r0[0x0]
-800024ae:	23 2c       	sub	r12,50
+800024aa:	2f ed       	sub	sp,-8
+800024ac:	e3 cd 80 e0 	ldm	sp++,r5-r7,pc
 800024b0:	80 00       	ld.sh	r0,r0[0x0]
-800024b2:	27 40       	sub	r0,116
-800024b4:	00 00       	add	r0,r0
-800024b6:	00 fc       	st.b	--r0,r12
+800024b2:	29 8c       	sub	r12,-104
+800024b4:	80 00       	ld.sh	r0,r0[0x0]
+800024b6:	34 38       	mov	r8,67
 800024b8:	80 00       	ld.sh	r0,r0[0x0]
-800024ba:	28 56       	sub	r6,-123
+800024ba:	23 2c       	sub	r12,50
 800024bc:	80 00       	ld.sh	r0,r0[0x0]
-800024be:	27 ee       	sub	lr,126
-800024c0:	80 00       	ld.sh	r0,r0[0x0]
-800024c2:	28 22       	sub	r2,-126
+800024be:	27 50       	sub	r0,117
+800024c0:	00 00       	add	r0,r0
+800024c2:	00 fc       	st.b	--r0,r12
 800024c4:	80 00       	ld.sh	r0,r0[0x0]
-800024c6:	27 dc       	sub	r12,125
+800024c6:	28 66       	sub	r6,-122
+800024c8:	80 00       	ld.sh	r0,r0[0x0]
+800024ca:	27 fe       	sub	lr,127
+800024cc:	80 00       	ld.sh	r0,r0[0x0]
+800024ce:	28 32       	sub	r2,-125
+800024d0:	80 00       	ld.sh	r0,r0[0x0]
+800024d2:	27 ec       	sub	r12,126
 
-800024c8 <sensor_led_init>:
+800024d4 <sensor_led_init>:
 
 __always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
 		bool level)
 {
 	if (level) {
 		arch_ioport_pin_to_base(pin)->ovrs
-800024c8:	fe 78 28 00 	mov	r8,-55296
-800024cc:	e0 69 40 00 	mov	r9,16384
-800024d0:	f1 49 00 54 	st.w	r8[84],r9
-800024d4:	e2 6a 00 00 	mov	r10,131072
-800024d8:	f1 4a 00 54 	st.w	r8[84],r10
-800024dc:	e0 6b 80 00 	mov	r11,32768
-800024e0:	f1 4b 00 54 	st.w	r8[84],r11
+800024d4:	fe 78 28 00 	mov	r8,-55296
+800024d8:	e0 69 40 00 	mov	r9,16384
+800024dc:	f1 49 00 54 	st.w	r8[84],r9
+800024e0:	e2 6a 00 00 	mov	r10,131072
+800024e4:	f1 4a 00 54 	st.w	r8[84],r10
+800024e8:	e0 6b 80 00 	mov	r11,32768
+800024ec:	f1 4b 00 54 	st.w	r8[84],r11
 
 __always_inline static void arch_ioport_set_pin_dir(ioport_pin_t pin,
 		enum ioport_direction dir)
 {
 	if (dir == IOPORT_DIR_OUTPUT) {
 		arch_ioport_pin_to_base(pin)->oders = arch_ioport_pin_to_mask(
-800024e4:	f1 4b 00 44 	st.w	r8[68],r11
-800024e8:	f1 4a 00 44 	st.w	r8[68],r10
-800024ec:	f1 49 00 44 	st.w	r8[68],r9
+800024f0:	f1 4b 00 44 	st.w	r8[68],r11
+800024f4:	f1 4a 00 44 	st.w	r8[68],r10
+800024f8:	f1 49 00 44 	st.w	r8[68],r9
 	ioport_set_pin_level(LED_G_SENS, LED_SENS_OFF);
 	ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);
 	ioport_set_pin_dir(LED_R_SENS, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(LED_G_SENS, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(LED_B_SENS, IOPORT_DIR_OUTPUT);
 }
-800024f0:	5e fc       	retal	r12
-800024f2:	d7 03       	nop
+800024fc:	5e fc       	retal	r12
+800024fe:	d7 03       	nop
 
-800024f4 <write_sensor_data>:
+80002500 <write_sensor_data>:
 	return twim_read_packet(TWI_SENS, &pack);
 	//return twim_read(TWI_SENS, values, count,BNO055_TWI_ADDR_SENSOR,false);
 }
 
 status_code_t write_sensor_data(bno055_register_addr_t _addr, uint8_t *values, uint_fast8_t count)
 {
-800024f4:	eb cd 40 c0 	pushm	r6-r7,lr
-800024f8:	1a 97       	mov	r7,sp
-800024fa:	14 98       	mov	r8,r10
+80002500:	eb cd 40 c0 	pushm	r6-r7,lr
+80002504:	1a 97       	mov	r7,sp
+80002506:	14 98       	mov	r8,r10
 	uint8_t volatile _values[count + 1];
 	_values[0] = _addr;
 	for (uint_fast8_t i = 0; i< count; i++) _values[i+1] = values[i];
 	
 	return twim_write(TWI_SENS, &_values, count + 1, BNO055_TWI_ADDR_SENSOR, false);
 };
-800024fc:	1a 96       	mov	r6,sp
+80002508:	1a 96       	mov	r6,sp
 	//return twim_read(TWI_SENS, values, count,BNO055_TWI_ADDR_SENSOR,false);
 }
 
 status_code_t write_sensor_data(bno055_register_addr_t _addr, uint8_t *values, uint_fast8_t count)
 {
 	uint8_t volatile _values[count + 1];
-800024fe:	2f fa       	sub	r10,-1
-80002500:	f0 c9 ff f9 	sub	r9,r8,-7
-80002504:	e0 19 ff fc 	andl	r9,0xfffc
-80002508:	12 1d       	sub	sp,r9
-8000250a:	1a 9e       	mov	lr,sp
+8000250a:	2f fa       	sub	r10,-1
+8000250c:	f0 c9 ff f9 	sub	r9,r8,-7
+80002510:	e0 19 ff fc 	andl	r9,0xfffc
+80002514:	12 1d       	sub	sp,r9
+80002516:	1a 9e       	mov	lr,sp
 	_values[0] = _addr;
-8000250c:	ba 8c       	st.b	sp[0x0],r12
+80002518:	ba 8c       	st.b	sp[0x0],r12
 	for (uint_fast8_t i = 0; i< count; i++) _values[i+1] = values[i];
-8000250e:	58 08       	cp.w	r8,0
-80002510:	c0 90       	breq	80002522 <write_sensor_data+0x2e>
-80002512:	30 09       	mov	r9,0
-80002514:	2f f9       	sub	r9,-1
-80002516:	17 3c       	ld.ub	r12,r11++
-80002518:	fc 09 0b 0c 	st.b	lr[r9],r12
-8000251c:	12 38       	cp.w	r8,r9
-8000251e:	fe 9b ff fb 	brhi	80002514 <write_sensor_data+0x20>
+8000251a:	58 08       	cp.w	r8,0
+8000251c:	c0 90       	breq	8000252e <write_sensor_data+0x2e>
+8000251e:	30 09       	mov	r9,0
+80002520:	2f f9       	sub	r9,-1
+80002522:	17 3c       	ld.ub	r12,r11++
+80002524:	fc 09 0b 0c 	st.b	lr[r9],r12
+80002528:	12 38       	cp.w	r8,r9
+8000252a:	fe 9b ff fb 	brhi	80002520 <write_sensor_data+0x20>
 	
 	return twim_write(TWI_SENS, &_values, count + 1, BNO055_TWI_ADDR_SENSOR, false);
-80002522:	30 08       	mov	r8,0
-80002524:	32 89       	mov	r9,40
-80002526:	1c 9b       	mov	r11,lr
-80002528:	fe 7c 40 00 	mov	r12,-49152
-8000252c:	f0 1f 00 03 	mcall	80002538 <write_sensor_data+0x44>
+8000252e:	30 08       	mov	r8,0
+80002530:	32 89       	mov	r9,40
+80002532:	1c 9b       	mov	r11,lr
+80002534:	fe 7c 40 00 	mov	r12,-49152
+80002538:	f0 1f 00 03 	mcall	80002544 <write_sensor_data+0x44>
 };
-80002530:	0c 9d       	mov	sp,r6
-80002532:	e3 cd 80 c0 	ldm	sp++,r6-r7,pc
-80002536:	00 00       	add	r0,r0
-80002538:	80 00       	ld.sh	r0,r0[0x0]
-8000253a:	2b 70       	sub	r0,-73
+8000253c:	0c 9d       	mov	sp,r6
+8000253e:	e3 cd 80 c0 	ldm	sp++,r6-r7,pc
+80002542:	00 00       	add	r0,r0
+80002544:	80 00       	ld.sh	r0,r0[0x0]
+80002546:	2b 80       	sub	r0,-72
 
-8000253c <read_sensor_data>:
+80002548 <read_sensor_data>:
 	ioport_set_pin_dir(LED_R_SENS, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(LED_G_SENS, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(LED_B_SENS, IOPORT_DIR_OUTPUT);
 }
 
 status_code_t read_sensor_data(bno055_register_addr_t _addr, const uint8_t *values, uint32_t count){
-8000253c:	d4 01       	pushm	lr
-8000253e:	20 5d       	sub	sp,20
+80002548:	d4 01       	pushm	lr
+8000254a:	20 5d       	sub	sp,20
 	twim_package_t pack;
 	pack.addr[0] = _addr;
-80002540:	ba cc       	st.b	sp[0x4],r12
+8000254c:	ba cc       	st.b	sp[0x4],r12
 	pack.addr_length = 1;
-80002542:	30 18       	mov	r8,1
-80002544:	ba f8       	st.b	sp[0x7],r8
+8000254e:	30 18       	mov	r8,1
+80002550:	ba f8       	st.b	sp[0x7],r8
 	pack.buffer = values;
-80002546:	50 2b       	stdsp	sp[0x8],r11
+80002552:	50 2b       	stdsp	sp[0x8],r11
 	pack.chip = BNO055_TWI_ADDR_SENSOR;
-80002548:	32 88       	mov	r8,40
-8000254a:	50 08       	stdsp	sp[0x0],r8
+80002554:	32 88       	mov	r8,40
+80002556:	50 08       	stdsp	sp[0x0],r8
 	pack.length = count;
-8000254c:	50 3a       	stdsp	sp[0xc],r10
+80002558:	50 3a       	stdsp	sp[0xc],r10
 	pack.no_wait = false;
-8000254e:	30 08       	mov	r8,0
-80002550:	fb 68 00 10 	st.b	sp[16],r8
+8000255a:	30 08       	mov	r8,0
+8000255c:	fb 68 00 10 	st.b	sp[16],r8
 	
 	return twim_read_packet(TWI_SENS, &pack);
-80002554:	1a 9b       	mov	r11,sp
-80002556:	fe 7c 40 00 	mov	r12,-49152
-8000255a:	f0 1f 00 03 	mcall	80002564 <read_sensor_data+0x28>
+80002560:	1a 9b       	mov	r11,sp
+80002562:	fe 7c 40 00 	mov	r12,-49152
+80002566:	f0 1f 00 03 	mcall	80002570 <read_sensor_data+0x28>
 	//return twim_read(TWI_SENS, values, count,BNO055_TWI_ADDR_SENSOR,false);
 }
-8000255e:	2f bd       	sub	sp,-20
-80002560:	d8 02       	popm	pc
-80002562:	00 00       	add	r0,r0
-80002564:	80 00       	ld.sh	r0,r0[0x0]
-80002566:	2c 40       	sub	r0,-60
+8000256a:	2f bd       	sub	sp,-20
+8000256c:	d8 02       	popm	pc
+8000256e:	00 00       	add	r0,r0
+80002570:	80 00       	ld.sh	r0,r0[0x0]
+80002572:	2c 50       	sub	r0,-59
 
-80002568 <read_sensor_euler>:
+80002574 <read_sensor_euler>:
 	_mag.z = (((int16_t) buf[5]) << 8) + ((int16_t) buf[4]);
 	return _mag;
 };
 
 struct bno055_euler_t read_sensor_euler(void)
 {
-80002568:	eb cd 40 80 	pushm	r7,lr
-8000256c:	20 2d       	sub	sp,8
-8000256e:	18 97       	mov	r7,r12
+80002574:	eb cd 40 80 	pushm	r7,lr
+80002578:	20 2d       	sub	sp,8
+8000257a:	18 97       	mov	r7,r12
 	uint8_t buf[6];
 	struct bno055_euler_t _eul;
 	read_sensor_data(BNO055_EULER_H_LSB_ADDR, &buf,6);
-80002570:	30 6a       	mov	r10,6
-80002572:	1a 9b       	mov	r11,sp
-80002574:	31 ac       	mov	r12,26
-80002576:	f0 1f 00 0b 	mcall	800025a0 <read_sensor_euler+0x38>
+8000257c:	30 6a       	mov	r10,6
+8000257e:	1a 9b       	mov	r11,sp
+80002580:	31 ac       	mov	r12,26
+80002582:	f0 1f 00 0b 	mcall	800025ac <read_sensor_euler+0x38>
 	_eul.h = (((int16_t) buf[1]) << 8) + ((int16_t) buf[0]);
-8000257a:	1b 98       	ld.ub	r8,sp[0x1]
-8000257c:	a9 68       	lsl	r8,0x8
-8000257e:	1b 89       	ld.ub	r9,sp[0x0]
-80002580:	12 08       	add	r8,r9
+80002586:	1b 98       	ld.ub	r8,sp[0x1]
+80002588:	a9 68       	lsl	r8,0x8
+8000258a:	1b 89       	ld.ub	r9,sp[0x0]
+8000258c:	12 08       	add	r8,r9
 	_eul.r = (((int16_t) buf[3]) << 8) + ((int16_t) buf[2]);
-80002582:	1b b9       	ld.ub	r9,sp[0x3]
-80002584:	a9 69       	lsl	r9,0x8
-80002586:	1b aa       	ld.ub	r10,sp[0x2]
-80002588:	14 09       	add	r9,r10
+8000258e:	1b b9       	ld.ub	r9,sp[0x3]
+80002590:	a9 69       	lsl	r9,0x8
+80002592:	1b aa       	ld.ub	r10,sp[0x2]
+80002594:	14 09       	add	r9,r10
 	_eul.p = (((int16_t) buf[5]) << 8) + ((int16_t) buf[4]);
 	return _eul;
-8000258a:	1b da       	ld.ub	r10,sp[0x5]
-8000258c:	a9 6a       	lsl	r10,0x8
-8000258e:	1b cb       	ld.ub	r11,sp[0x4]
-80002590:	16 0a       	add	r10,r11
-80002592:	8f 2a       	st.w	r7[0x8],r10
-80002594:	8f 19       	st.w	r7[0x4],r9
-80002596:	8f 08       	st.w	r7[0x0],r8
+80002596:	1b da       	ld.ub	r10,sp[0x5]
+80002598:	a9 6a       	lsl	r10,0x8
+8000259a:	1b cb       	ld.ub	r11,sp[0x4]
+8000259c:	16 0a       	add	r10,r11
+8000259e:	8f 2a       	st.w	r7[0x8],r10
+800025a0:	8f 19       	st.w	r7[0x4],r9
+800025a2:	8f 08       	st.w	r7[0x0],r8
 };
-80002598:	0e 9c       	mov	r12,r7
-8000259a:	2f ed       	sub	sp,-8
-8000259c:	e3 cd 80 80 	ldm	sp++,r7,pc
-800025a0:	80 00       	ld.sh	r0,r0[0x0]
-800025a2:	25 3c       	sub	r12,83
+800025a4:	0e 9c       	mov	r12,r7
+800025a6:	2f ed       	sub	sp,-8
+800025a8:	e3 cd 80 80 	ldm	sp++,r7,pc
+800025ac:	80 00       	ld.sh	r0,r0[0x0]
+800025ae:	25 48       	sub	r8,84
 
-800025a4 <sensor_init>:
+800025b0 <sensor_init>:
  *  Author: Markus
  */ 
 #include "asf.h"
 #include "sensor.h" 
 
 void sensor_init(void){
-800025a4:	eb cd 40 e0 	pushm	r5-r7,lr
-800025a8:	20 5d       	sub	sp,20
-800025aa:	fe 77 28 00 	mov	r7,-55296
-800025ae:	e0 76 00 00 	mov	r6,65536
-800025b2:	ef 46 00 44 	st.w	r7[68],r6
-800025b6:	e0 65 01 00 	mov	r5,256
-800025ba:	ef 45 00 44 	st.w	r7[68],r5
+800025b0:	eb cd 40 e0 	pushm	r5-r7,lr
+800025b4:	20 5d       	sub	sp,20
+800025b6:	fe 77 28 00 	mov	r7,-55296
+800025ba:	e0 76 00 00 	mov	r6,65536
+800025be:	ef 46 00 44 	st.w	r7[68],r6
+800025c2:	e0 65 01 00 	mov	r5,256
+800025c6:	ef 45 00 44 	st.w	r7[68],r5
 				pin);
 	} else if (dir == IOPORT_DIR_INPUT) {
 		arch_ioport_pin_to_base(pin)->oderc = arch_ioport_pin_to_mask(
-800025be:	e0 68 20 00 	mov	r8,8192
-800025c2:	ef 48 00 48 	st.w	r7[72],r8
+800025ca:	e0 68 20 00 	mov	r8,8192
+800025ce:	ef 48 00 48 	st.w	r7[72],r8
 	//ioport_set_pin_dir(BOOT_SENS, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(ADDR0_SENS, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(RST_SENS, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(INT_SENS, IOPORT_DIR_INPUT);
 	
 	sensor_led_init();
-800025c6:	f0 1f 00 49 	mcall	800026e8 <sensor_init+0x144>
+800025d2:	f0 1f 00 49 	mcall	800026f4 <sensor_init+0x144>
 {
 	if (level) {
 		arch_ioport_pin_to_base(pin)->ovrs
 			= arch_ioport_pin_to_mask(pin);
 	} else {
 		arch_ioport_pin_to_base(pin)->ovrc
-800025ca:	ef 46 00 58 	st.w	r7[88],r6
-800025ce:	ef 45 00 58 	st.w	r7[88],r5
-800025d2:	30 bb       	mov	r11,11
-800025d4:	30 2c       	mov	r12,2
-800025d6:	f0 1f 00 46 	mcall	800026ec <sensor_init+0x148>
+800025d6:	ef 46 00 58 	st.w	r7[88],r6
+800025da:	ef 45 00 58 	st.w	r7[88],r5
+800025de:	30 bb       	mov	r11,11
+800025e0:	30 2c       	mov	r12,2
+800025e2:	f0 1f 00 46 	mcall	800026f8 <sensor_init+0x148>
 	ioport_set_pin_level(RST_SENS, LOW);
 	
 	sysclk_enable_peripheral_clock(TWI_SENS);
 	
 	static const gpio_map_t TWI_GPIO_MAP =	{{SDA_SENS, SDA_SENS_PER_FUNC},{SCL_SENS, SCL_SENS_PER_FUNC}};
 	gpio_enable_module(TWI_GPIO_MAP,2);
-800025da:	30 2b       	mov	r11,2
-800025dc:	4c 5c       	lddpc	r12,800026f0 <sensor_init+0x14c>
-800025de:	f0 1f 00 46 	mcall	800026f4 <sensor_init+0x150>
+800025e6:	30 2b       	mov	r11,2
+800025e8:	4c 5c       	lddpc	r12,800026fc <sensor_init+0x14c>
+800025ea:	f0 1f 00 46 	mcall	80002700 <sensor_init+0x150>
 	
 	twim_options_t _twi_opt;
 	_twi_opt.chip = BNO055_TWI_ADDR_SENSOR;
-800025e2:	32 88       	mov	r8,40
-800025e4:	50 38       	stdsp	sp[0xc],r8
+800025ee:	32 88       	mov	r8,40
+800025f0:	50 38       	stdsp	sp[0xc],r8
 	_twi_opt.pba_hz = sysclk_get_pba_hz();
-800025e6:	e0 68 c3 80 	mov	r8,50048
-800025ea:	ea 18 01 c9 	orh	r8,0x1c9
-800025ee:	50 18       	stdsp	sp[0x4],r8
+800025f2:	e0 68 c3 80 	mov	r8,50048
+800025f6:	ea 18 01 c9 	orh	r8,0x1c9
+800025fa:	50 18       	stdsp	sp[0x4],r8
 	_twi_opt.smbus = false;
-800025f0:	30 08       	mov	r8,0
-800025f2:	fb 68 00 10 	st.b	sp[16],r8
+800025fc:	30 08       	mov	r8,0
+800025fe:	fb 68 00 10 	st.b	sp[16],r8
 	_twi_opt.speed = TWI_SENS_SPEED;
-800025f6:	e6 68 1a 80 	mov	r8,400000
-800025fa:	50 28       	stdsp	sp[0x8],r8
+80002602:	e6 68 1a 80 	mov	r8,400000
+80002606:	50 28       	stdsp	sp[0x8],r8
  * \param  delay:   (input) delay in CPU cycles before timeout.
  * \param  cpu_time: (output) internal information used by the timer API.
  */
 __always_inline static void cpu_set_timeout(unsigned long delay, t_cpu_time *cpu_time)
 {
   cpu_time->delay_start_cycle = Get_system_register(AVR32_COUNT);
-800025fc:	e1 b8 00 42 	mfsr	r8,0x108
+80002608:	e1 b8 00 42 	mfsr	r8,0x108
   cpu_time->delay_end_cycle   = cpu_time->delay_start_cycle + delay;
-80002600:	e2 69 49 f0 	mov	r9,150000
-80002604:	f0 09 00 0a 	add	r10,r8,r9
+8000260c:	e2 69 49 f0 	mov	r9,150000
+80002610:	f0 09 00 0a 	add	r10,r8,r9
  *
  * \return true if timeout occurred, otherwise false.
  */
 __always_inline static unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
 {
   unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
-80002608:	e1 b9 00 42 	mfsr	r9,0x108
+80002614:	e1 b9 00 42 	mfsr	r9,0x108
   // Test if the timeout as already occurred.
   else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
     return true;
 
   // If the ending cycle count of this timeout is wrapped, ...
   else if (cpu_time->delay_start_cycle > cpu_time->delay_end_cycle)
-8000260c:	14 38       	cp.w	r8,r10
-8000260e:	e0 88 00 08 	brls	8000261e <sensor_init+0x7a>
+80002618:	14 38       	cp.w	r8,r10
+8000261a:	e0 88 00 08 	brls	8000262a <sensor_init+0x7a>
   {
     if (current_cycle_count < cpu_time->delay_start_cycle && current_cycle_count > cpu_time->delay_end_cycle)
-80002612:	12 38       	cp.w	r8,r9
-80002614:	fe 98 ff fa 	brls	80002608 <sensor_init+0x64>
-80002618:	12 3a       	cp.w	r10,r9
-8000261a:	c2 a3       	brcs	8000266e <sensor_init+0xca>
-8000261c:	cf 6b       	rjmp	80002608 <sensor_init+0x64>
-    }
-    return false;
-  }
-  else
-  {
-    if (current_cycle_count < cpu_time->delay_start_cycle || current_cycle_count > cpu_time->delay_end_cycle)
 8000261e:	12 38       	cp.w	r8,r9
-80002620:	e0 8b 00 27 	brhi	8000266e <sensor_init+0xca>
+80002620:	fe 98 ff fa 	brls	80002614 <sensor_init+0x64>
 80002624:	12 3a       	cp.w	r10,r9
-80002626:	c2 43       	brcs	8000266e <sensor_init+0xca>
-80002628:	cf 0b       	rjmp	80002608 <sensor_init+0x64>
- *
- * \return true if timeout occurred, otherwise false.
- */
-__always_inline static unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
-{
-  unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
-8000262a:	e1 b9 00 42 	mfsr	r9,0x108
-  // Test if the timeout as already occurred.
-  else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
-    return true;
-
-  // If the ending cycle count of this timeout is wrapped, ...
-  else if (cpu_time->delay_start_cycle > cpu_time->delay_end_cycle)
-8000262e:	14 38       	cp.w	r8,r10
-80002630:	e0 88 00 08 	brls	80002640 <sensor_init+0x9c>
-  {
-    if (current_cycle_count < cpu_time->delay_start_cycle && current_cycle_count > cpu_time->delay_end_cycle)
-80002634:	12 38       	cp.w	r8,r9
-80002636:	fe 98 ff fa 	brls	8000262a <sensor_init+0x86>
-8000263a:	12 3a       	cp.w	r10,r9
-8000263c:	c2 83       	brcs	8000268c <sensor_init+0xe8>
-8000263e:	cf 6b       	rjmp	8000262a <sensor_init+0x86>
+80002626:	c2 a3       	brcs	8000267a <sensor_init+0xca>
+80002628:	cf 6b       	rjmp	80002614 <sensor_init+0x64>
     }
     return false;
   }
   else
   {
     if (current_cycle_count < cpu_time->delay_start_cycle || current_cycle_count > cpu_time->delay_end_cycle)
+8000262a:	12 38       	cp.w	r8,r9
+8000262c:	e0 8b 00 27 	brhi	8000267a <sensor_init+0xca>
+80002630:	12 3a       	cp.w	r10,r9
+80002632:	c2 43       	brcs	8000267a <sensor_init+0xca>
+80002634:	cf 0b       	rjmp	80002614 <sensor_init+0x64>
+ *
+ * \return true if timeout occurred, otherwise false.
+ */
+__always_inline static unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
+{
+  unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
+80002636:	e1 b9 00 42 	mfsr	r9,0x108
+  // Test if the timeout as already occurred.
+  else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
+    return true;
+
+  // If the ending cycle count of this timeout is wrapped, ...
+  else if (cpu_time->delay_start_cycle > cpu_time->delay_end_cycle)
+8000263a:	14 38       	cp.w	r8,r10
+8000263c:	e0 88 00 08 	brls	8000264c <sensor_init+0x9c>
+  {
+    if (current_cycle_count < cpu_time->delay_start_cycle && current_cycle_count > cpu_time->delay_end_cycle)
 80002640:	12 38       	cp.w	r8,r9
-80002642:	e0 8b 00 25 	brhi	8000268c <sensor_init+0xe8>
+80002642:	fe 98 ff fa 	brls	80002636 <sensor_init+0x86>
 80002646:	12 3a       	cp.w	r10,r9
-80002648:	c2 23       	brcs	8000268c <sensor_init+0xe8>
-8000264a:	cf 0b       	rjmp	8000262a <sensor_init+0x86>
- *
- * \return true if timeout occurred, otherwise false.
- */
-__always_inline static unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
-{
-  unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
-8000264c:	e1 b9 00 42 	mfsr	r9,0x108
-  // Test if the timeout as already occurred.
-  else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
-    return true;
-
-  // If the ending cycle count of this timeout is wrapped, ...
-  else if (cpu_time->delay_start_cycle > cpu_time->delay_end_cycle)
-80002650:	14 38       	cp.w	r8,r10
-80002652:	e0 88 00 08 	brls	80002662 <sensor_init+0xbe>
-  {
-    if (current_cycle_count < cpu_time->delay_start_cycle && current_cycle_count > cpu_time->delay_end_cycle)
-80002656:	12 38       	cp.w	r8,r9
-80002658:	fe 98 ff fa 	brls	8000264c <sensor_init+0xa8>
-8000265c:	12 3a       	cp.w	r10,r9
-8000265e:	c4 13       	brcs	800026e0 <sensor_init+0x13c>
-80002660:	cf 6b       	rjmp	8000264c <sensor_init+0xa8>
+80002648:	c2 83       	brcs	80002698 <sensor_init+0xe8>
+8000264a:	cf 6b       	rjmp	80002636 <sensor_init+0x86>
     }
     return false;
   }
   else
   {
     if (current_cycle_count < cpu_time->delay_start_cycle || current_cycle_count > cpu_time->delay_end_cycle)
+8000264c:	12 38       	cp.w	r8,r9
+8000264e:	e0 8b 00 25 	brhi	80002698 <sensor_init+0xe8>
+80002652:	12 3a       	cp.w	r10,r9
+80002654:	c2 23       	brcs	80002698 <sensor_init+0xe8>
+80002656:	cf 0b       	rjmp	80002636 <sensor_init+0x86>
+ *
+ * \return true if timeout occurred, otherwise false.
+ */
+__always_inline static unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
+{
+  unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
+80002658:	e1 b9 00 42 	mfsr	r9,0x108
+  // Test if the timeout as already occurred.
+  else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
+    return true;
+
+  // If the ending cycle count of this timeout is wrapped, ...
+  else if (cpu_time->delay_start_cycle > cpu_time->delay_end_cycle)
+8000265c:	14 38       	cp.w	r8,r10
+8000265e:	e0 88 00 08 	brls	8000266e <sensor_init+0xbe>
+  {
+    if (current_cycle_count < cpu_time->delay_start_cycle && current_cycle_count > cpu_time->delay_end_cycle)
 80002662:	12 38       	cp.w	r8,r9
-80002664:	e0 8b 00 3e 	brhi	800026e0 <sensor_init+0x13c>
+80002664:	fe 98 ff fa 	brls	80002658 <sensor_init+0xa8>
 80002668:	12 3a       	cp.w	r10,r9
-8000266a:	c3 b3       	brcs	800026e0 <sensor_init+0x13c>
-8000266c:	cf 0b       	rjmp	8000264c <sensor_init+0xa8>
+8000266a:	c4 13       	brcs	800026ec <sensor_init+0x13c>
+8000266c:	cf 6b       	rjmp	80002658 <sensor_init+0xa8>
+    }
+    return false;
+  }
+  else
+  {
+    if (current_cycle_count < cpu_time->delay_start_cycle || current_cycle_count > cpu_time->delay_end_cycle)
+8000266e:	12 38       	cp.w	r8,r9
+80002670:	e0 8b 00 3e 	brhi	800026ec <sensor_init+0x13c>
+80002674:	12 3a       	cp.w	r10,r9
+80002676:	c3 b3       	brcs	800026ec <sensor_init+0x13c>
+80002678:	cf 0b       	rjmp	80002658 <sensor_init+0xa8>
 
 __always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
 		bool level)
 {
 	if (level) {
 		arch_ioport_pin_to_base(pin)->ovrs
-8000266e:	e0 69 01 00 	mov	r9,256
-80002672:	fe 78 28 00 	mov	r8,-55296
-80002676:	f1 49 00 54 	st.w	r8[84],r9
+8000267a:	e0 69 01 00 	mov	r9,256
+8000267e:	fe 78 28 00 	mov	r8,-55296
+80002682:	f1 49 00 54 	st.w	r8[84],r9
  * \param  delay:   (input) delay in CPU cycles before timeout.
  * \param  cpu_time: (output) internal information used by the timer API.
  */
 __always_inline static void cpu_set_timeout(unsigned long delay, t_cpu_time *cpu_time)
 {
   cpu_time->delay_start_cycle = Get_system_register(AVR32_COUNT);
-8000267a:	e1 b8 00 42 	mfsr	r8,0x108
+80002686:	e1 b8 00 42 	mfsr	r8,0x108
   cpu_time->delay_end_cycle   = cpu_time->delay_start_cycle + delay;
-8000267e:	e0 6a 6f 40 	mov	r10,28480
-80002682:	ea 1a 01 40 	orh	r10,0x140
-80002686:	f0 0a 00 0a 	add	r10,r8,r10
-8000268a:	cd 0b       	rjmp	8000262a <sensor_init+0x86>
+8000268a:	e0 6a 6f 40 	mov	r10,28480
+8000268e:	ea 1a 01 40 	orh	r10,0x140
+80002692:	f0 0a 00 0a 	add	r10,r8,r10
+80002696:	cd 0b       	rjmp	80002636 <sensor_init+0x86>
 	
 	delay_ms(5);
 	ioport_set_pin_level(RST_SENS, HIGH);
 	delay_ms(BNO055_STARTUP_TIME_MS);							//SENSOR STARTUP TIME
 	twim_master_init(TWI_SENS, &_twi_opt);
-8000268c:	fa cb ff fc 	sub	r11,sp,-4
-80002690:	fe 7c 40 00 	mov	r12,-49152
-80002694:	f0 1f 00 19 	mcall	800026f8 <sensor_init+0x154>
+80002698:	fa cb ff fc 	sub	r11,sp,-4
+8000269c:	fe 7c 40 00 	mov	r12,-49152
+800026a0:	f0 1f 00 19 	mcall	80002704 <sensor_init+0x154>
 	
 	//Konfigurieren des Sensores
 	
 	//REMAP X AS Y
 	uint8_t val;
 	val = BNO055_REMAP_X_Y;
-80002698:	32 18       	mov	r8,33
-8000269a:	ba b8       	st.b	sp[0x3],r8
+800026a4:	32 18       	mov	r8,33
+800026a6:	ba b8       	st.b	sp[0x3],r8
 	write_sensor_data(BNO055_AXIS_MAP_CONFIG_ADDR, &val,1);											//AXIS REMAPPING
-8000269c:	fa c7 ff fd 	sub	r7,sp,-3
-800026a0:	30 1a       	mov	r10,1
-800026a2:	0e 9b       	mov	r11,r7
-800026a4:	34 1c       	mov	r12,65
-800026a6:	f0 1f 00 16 	mcall	800026fc <sensor_init+0x158>
+800026a8:	fa c7 ff fd 	sub	r7,sp,-3
+800026ac:	30 1a       	mov	r10,1
+800026ae:	0e 9b       	mov	r11,r7
+800026b0:	34 1c       	mov	r12,65
+800026b2:	f0 1f 00 16 	mcall	80002708 <sensor_init+0x158>
 	val = (BNO055_REMAP_AXIS_POSITIVE)&(BNO055_REMAP_AXIS_POSITIVE)&(BNO055_REMAP_AXIS_POSITIVE);
-800026aa:	30 06       	mov	r6,0
-800026ac:	ba b6       	st.b	sp[0x3],r6
+800026b6:	30 06       	mov	r6,0
+800026b8:	ba b6       	st.b	sp[0x3],r6
 	write_sensor_data(BNO055_AXIS_MAP_SIGN_ADDR, &val, 1);														//AXIS REMAPPING SIGN
-800026ae:	30 1a       	mov	r10,1
-800026b0:	0e 9b       	mov	r11,r7
-800026b2:	34 2c       	mov	r12,66
-800026b4:	f0 1f 00 12 	mcall	800026fc <sensor_init+0x158>
+800026ba:	30 1a       	mov	r10,1
+800026bc:	0e 9b       	mov	r11,r7
+800026be:	34 2c       	mov	r12,66
+800026c0:	f0 1f 00 12 	mcall	80002708 <sensor_init+0x158>
 	
 	//Output Data Format
 	val = (BNO055_ACCEL_UNIT_MSQ << BNO055_ACCEL_UNIT_POS) & \
-800026b8:	ba b6       	st.b	sp[0x3],r6
+800026c4:	ba b6       	st.b	sp[0x3],r6
 		(BNO055_GYRO_UNIT_RPS << BNO055_GYRO_UNIT_POS) & \
 		(BNO055_EULER_UNIT_DEG << BNO055_EULER_UNIT_POS) & \
 		(BNO055_TEMP_UNIT_CELSIUS << BNO055_TEMP_UNIT_POS); 
 	write_sensor_data(BNO055_UNIT_SEL_ADDR, &val, 1);
-800026ba:	30 1a       	mov	r10,1
-800026bc:	0e 9b       	mov	r11,r7
-800026be:	33 bc       	mov	r12,59
-800026c0:	f0 1f 00 0f 	mcall	800026fc <sensor_init+0x158>
+800026c6:	30 1a       	mov	r10,1
+800026c8:	0e 9b       	mov	r11,r7
+800026ca:	33 bc       	mov	r12,59
+800026cc:	f0 1f 00 0f 	mcall	80002708 <sensor_init+0x158>
 	
 	val = BNO055_OPERATION_MODE_NDOF;
-800026c4:	30 c8       	mov	r8,12
-800026c6:	ba b8       	st.b	sp[0x3],r8
+800026d0:	30 c8       	mov	r8,12
+800026d2:	ba b8       	st.b	sp[0x3],r8
 	write_sensor_data(BNO055_OPR_MODE_ADDR, &val,1);
-800026c8:	30 1a       	mov	r10,1
-800026ca:	0e 9b       	mov	r11,r7
-800026cc:	33 dc       	mov	r12,61
-800026ce:	f0 1f 00 0c 	mcall	800026fc <sensor_init+0x158>
+800026d4:	30 1a       	mov	r10,1
+800026d6:	0e 9b       	mov	r11,r7
+800026d8:	33 dc       	mov	r12,61
+800026da:	f0 1f 00 0c 	mcall	80002708 <sensor_init+0x158>
  * \param  delay:   (input) delay in CPU cycles before timeout.
  * \param  cpu_time: (output) internal information used by the timer API.
  */
 __always_inline static void cpu_set_timeout(unsigned long delay, t_cpu_time *cpu_time)
 {
   cpu_time->delay_start_cycle = Get_system_register(AVR32_COUNT);
-800026d2:	e1 b8 00 42 	mfsr	r8,0x108
+800026de:	e1 b8 00 42 	mfsr	r8,0x108
   cpu_time->delay_end_cycle   = cpu_time->delay_start_cycle + delay;
-800026d6:	e8 79 27 c0 	mov	r9,600000
-800026da:	f0 09 00 0a 	add	r10,r8,r9
-800026de:	cb 7b       	rjmp	8000264c <sensor_init+0xa8>
+800026e2:	e8 79 27 c0 	mov	r9,600000
+800026e6:	f0 09 00 0a 	add	r10,r8,r9
+800026ea:	cb 7b       	rjmp	80002658 <sensor_init+0xa8>
 	delay_ms(BNO055_SWITCH_OP_TIME_MS);												//SENSOR SWITCHING OPERATION MODE TIME
 }
-800026e0:	2f bd       	sub	sp,-20
-800026e2:	e3 cd 80 e0 	ldm	sp++,r5-r7,pc
-800026e6:	00 00       	add	r0,r0
-800026e8:	80 00       	ld.sh	r0,r0[0x0]
-800026ea:	24 c8       	sub	r8,76
-800026ec:	80 00       	ld.sh	r0,r0[0x0]
-800026ee:	29 7c       	sub	r12,-105
-800026f0:	80 00       	ld.sh	r0,r0[0x0]
-800026f2:	34 58       	mov	r8,69
+800026ec:	2f bd       	sub	sp,-20
+800026ee:	e3 cd 80 e0 	ldm	sp++,r5-r7,pc
+800026f2:	00 00       	add	r0,r0
 800026f4:	80 00       	ld.sh	r0,r0[0x0]
-800026f6:	23 2c       	sub	r12,50
+800026f6:	24 d4       	sub	r4,77
 800026f8:	80 00       	ld.sh	r0,r0[0x0]
-800026fa:	2d 50       	sub	r0,-43
+800026fa:	29 8c       	sub	r12,-104
 800026fc:	80 00       	ld.sh	r0,r0[0x0]
-800026fe:	24 f4       	sub	r4,79
+800026fe:	34 58       	mov	r8,69
+80002700:	80 00       	ld.sh	r0,r0[0x0]
+80002702:	23 2c       	sub	r12,50
+80002704:	80 00       	ld.sh	r0,r0[0x0]
+80002706:	2d 60       	sub	r0,-42
+80002708:	80 00       	ld.sh	r0,r0[0x0]
+8000270a:	25 00       	sub	r0,80
 
-80002700 <settings_init>:
-settings_t set;
+8000270c <settings_init>:
+volatile settings_t set;
 
 //Read settings set of UserPage on Controller
 //If no data -> Default-values
 void settings_init(void)
 {
-80002700:	d4 01       	pushm	lr
+8000270c:	d4 01       	pushm	lr
 	if (flashcdw_quick_user_page_read())
-80002702:	f0 1f 00 0d 	mcall	80002734 <settings_init+0x34>
-80002706:	c0 f0       	breq	80002724 <settings_init+0x24>
+8000270e:	f0 1f 00 0e 	mcall	80002744 <settings_init+0x38>
+80002712:	c1 10       	breq	80002734 <settings_init+0x28>
 	{
 		//User page empty -> default values
 		set.motor_esc_timer_period = 3750;
-80002708:	48 c8       	lddpc	r8,80002738 <settings_init+0x38>
-8000270a:	e0 69 0e a6 	mov	r9,3750
-8000270e:	91 09       	st.w	r8[0x0],r9
+80002714:	48 d8       	lddpc	r8,80002748 <settings_init+0x3c>
+80002716:	e0 69 0e a6 	mov	r9,3750
+8000271a:	91 09       	st.w	r8[0x0],r9
 		set.motor_esc_timer_value_max = 1875;
-80002710:	e0 69 07 53 	mov	r9,1875
-80002714:	91 29       	st.w	r8[0x8],r9
+8000271c:	e0 69 07 53 	mov	r9,1875
+80002720:	91 29       	st.w	r8[0x8],r9
 		set.motor_esc_timer_value_min = 937;
-80002716:	e0 69 03 a9 	mov	r9,937
-8000271a:	91 19       	st.w	r8[0x4],r9
+80002722:	e0 69 03 a9 	mov	r9,937
+80002726:	91 19       	st.w	r8[0x4],r9
 		set.motor_esc_timer_value_interval = set.motor_esc_timer_value_max - set.motor_esc_timer_value_min;
-8000271c:	e0 69 03 aa 	mov	r9,938
-80002720:	91 39       	st.w	r8[0xc],r9
-80002722:	d8 02       	popm	pc
+80002728:	70 2a       	ld.w	r10,r8[0x8]
+8000272a:	70 19       	ld.w	r9,r8[0x4]
+8000272c:	f4 09 01 09 	sub	r9,r10,r9
+80002730:	91 39       	st.w	r8[0xc],r9
+80002732:	d8 02       	popm	pc
 	}	
 	else
 	{
-		flashcdw_memcpy(&set, AVR32_USER_PAGE_ADDRESS, sizeof(set), false);
-80002724:	30 09       	mov	r9,0
-80002726:	34 ca       	mov	r10,76
-80002728:	fc 1b 80 80 	movh	r11,0x8080
-8000272c:	48 3c       	lddpc	r12,80002738 <settings_init+0x38>
-8000272e:	f0 1f 00 04 	mcall	8000273c <settings_init+0x3c>
-80002732:	d8 02       	popm	pc
-80002734:	80 00       	ld.sh	r0,r0[0x0]
-80002736:	21 4c       	sub	r12,20
-80002738:	00 00       	add	r0,r0
-8000273a:	00 fc       	st.b	--r0,r12
-8000273c:	80 00       	ld.sh	r0,r0[0x0]
-8000273e:	21 9c       	sub	r12,25
+		flashcdw_memcpy(&set, (uint32_t*) AVR32_USER_PAGE_ADDRESS, sizeof(set), false);
+80002734:	30 09       	mov	r9,0
+80002736:	34 ca       	mov	r10,76
+80002738:	fc 1b 80 80 	movh	r11,0x8080
+8000273c:	48 3c       	lddpc	r12,80002748 <settings_init+0x3c>
+8000273e:	f0 1f 00 04 	mcall	8000274c <settings_init+0x40>
+80002742:	d8 02       	popm	pc
+80002744:	80 00       	ld.sh	r0,r0[0x0]
+80002746:	21 4c       	sub	r12,20
+80002748:	00 00       	add	r0,r0
+8000274a:	00 fc       	st.b	--r0,r12
+8000274c:	80 00       	ld.sh	r0,r0[0x0]
+8000274e:	21 9c       	sub	r12,25
 
-80002740 <tc_init_waveform>:
+80002750 <tc_init_waveform>:
 
 
 int tc_init_waveform(volatile avr32_tc_t *tc, const tc_waveform_opt_t *opt)
 {
   // Check for valid input.
   if (opt->channel >= TC_NUMBER_OF_CHANNELS)
-80002740:	76 09       	ld.w	r9,r11[0x0]
-80002742:	58 29       	cp.w	r9,2
-80002744:	e0 88 00 03 	brls	8000274a <tc_init_waveform+0xa>
-80002748:	5e fe       	retal	-1
+80002750:	76 09       	ld.w	r9,r11[0x0]
+80002752:	58 29       	cp.w	r9,2
+80002754:	e0 88 00 03 	brls	8000275a <tc_init_waveform+0xa>
+80002758:	5e fe       	retal	-1
     return TC_INVALID_ARGUMENT;
 
   // GENERATE SIGNALS: Waveform operating mode.
   tc->channel[opt->channel].cmr = opt->bswtrg << AVR32_TC_BSWTRG_OFFSET |
-8000274a:	76 18       	ld.w	r8,r11[0x4]
-8000274c:	f5 d8 c0 03 	bfextu	r10,r8,0x0,0x3
-80002750:	af ba       	sbr	r10,0xf
-80002752:	10 9b       	mov	r11,r8
-80002754:	e6 1b c0 00 	andh	r11,0xc000,COH
-80002758:	16 4a       	or	r10,r11
-8000275a:	10 9b       	mov	r11,r8
-8000275c:	e6 1b 30 00 	andh	r11,0x3000,COH
-80002760:	16 4a       	or	r10,r11
+8000275a:	76 18       	ld.w	r8,r11[0x4]
+8000275c:	f5 d8 c0 03 	bfextu	r10,r8,0x0,0x3
+80002760:	af ba       	sbr	r10,0xf
 80002762:	10 9b       	mov	r11,r8
-80002764:	e6 1b 0c 00 	andh	r11,0xc00,COH
+80002764:	e6 1b c0 00 	andh	r11,0xc000,COH
 80002768:	16 4a       	or	r10,r11
 8000276a:	10 9b       	mov	r11,r8
-8000276c:	e6 1b 03 00 	andh	r11,0x300,COH
+8000276c:	e6 1b 30 00 	andh	r11,0x3000,COH
 80002770:	16 4a       	or	r10,r11
 80002772:	10 9b       	mov	r11,r8
-80002774:	e6 1b 00 c0 	andh	r11,0xc0,COH
+80002774:	e6 1b 0c 00 	andh	r11,0xc00,COH
 80002778:	16 4a       	or	r10,r11
 8000277a:	10 9b       	mov	r11,r8
-8000277c:	e6 1b 00 30 	andh	r11,0x30,COH
+8000277c:	e6 1b 03 00 	andh	r11,0x300,COH
 80002780:	16 4a       	or	r10,r11
 80002782:	10 9b       	mov	r11,r8
-80002784:	e6 1b 00 0c 	andh	r11,0xc,COH
+80002784:	e6 1b 00 c0 	andh	r11,0xc0,COH
 80002788:	16 4a       	or	r10,r11
 8000278a:	10 9b       	mov	r11,r8
-8000278c:	e6 1b 00 03 	andh	r11,0x3,COH
+8000278c:	e6 1b 00 30 	andh	r11,0x30,COH
 80002790:	16 4a       	or	r10,r11
 80002792:	10 9b       	mov	r11,r8
-80002794:	e2 1b 60 00 	andl	r11,0x6000,COH
+80002794:	e6 1b 00 0c 	andh	r11,0xc,COH
 80002798:	16 4a       	or	r10,r11
-8000279a:	f7 d8 c1 81 	bfextu	r11,r8,0xc,0x1
-8000279e:	f5 eb 10 ca 	or	r10,r10,r11<<0xc
+8000279a:	10 9b       	mov	r11,r8
+8000279c:	e6 1b 00 03 	andh	r11,0x3,COH
+800027a0:	16 4a       	or	r10,r11
 800027a2:	10 9b       	mov	r11,r8
-800027a4:	e2 1b 0c 00 	andl	r11,0xc00,COH
+800027a4:	e2 1b 60 00 	andl	r11,0x6000,COH
 800027a8:	16 4a       	or	r10,r11
-800027aa:	10 9b       	mov	r11,r8
-800027ac:	e2 1b 03 00 	andl	r11,0x300,COH
-800027b0:	16 4a       	or	r10,r11
-800027b2:	f7 d8 c0 e1 	bfextu	r11,r8,0x7,0x1
-800027b6:	f5 eb 10 7a 	or	r10,r10,r11<<0x7
-800027ba:	f7 d8 c0 c1 	bfextu	r11,r8,0x6,0x1
-800027be:	f5 eb 10 6a 	or	r10,r10,r11<<0x6
-800027c2:	10 9b       	mov	r11,r8
-800027c4:	e2 1b 00 30 	andl	r11,0x30,COH
-800027c8:	16 4a       	or	r10,r11
-800027ca:	f1 d8 c0 61 	bfextu	r8,r8,0x3,0x1
-800027ce:	f5 e8 10 38 	or	r8,r10,r8<<0x3
-800027d2:	a5 69       	lsl	r9,0x4
-800027d4:	2f f9       	sub	r9,-1
-800027d6:	f8 09 09 28 	st.w	r12[r9<<0x2],r8
-800027da:	5e fd       	retal	0
+800027aa:	f7 d8 c1 81 	bfextu	r11,r8,0xc,0x1
+800027ae:	f5 eb 10 ca 	or	r10,r10,r11<<0xc
+800027b2:	10 9b       	mov	r11,r8
+800027b4:	e2 1b 0c 00 	andl	r11,0xc00,COH
+800027b8:	16 4a       	or	r10,r11
+800027ba:	10 9b       	mov	r11,r8
+800027bc:	e2 1b 03 00 	andl	r11,0x300,COH
+800027c0:	16 4a       	or	r10,r11
+800027c2:	f7 d8 c0 e1 	bfextu	r11,r8,0x7,0x1
+800027c6:	f5 eb 10 7a 	or	r10,r10,r11<<0x7
+800027ca:	f7 d8 c0 c1 	bfextu	r11,r8,0x6,0x1
+800027ce:	f5 eb 10 6a 	or	r10,r10,r11<<0x6
+800027d2:	10 9b       	mov	r11,r8
+800027d4:	e2 1b 00 30 	andl	r11,0x30,COH
+800027d8:	16 4a       	or	r10,r11
+800027da:	f1 d8 c0 61 	bfextu	r8,r8,0x3,0x1
+800027de:	f5 e8 10 38 	or	r8,r10,r8<<0x3
+800027e2:	a5 69       	lsl	r9,0x4
+800027e4:	2f f9       	sub	r9,-1
+800027e6:	f8 09 09 28 	st.w	r12[r9<<0x2],r8
+800027ea:	5e fd       	retal	0
 
-800027dc <tc_start>:
+800027ec <tc_start>:
 
 
 int tc_start(volatile avr32_tc_t *tc, unsigned int channel)
 {
   // Check for valid input.
   if (channel >= TC_NUMBER_OF_CHANNELS)
-800027dc:	58 2b       	cp.w	r11,2
-800027de:	e0 88 00 03 	brls	800027e4 <tc_start+0x8>
-800027e2:	5e fe       	retal	-1
+800027ec:	58 2b       	cp.w	r11,2
+800027ee:	e0 88 00 03 	brls	800027f4 <tc_start+0x8>
+800027f2:	5e fe       	retal	-1
     return TC_INVALID_ARGUMENT;
 
   // Enable, reset and start the selected timer/counter channel.
   tc->channel[channel].ccr = AVR32_TC_SWTRG_MASK | AVR32_TC_CLKEN_MASK;
-800027e4:	a7 6b       	lsl	r11,0x6
-800027e6:	16 0c       	add	r12,r11
-800027e8:	30 58       	mov	r8,5
-800027ea:	99 08       	st.w	r12[0x0],r8
-800027ec:	5e fd       	retal	0
+800027f4:	a7 6b       	lsl	r11,0x6
+800027f6:	16 0c       	add	r12,r11
+800027f8:	30 58       	mov	r8,5
+800027fa:	99 08       	st.w	r12[0x0],r8
+800027fc:	5e fd       	retal	0
 
-800027ee <tc_write_ra>:
+800027fe <tc_write_ra>:
 
 
 int tc_write_ra(volatile avr32_tc_t *tc, unsigned int channel, unsigned short value)
 {
   // Check for valid input.
   if (channel >= TC_NUMBER_OF_CHANNELS)
-800027ee:	58 2b       	cp.w	r11,2
-800027f0:	e0 88 00 03 	brls	800027f6 <tc_write_ra+0x8>
-800027f4:	5e fe       	retal	-1
+800027fe:	58 2b       	cp.w	r11,2
+80002800:	e0 88 00 03 	brls	80002806 <tc_write_ra+0x8>
+80002804:	5e fe       	retal	-1
     return TC_INVALID_ARGUMENT;
 
   // This function is only available in WAVEFORM mode.
   if (Tst_bits(tc->channel[channel].cmr, AVR32_TC_WAVE_MASK))
-800027f6:	f6 08 15 04 	lsl	r8,r11,0x4
-800027fa:	2f f8       	sub	r8,-1
-800027fc:	f8 08 03 28 	ld.w	r8,r12[r8<<0x2]
-80002800:	e2 18 80 00 	andl	r8,0x8000,COH
-80002804:	c0 c0       	breq	8000281c <tc_write_ra+0x2e>
+80002806:	f6 08 15 04 	lsl	r8,r11,0x4
+8000280a:	2f f8       	sub	r8,-1
+8000280c:	f8 08 03 28 	ld.w	r8,r12[r8<<0x2]
+80002810:	e2 18 80 00 	andl	r8,0x8000,COH
+80002814:	c0 c0       	breq	8000282c <tc_write_ra+0x2e>
     Wr_bitfield(tc->channel[channel].ra, AVR32_TC_RA_MASK, value);
-80002806:	a7 6b       	lsl	r11,0x6
-80002808:	16 0c       	add	r12,r11
-8000280a:	2e cc       	sub	r12,-20
-8000280c:	78 08       	ld.w	r8,r12[0x0]
-8000280e:	f3 da c0 10 	bfextu	r9,r10,0x0,0x10
-80002812:	e0 18 00 00 	andl	r8,0x0
-80002816:	f3 e8 10 08 	or	r8,r9,r8
-8000281a:	99 08       	st.w	r12[0x0],r8
+80002816:	a7 6b       	lsl	r11,0x6
+80002818:	16 0c       	add	r12,r11
+8000281a:	2e cc       	sub	r12,-20
+8000281c:	78 08       	ld.w	r8,r12[0x0]
+8000281e:	f3 da c0 10 	bfextu	r9,r10,0x0,0x10
+80002822:	e0 18 00 00 	andl	r8,0x0
+80002826:	f3 e8 10 08 	or	r8,r9,r8
+8000282a:	99 08       	st.w	r12[0x0],r8
 
   return value;
-8000281c:	f9 da c0 10 	bfextu	r12,r10,0x0,0x10
+8000282c:	f9 da c0 10 	bfextu	r12,r10,0x0,0x10
 }
-80002820:	5e fc       	retal	r12
+80002830:	5e fc       	retal	r12
 
-80002822 <tc_write_rb>:
+80002832 <tc_write_rb>:
 
 
 int tc_write_rb(volatile avr32_tc_t *tc, unsigned int channel, unsigned short value)
 {
   // Check for valid input.
   if (channel >= TC_NUMBER_OF_CHANNELS)
-80002822:	58 2b       	cp.w	r11,2
-80002824:	e0 88 00 03 	brls	8000282a <tc_write_rb+0x8>
-80002828:	5e fe       	retal	-1
+80002832:	58 2b       	cp.w	r11,2
+80002834:	e0 88 00 03 	brls	8000283a <tc_write_rb+0x8>
+80002838:	5e fe       	retal	-1
     return TC_INVALID_ARGUMENT;
 
   // This function is only available in WAVEFORM mode.
   if (Tst_bits(tc->channel[channel].cmr, AVR32_TC_WAVE_MASK))
-8000282a:	f6 08 15 04 	lsl	r8,r11,0x4
-8000282e:	2f f8       	sub	r8,-1
-80002830:	f8 08 03 28 	ld.w	r8,r12[r8<<0x2]
-80002834:	e2 18 80 00 	andl	r8,0x8000,COH
-80002838:	c0 c0       	breq	80002850 <tc_write_rb+0x2e>
+8000283a:	f6 08 15 04 	lsl	r8,r11,0x4
+8000283e:	2f f8       	sub	r8,-1
+80002840:	f8 08 03 28 	ld.w	r8,r12[r8<<0x2]
+80002844:	e2 18 80 00 	andl	r8,0x8000,COH
+80002848:	c0 c0       	breq	80002860 <tc_write_rb+0x2e>
     Wr_bitfield(tc->channel[channel].rb, AVR32_TC_RB_MASK, value);
-8000283a:	a7 6b       	lsl	r11,0x6
-8000283c:	16 0c       	add	r12,r11
-8000283e:	2e 8c       	sub	r12,-24
-80002840:	78 08       	ld.w	r8,r12[0x0]
-80002842:	f3 da c0 10 	bfextu	r9,r10,0x0,0x10
-80002846:	e0 18 00 00 	andl	r8,0x0
-8000284a:	f3 e8 10 08 	or	r8,r9,r8
-8000284e:	99 08       	st.w	r12[0x0],r8
+8000284a:	a7 6b       	lsl	r11,0x6
+8000284c:	16 0c       	add	r12,r11
+8000284e:	2e 8c       	sub	r12,-24
+80002850:	78 08       	ld.w	r8,r12[0x0]
+80002852:	f3 da c0 10 	bfextu	r9,r10,0x0,0x10
+80002856:	e0 18 00 00 	andl	r8,0x0
+8000285a:	f3 e8 10 08 	or	r8,r9,r8
+8000285e:	99 08       	st.w	r12[0x0],r8
 
   return value;
-80002850:	f9 da c0 10 	bfextu	r12,r10,0x0,0x10
+80002860:	f9 da c0 10 	bfextu	r12,r10,0x0,0x10
 }
-80002854:	5e fc       	retal	r12
+80002864:	5e fc       	retal	r12
 
-80002856 <tc_write_rc>:
+80002866 <tc_write_rc>:
 
 
 int tc_write_rc(volatile avr32_tc_t *tc, unsigned int channel, unsigned short value)
 {
   // Check for valid input.
   if (channel >= TC_NUMBER_OF_CHANNELS)
-80002856:	58 2b       	cp.w	r11,2
-80002858:	e0 88 00 03 	brls	8000285e <tc_write_rc+0x8>
-8000285c:	5e fe       	retal	-1
+80002866:	58 2b       	cp.w	r11,2
+80002868:	e0 88 00 03 	brls	8000286e <tc_write_rc+0x8>
+8000286c:	5e fe       	retal	-1
     return TC_INVALID_ARGUMENT;
 
   // This function is only available in WAVEFORM mode.
   if (Tst_bits(tc->channel[channel].cmr, AVR32_TC_WAVE_MASK))
-8000285e:	f6 08 15 04 	lsl	r8,r11,0x4
-80002862:	2f f8       	sub	r8,-1
-80002864:	f8 08 03 28 	ld.w	r8,r12[r8<<0x2]
-80002868:	e2 18 80 00 	andl	r8,0x8000,COH
-8000286c:	c0 c0       	breq	80002884 <tc_write_rc+0x2e>
+8000286e:	f6 08 15 04 	lsl	r8,r11,0x4
+80002872:	2f f8       	sub	r8,-1
+80002874:	f8 08 03 28 	ld.w	r8,r12[r8<<0x2]
+80002878:	e2 18 80 00 	andl	r8,0x8000,COH
+8000287c:	c0 c0       	breq	80002894 <tc_write_rc+0x2e>
     Wr_bitfield(tc->channel[channel].rc, AVR32_TC_RC_MASK, value);
-8000286e:	a7 6b       	lsl	r11,0x6
-80002870:	16 0c       	add	r12,r11
-80002872:	2e 4c       	sub	r12,-28
-80002874:	78 08       	ld.w	r8,r12[0x0]
-80002876:	f3 da c0 10 	bfextu	r9,r10,0x0,0x10
-8000287a:	e0 18 00 00 	andl	r8,0x0
-8000287e:	f3 e8 10 08 	or	r8,r9,r8
-80002882:	99 08       	st.w	r12[0x0],r8
+8000287e:	a7 6b       	lsl	r11,0x6
+80002880:	16 0c       	add	r12,r11
+80002882:	2e 4c       	sub	r12,-28
+80002884:	78 08       	ld.w	r8,r12[0x0]
+80002886:	f3 da c0 10 	bfextu	r9,r10,0x0,0x10
+8000288a:	e0 18 00 00 	andl	r8,0x0
+8000288e:	f3 e8 10 08 	or	r8,r9,r8
+80002892:	99 08       	st.w	r12[0x0],r8
 
   return value;
-80002884:	f9 da c0 10 	bfextu	r12,r10,0x0,0x10
+80002894:	f9 da c0 10 	bfextu	r12,r10,0x0,0x10
 }
-80002888:	5e fc       	retal	r12
+80002898:	5e fc       	retal	r12
 
-8000288a <osc_priv_enable_rc120m>:
+8000289a <osc_priv_enable_rc120m>:
 	cpu_irq_restore(flags);
 }
 #endif /* BOARD_OSC32_HZ */
 
 void osc_priv_enable_rc120m(void)
 {
-8000288a:	20 1d       	sub	sp,4
+8000289a:	20 1d       	sub	sp,4
 
 static inline irqflags_t cpu_irq_save(void)
 {
 	volatile irqflags_t flags;
 
 	flags = sysreg_read(AVR32_SR);
-8000288c:	e1 b8 00 00 	mfsr	r8,0x0
-80002890:	50 08       	stdsp	sp[0x0],r8
+8000289c:	e1 b8 00 00 	mfsr	r8,0x0
+800028a0:	50 08       	stdsp	sp[0x0],r8
 	cpu_irq_disable();
-80002892:	d3 03       	ssrf	0x10
+800028a2:	d3 03       	ssrf	0x10
 
 	return flags;
-80002894:	40 09       	lddsp	r9,sp[0x0]
+800028a4:	40 09       	lddsp	r9,sp[0x0]
 	irqflags_t flags;
 
 	flags = cpu_irq_save();
 	AVR32_SCIF.unlock = 0xaa000000 | AVR32_SCIF_RC120MCR;
-80002896:	fe 78 58 00 	mov	r8,-43008
-8000289a:	34 4a       	mov	r10,68
-8000289c:	ea 1a aa 00 	orh	r10,0xaa00
-800028a0:	91 6a       	st.w	r8[0x18],r10
+800028a6:	fe 78 58 00 	mov	r8,-43008
+800028aa:	34 4a       	mov	r10,68
+800028ac:	ea 1a aa 00 	orh	r10,0xaa00
+800028b0:	91 6a       	st.w	r8[0x18],r10
 	AVR32_SCIF.rc120mcr = 1U << AVR32_SCIF_RC120MCR_EN;
-800028a2:	30 1a       	mov	r10,1
-800028a4:	f1 4a 00 44 	st.w	r8[68],r10
+800028b2:	30 1a       	mov	r10,1
+800028b4:	f1 4a 00 44 	st.w	r8[68],r10
 static inline void cpu_irq_restore(irqflags_t flags)
 {
 	barrier();
 
    /* Restore the global IRQ mask status flag if it was previously set */
    if ( cpu_irq_is_enabled_flags(flags) ) {
-800028a8:	12 98       	mov	r8,r9
-800028aa:	e6 18 00 01 	andh	r8,0x1,COH
-800028ae:	c0 21       	brne	800028b2 <osc_priv_enable_rc120m+0x28>
+800028b8:	12 98       	mov	r8,r9
+800028ba:	e6 18 00 01 	andh	r8,0x1,COH
+800028be:	c0 21       	brne	800028c2 <osc_priv_enable_rc120m+0x28>
       cpu_irq_enable();
-800028b0:	d5 03       	csrf	0x10
+800028c0:	d5 03       	csrf	0x10
 	cpu_irq_restore(flags);
 }
-800028b2:	2f fd       	sub	sp,-4
-800028b4:	5e fc       	retal	r12
+800028c2:	2f fd       	sub	sp,-4
+800028c4:	5e fc       	retal	r12
 
-800028b6 <sysclk_set_source>:
+800028c6 <sysclk_set_source>:
  *
  * \param src The new system clock source. Must be one of the constants
  * from the <em>System Clock Sources</em> section.
  */
 void sysclk_set_source(uint_fast8_t src)
 {
-800028b6:	20 1d       	sub	sp,4
+800028c6:	20 1d       	sub	sp,4
 
 static inline irqflags_t cpu_irq_save(void)
 {
 	volatile irqflags_t flags;
 
 	flags = sysreg_read(AVR32_SR);
-800028b8:	e1 b8 00 00 	mfsr	r8,0x0
-800028bc:	50 08       	stdsp	sp[0x0],r8
+800028c8:	e1 b8 00 00 	mfsr	r8,0x0
+800028cc:	50 08       	stdsp	sp[0x0],r8
 	cpu_irq_disable();
-800028be:	d3 03       	ssrf	0x10
+800028ce:	d3 03       	ssrf	0x10
 
 	return flags;
-800028c0:	40 09       	lddsp	r9,sp[0x0]
+800028d0:	40 09       	lddsp	r9,sp[0x0]
 	irqflags_t flags;
 
 	Assert(src <= SYSCLK_SRC_PLL1);
 
 	flags = cpu_irq_save();
 	AVR32_PM.unlock = 0xaa000000 | AVR32_PM_MCCTRL;
-800028c2:	fe 78 14 00 	mov	r8,-60416
-800028c6:	fc 1a aa 00 	movh	r10,0xaa00
-800028ca:	f1 4a 00 58 	st.w	r8[88],r10
+800028d2:	fe 78 14 00 	mov	r8,-60416
+800028d6:	fc 1a aa 00 	movh	r10,0xaa00
+800028da:	f1 4a 00 58 	st.w	r8[88],r10
 	AVR32_PM.mcctrl = src;
-800028ce:	91 0c       	st.w	r8[0x0],r12
+800028de:	91 0c       	st.w	r8[0x0],r12
 static inline void cpu_irq_restore(irqflags_t flags)
 {
 	barrier();
 
    /* Restore the global IRQ mask status flag if it was previously set */
    if ( cpu_irq_is_enabled_flags(flags) ) {
-800028d0:	12 98       	mov	r8,r9
-800028d2:	e6 18 00 01 	andh	r8,0x1,COH
-800028d6:	c0 21       	brne	800028da <sysclk_set_source+0x24>
+800028e0:	12 98       	mov	r8,r9
+800028e2:	e6 18 00 01 	andh	r8,0x1,COH
+800028e6:	c0 21       	brne	800028ea <sysclk_set_source+0x24>
       cpu_irq_enable();
-800028d8:	d5 03       	csrf	0x10
+800028e8:	d5 03       	csrf	0x10
 	cpu_irq_restore(flags);
 }
-800028da:	2f fd       	sub	sp,-4
-800028dc:	5e fc       	retal	r12
+800028ea:	2f fd       	sub	sp,-4
+800028ec:	5e fc       	retal	r12
 
-800028de <sysclk_set_prescalers>:
+800028ee <sysclk_set_prescalers>:
  * \param pba_shift The PBA clock will be divided by \f$2^{pba\_shift}\f$
  * \param pbb_shift The PBB clock will be divided by \f$2^{pbb\_shift}\f$
  */
 void sysclk_set_prescalers(unsigned int cpu_shift,
 		unsigned int pba_shift, unsigned int pbb_shift)
 {
-800028de:	d4 01       	pushm	lr
-800028e0:	20 1d       	sub	sp,4
+800028ee:	d4 01       	pushm	lr
+800028f0:	20 1d       	sub	sp,4
 	uint32_t   pbb_cksel = 0;
 
 	Assert(cpu_shift <= pba_shift);
 	Assert(cpu_shift <= pbb_shift);
 
 	if (cpu_shift > 0)
-800028e2:	58 0c       	cp.w	r12,0
-800028e4:	c0 30       	breq	800028ea <sysclk_set_prescalers+0xc>
+800028f2:	58 0c       	cp.w	r12,0
+800028f4:	c0 30       	breq	800028fa <sysclk_set_prescalers+0xc>
 		cpu_cksel = ((cpu_shift - 1) << AVR32_PM_CPUSEL_OFFSET)
-800028e6:	20 1c       	sub	r12,1
-800028e8:	a7 bc       	sbr	r12,0x7
+800028f6:	20 1c       	sub	r12,1
+800028f8:	a7 bc       	sbr	r12,0x7
 				| (1U << AVR32_PM_CPUDIV);
 
 	if (pba_shift > 0)
-800028ea:	58 0b       	cp.w	r11,0
-800028ec:	c0 30       	breq	800028f2 <sysclk_set_prescalers+0x14>
+800028fa:	58 0b       	cp.w	r11,0
+800028fc:	c0 30       	breq	80002902 <sysclk_set_prescalers+0x14>
 		pba_cksel = ((pba_shift - 1) << AVR32_PM_PBASEL_OFFSET)
-800028ee:	20 1b       	sub	r11,1
-800028f0:	a7 bb       	sbr	r11,0x7
+800028fe:	20 1b       	sub	r11,1
+80002900:	a7 bb       	sbr	r11,0x7
 				| (1U << AVR32_PM_PBADIV);
 
 	if (pbb_shift > 0)
-800028f2:	58 0a       	cp.w	r10,0
-800028f4:	c0 30       	breq	800028fa <sysclk_set_prescalers+0x1c>
+80002902:	58 0a       	cp.w	r10,0
+80002904:	c0 30       	breq	8000290a <sysclk_set_prescalers+0x1c>
 		pbb_cksel = ((pbb_shift - 1) << AVR32_PM_PBBSEL_OFFSET)
-800028f6:	20 1a       	sub	r10,1
-800028f8:	a7 ba       	sbr	r10,0x7
+80002906:	20 1a       	sub	r10,1
+80002908:	a7 ba       	sbr	r10,0x7
 
 static inline irqflags_t cpu_irq_save(void)
 {
 	volatile irqflags_t flags;
 
 	flags = sysreg_read(AVR32_SR);
-800028fa:	e1 b8 00 00 	mfsr	r8,0x0
-800028fe:	50 08       	stdsp	sp[0x0],r8
+8000290a:	e1 b8 00 00 	mfsr	r8,0x0
+8000290e:	50 08       	stdsp	sp[0x0],r8
 	cpu_irq_disable();
-80002900:	d3 03       	ssrf	0x10
+80002910:	d3 03       	ssrf	0x10
 
 	return flags;
-80002902:	40 09       	lddsp	r9,sp[0x0]
+80002912:	40 09       	lddsp	r9,sp[0x0]
 				| (1U << AVR32_PM_PBBDIV);
 
 	flags = cpu_irq_save();
 	AVR32_PM.unlock = 0xaa000000 | AVR32_PM_CPUSEL;
-80002904:	fe 78 14 00 	mov	r8,-60416
-80002908:	30 4e       	mov	lr,4
-8000290a:	ea 1e aa 00 	orh	lr,0xaa00
-8000290e:	f1 4e 00 58 	st.w	r8[88],lr
+80002914:	fe 78 14 00 	mov	r8,-60416
+80002918:	30 4e       	mov	lr,4
+8000291a:	ea 1e aa 00 	orh	lr,0xaa00
+8000291e:	f1 4e 00 58 	st.w	r8[88],lr
 	AVR32_PM.cpusel = cpu_cksel;
-80002912:	91 1c       	st.w	r8[0x4],r12
+80002922:	91 1c       	st.w	r8[0x4],r12
 	AVR32_PM.unlock = 0xaa000000 | AVR32_PM_PBASEL;
-80002914:	30 cc       	mov	r12,12
-80002916:	ea 1c aa 00 	orh	r12,0xaa00
-8000291a:	f1 4c 00 58 	st.w	r8[88],r12
+80002924:	30 cc       	mov	r12,12
+80002926:	ea 1c aa 00 	orh	r12,0xaa00
+8000292a:	f1 4c 00 58 	st.w	r8[88],r12
 	AVR32_PM.pbasel = pba_cksel;
-8000291e:	91 3b       	st.w	r8[0xc],r11
+8000292e:	91 3b       	st.w	r8[0xc],r11
 	AVR32_PM.unlock = 0xaa000000 | AVR32_PM_PBBSEL;
-80002920:	31 0b       	mov	r11,16
-80002922:	ea 1b aa 00 	orh	r11,0xaa00
-80002926:	f1 4b 00 58 	st.w	r8[88],r11
+80002930:	31 0b       	mov	r11,16
+80002932:	ea 1b aa 00 	orh	r11,0xaa00
+80002936:	f1 4b 00 58 	st.w	r8[88],r11
 	AVR32_PM.pbbsel = pbb_cksel;
-8000292a:	91 4a       	st.w	r8[0x10],r10
+8000293a:	91 4a       	st.w	r8[0x10],r10
 static inline void cpu_irq_restore(irqflags_t flags)
 {
 	barrier();
 
    /* Restore the global IRQ mask status flag if it was previously set */
    if ( cpu_irq_is_enabled_flags(flags) ) {
-8000292c:	12 98       	mov	r8,r9
-8000292e:	e6 18 00 01 	andh	r8,0x1,COH
-80002932:	c0 21       	brne	80002936 <sysclk_set_prescalers+0x58>
+8000293c:	12 98       	mov	r8,r9
+8000293e:	e6 18 00 01 	andh	r8,0x1,COH
+80002942:	c0 21       	brne	80002946 <sysclk_set_prescalers+0x58>
       cpu_irq_enable();
-80002934:	d5 03       	csrf	0x10
+80002944:	d5 03       	csrf	0x10
 	cpu_irq_restore(flags);
 }
-80002936:	2f fd       	sub	sp,-4
-80002938:	d8 02       	popm	pc
-8000293a:	d7 03       	nop
+80002946:	2f fd       	sub	sp,-4
+80002948:	d8 02       	popm	pc
+8000294a:	d7 03       	nop
 
-8000293c <sysclk_init>:
+8000294c <sysclk_init>:
 #endif // CONFIG_USBCLK_SOURCE
 
 
 
 void sysclk_init(void)
 {
-8000293c:	d4 01       	pushm	lr
+8000294c:	d4 01       	pushm	lr
 	/* Set up system clock dividers if different from defaults */
 	if ((CONFIG_SYSCLK_CPU_DIV > 0) || (CONFIG_SYSCLK_PBA_DIV > 0) ||
 			(CONFIG_SYSCLK_PBB_DIV > 0)) {
 		sysclk_set_prescalers(CONFIG_SYSCLK_CPU_DIV,
-8000293e:	30 2a       	mov	r10,2
-80002940:	14 9b       	mov	r11,r10
-80002942:	14 9c       	mov	r12,r10
-80002944:	f0 1f 00 0a 	mcall	8000296c <sysclk_init+0x30>
+8000294e:	30 2a       	mov	r10,2
+80002950:	14 9b       	mov	r11,r10
+80002952:	14 9c       	mov	r12,r10
+80002954:	f0 1f 00 0a 	mcall	8000297c <sysclk_init+0x30>
 		osc_priv_enable_osc32();
 		break;
 #endif
 
 	case OSC_ID_RC120M:
 		osc_priv_enable_rc120m();
-80002948:	f0 1f 00 0a 	mcall	80002970 <sysclk_init+0x34>
+80002958:	f0 1f 00 0a 	mcall	80002980 <sysclk_init+0x34>
 	case OSC_ID_OSC32:
 		return !!(AVR32_SCIF.pclksr & (1 << AVR32_SCIF_OSC32RDY));
 #endif
 
 	case OSC_ID_RC120M:
 		return !!(AVR32_SCIF.rc120mcr & (1 << AVR32_SCIF_RC120MCR_EN));
-8000294c:	fe 78 58 00 	mov	r8,-43008
-80002950:	71 19       	ld.w	r9,r8[0x44]
+8000295c:	fe 78 58 00 	mov	r8,-43008
+80002960:	71 19       	ld.w	r9,r8[0x44]
  *
  * \param id A number identifying the oscillator to wait for.
  */
 static inline void osc_wait_ready(uint8_t id)
 {
 	while (!osc_is_ready(id)) {
-80002952:	f3 d9 c0 01 	bfextu	r9,r9,0x0,0x1
-80002956:	cf d0       	breq	80002950 <sysclk_init+0x14>
+80002962:	f3 d9 c0 01 	bfextu	r9,r9,0x0,0x1
+80002966:	cf d0       	breq	80002960 <sysclk_init+0x14>
 #endif
 	case SYSCLK_SRC_RC120M:
 		osc_enable(OSC_ID_RC120M);
 		osc_wait_ready(OSC_ID_RC120M);
 		// Set a flash wait state depending on the new cpu frequency.
 		flash_set_bus_freq(sysclk_get_cpu_hz());
-80002958:	e0 6c c3 80 	mov	r12,50048
-8000295c:	ea 1c 01 c9 	orh	r12,0x1c9
-80002960:	f0 1f 00 05 	mcall	80002974 <sysclk_init+0x38>
+80002968:	e0 6c c3 80 	mov	r12,50048
+8000296c:	ea 1c 01 c9 	orh	r12,0x1c9
+80002970:	f0 1f 00 05 	mcall	80002984 <sysclk_init+0x38>
 		sysclk_set_source(SYSCLK_SRC_RC120M);
-80002964:	30 4c       	mov	r12,4
-80002966:	f0 1f 00 05 	mcall	80002978 <sysclk_init+0x3c>
+80002974:	30 4c       	mov	r12,4
+80002976:	f0 1f 00 05 	mcall	80002988 <sysclk_init+0x3c>
 
 #if (defined CONFIG_SYSCLK_DEFAULT_RETURNS_SLOW_OSC)
 	/* Signal that the internal frequencies are setup */
 	sysclk_initialized = true;
 #endif
 }
-8000296a:	d8 02       	popm	pc
-8000296c:	80 00       	ld.sh	r0,r0[0x0]
-8000296e:	28 de       	sub	lr,-115
-80002970:	80 00       	ld.sh	r0,r0[0x0]
-80002972:	28 8a       	sub	r10,-120
-80002974:	80 00       	ld.sh	r0,r0[0x0]
-80002976:	20 78       	sub	r8,7
-80002978:	80 00       	ld.sh	r0,r0[0x0]
-8000297a:	28 b6       	sub	r6,-117
+8000297a:	d8 02       	popm	pc
+8000297c:	80 00       	ld.sh	r0,r0[0x0]
+8000297e:	28 ee       	sub	lr,-114
+80002980:	80 00       	ld.sh	r0,r0[0x0]
+80002982:	28 9a       	sub	r10,-119
+80002984:	80 00       	ld.sh	r0,r0[0x0]
+80002986:	20 78       	sub	r8,7
+80002988:	80 00       	ld.sh	r0,r0[0x0]
+8000298a:	28 c6       	sub	r6,-116
 
-8000297c <sysclk_priv_enable_module>:
+8000298c <sysclk_priv_enable_module>:
  * \param bus_id Bus index, given by the \c AVR32_PM_CLK_GRP_xxx definitions.
  * \param module_index Index of the module to be enabled. This is the
  * bit number in the corresponding xxxMASK register.
  */
 void sysclk_priv_enable_module(unsigned int bus_id, unsigned int module_index)
 {
-8000297c:	d4 01       	pushm	lr
-8000297e:	20 1d       	sub	sp,4
+8000298c:	d4 01       	pushm	lr
+8000298e:	20 1d       	sub	sp,4
 
 static inline irqflags_t cpu_irq_save(void)
 {
 	volatile irqflags_t flags;
 
 	flags = sysreg_read(AVR32_SR);
-80002980:	e1 b8 00 00 	mfsr	r8,0x0
-80002984:	50 08       	stdsp	sp[0x0],r8
+80002990:	e1 b8 00 00 	mfsr	r8,0x0
+80002994:	50 08       	stdsp	sp[0x0],r8
 	cpu_irq_disable();
-80002986:	d3 03       	ssrf	0x10
+80002996:	d3 03       	ssrf	0x10
 
 	return flags;
-80002988:	40 09       	lddsp	r9,sp[0x0]
+80002998:	40 09       	lddsp	r9,sp[0x0]
 	uint32_t   mask;
 
 	flags = cpu_irq_save();
 
 	/* Enable the clock */
 	mask = *(&AVR32_PM.cpumask + bus_id);
-8000298a:	a3 6c       	lsl	r12,0x2
-8000298c:	fe 7a 14 20 	mov	r10,-60384
-80002990:	f8 0a 00 08 	add	r8,r12,r10
-80002994:	70 0a       	ld.w	r10,r8[0x0]
+8000299a:	a3 6c       	lsl	r12,0x2
+8000299c:	fe 7a 14 20 	mov	r10,-60384
+800029a0:	f8 0a 00 08 	add	r8,r12,r10
+800029a4:	70 0a       	ld.w	r10,r8[0x0]
 	mask |= 1U << module_index;
-80002996:	30 1e       	mov	lr,1
-80002998:	fc 0b 09 4b 	lsl	r11,lr,r11
-8000299c:	14 4b       	or	r11,r10
+800029a6:	30 1e       	mov	lr,1
+800029a8:	fc 0b 09 4b 	lsl	r11,lr,r11
+800029ac:	14 4b       	or	r11,r10
 	AVR32_PM.unlock = 0xaa000020 + (4 * bus_id);
-8000299e:	32 0a       	mov	r10,32
-800029a0:	ea 1a aa 00 	orh	r10,0xaa00
-800029a4:	14 0c       	add	r12,r10
-800029a6:	fe 7a 14 00 	mov	r10,-60416
-800029aa:	f5 4c 00 58 	st.w	r10[88],r12
+800029ae:	32 0a       	mov	r10,32
+800029b0:	ea 1a aa 00 	orh	r10,0xaa00
+800029b4:	14 0c       	add	r12,r10
+800029b6:	fe 7a 14 00 	mov	r10,-60416
+800029ba:	f5 4c 00 58 	st.w	r10[88],r12
 	*(&AVR32_PM.cpumask + bus_id) = mask;
-800029ae:	91 0b       	st.w	r8[0x0],r11
+800029be:	91 0b       	st.w	r8[0x0],r11
 static inline void cpu_irq_restore(irqflags_t flags)
 {
 	barrier();
 
    /* Restore the global IRQ mask status flag if it was previously set */
    if ( cpu_irq_is_enabled_flags(flags) ) {
-800029b0:	12 98       	mov	r8,r9
-800029b2:	e6 18 00 01 	andh	r8,0x1,COH
-800029b6:	c0 21       	brne	800029ba <sysclk_priv_enable_module+0x3e>
+800029c0:	12 98       	mov	r8,r9
+800029c2:	e6 18 00 01 	andh	r8,0x1,COH
+800029c6:	c0 21       	brne	800029ca <sysclk_priv_enable_module+0x3e>
       cpu_irq_enable();
-800029b8:	d5 03       	csrf	0x10
+800029c8:	d5 03       	csrf	0x10
 
 	cpu_irq_restore(flags);
 }
-800029ba:	2f fd       	sub	sp,-4
-800029bc:	d8 02       	popm	pc
+800029ca:	2f fd       	sub	sp,-4
+800029cc:	d8 02       	popm	pc
 
-800029be <spi_initSlave>:
+800029ce <spi_initSlave>:
 
 spi_status_t spi_initSlave(volatile avr32_spi_t *spi,
 		uint8_t bits,
 		uint8_t spi_mode)
 {
 	if (spi_mode > 3 ||
-800029be:	30 38       	mov	r8,3
-800029c0:	f0 0a 18 00 	cp.b	r10,r8
-800029c4:	5f b9       	srhi	r9
-800029c6:	30 78       	mov	r8,7
-800029c8:	f0 0b 18 00 	cp.b	r11,r8
-800029cc:	5f 88       	srls	r8
-800029ce:	f3 e8 10 08 	or	r8,r9,r8
-800029d2:	c1 71       	brne	80002a00 <spi_initSlave+0x42>
-800029d4:	31 08       	mov	r8,16
-800029d6:	f0 0b 18 00 	cp.b	r11,r8
-800029da:	e0 8b 00 13 	brhi	80002a00 <spi_initSlave+0x42>
+800029ce:	30 38       	mov	r8,3
+800029d0:	f0 0a 18 00 	cp.b	r10,r8
+800029d4:	5f b9       	srhi	r9
+800029d6:	30 78       	mov	r8,7
+800029d8:	f0 0b 18 00 	cp.b	r11,r8
+800029dc:	5f 88       	srls	r8
+800029de:	f3 e8 10 08 	or	r8,r9,r8
+800029e2:	c1 71       	brne	80002a10 <spi_initSlave+0x42>
+800029e4:	31 08       	mov	r8,16
+800029e6:	f0 0b 18 00 	cp.b	r11,r8
+800029ea:	e0 8b 00 13 	brhi	80002a10 <spi_initSlave+0x42>
 			bits < 8 || bits > 16) {
 		return SPI_ERROR_ARGUMENT;
 	}
 
 	/* Reset. */
 	spi->cr = AVR32_SPI_CR_SWRST_MASK;
-800029de:	e0 68 00 80 	mov	r8,128
-800029e2:	99 08       	st.w	r12[0x0],r8
+800029ee:	e0 68 00 80 	mov	r8,128
+800029f2:	99 08       	st.w	r12[0x0],r8
 
 	/* Will use CSR0 offsets; these are the same for CSR0 to CSR3. */
 	spi->csr0 = ((spi_mode >> 1) << AVR32_SPI_CSR0_CPOL_OFFSET) |
 			(((spi_mode &
-800029e4:	f1 da c0 01 	bfextu	r8,r10,0x0,0x1
-800029e8:	f9 b8 00 02 	moveq	r8,2
-800029ec:	f9 b8 01 00 	movne	r8,0
+800029f4:	f1 da c0 01 	bfextu	r8,r10,0x0,0x1
+800029f8:	f9 b8 00 02 	moveq	r8,2
+800029fc:	f9 b8 01 00 	movne	r8,0
 
 	/* Reset. */
 	spi->cr = AVR32_SPI_CR_SWRST_MASK;
 
 	/* Will use CSR0 offsets; these are the same for CSR0 to CSR3. */
 	spi->csr0 = ((spi_mode >> 1) << AVR32_SPI_CSR0_CPOL_OFFSET) |
-800029f0:	20 8b       	sub	r11,8
-800029f2:	a1 9a       	lsr	r10,0x1
-800029f4:	f5 eb 10 4a 	or	r10,r10,r11<<0x4
-800029f8:	f5 e8 10 08 	or	r8,r10,r8
-800029fc:	99 c8       	st.w	r12[0x30],r8
-800029fe:	5e fd       	retal	0
+80002a00:	20 8b       	sub	r11,8
+80002a02:	a1 9a       	lsr	r10,0x1
+80002a04:	f5 eb 10 4a 	or	r10,r10,r11<<0x4
+80002a08:	f5 e8 10 08 	or	r8,r10,r8
+80002a0c:	99 c8       	st.w	r12[0x30],r8
+80002a0e:	5e fd       	retal	0
 			(((spi_mode &
 			0x1) ^ 0x1) << AVR32_SPI_CSR0_NCPHA_OFFSET) |
 			((bits - 8) << AVR32_SPI_CSR0_BITS_OFFSET);
 
 	return SPI_OK;
-80002a00:	30 2c       	mov	r12,2
+80002a10:	30 2c       	mov	r12,2
 }
-80002a02:	5e fc       	retal	r12
+80002a12:	5e fc       	retal	r12
 
-80002a04 <spi_enable>:
+80002a14 <spi_enable>:
 	return SPI_OK;
 }
 
 void spi_enable(volatile avr32_spi_t *spi)
 {
 	spi->cr = AVR32_SPI_CR_SPIEN_MASK;
-80002a04:	30 18       	mov	r8,1
-80002a06:	99 08       	st.w	r12[0x0],r8
+80002a14:	30 18       	mov	r8,1
+80002a16:	99 08       	st.w	r12[0x0],r8
 }
-80002a08:	5e fc       	retal	r12
-80002a0a:	d7 03       	nop
+80002a18:	5e fc       	retal	r12
+80002a1a:	d7 03       	nop
 
-80002a0c <twim_master_interrupt_handler>:
+80002a1c <twim_master_interrupt_handler>:
  * \brief TWI interrupt handler.
  */
 ISR(twim_master_interrupt_handler,CONF_TWIM_IRQ_GROUP,CONF_TWIM_IRQ_LEVEL)
 {
 	// get masked status register value
 	uint32_t status = twim_inst->sr & twim_it_mask;
-80002a0c:	4a e8       	lddpc	r8,80002ac4 <twim_master_interrupt_handler+0xb8>
-80002a0e:	70 08       	ld.w	r8,r8[0x0]
-80002a10:	70 79       	ld.w	r9,r8[0x1c]
-80002a12:	4a ea       	lddpc	r10,80002ac8 <twim_master_interrupt_handler+0xbc>
-80002a14:	74 0a       	ld.w	r10,r10[0x0]
-80002a16:	f5 e9 00 09 	and	r9,r10,r9
+80002a1c:	4a e8       	lddpc	r8,80002ad4 <twim_master_interrupt_handler+0xb8>
+80002a1e:	70 08       	ld.w	r8,r8[0x0]
+80002a20:	70 79       	ld.w	r9,r8[0x1c]
+80002a22:	4a ea       	lddpc	r10,80002ad8 <twim_master_interrupt_handler+0xbc>
+80002a24:	74 0a       	ld.w	r10,r10[0x0]
+80002a26:	f5 e9 00 09 	and	r9,r10,r9
 	// this is a NACK
 	if (status & AVR32_TWIM_SR_STD_MASK) {
-80002a1a:	12 9a       	mov	r10,r9
-80002a1c:	e2 1a 07 00 	andl	r10,0x700,COH
-80002a20:	c1 40       	breq	80002a48 <twim_master_interrupt_handler+0x3c>
+80002a2a:	12 9a       	mov	r10,r9
+80002a2c:	e2 1a 07 00 	andl	r10,0x700,COH
+80002a30:	c1 40       	breq	80002a58 <twim_master_interrupt_handler+0x3c>
 		//if we get a nak, clear the valid bit in cmdr,
 		//otherwise the command will be resent.
 		transfer_status =(status & AVR32_TWIM_IER_NAK_MASK) ?
-80002a22:	e2 19 03 00 	andl	r9,0x300,COH
-80002a26:	f9 b9 01 fc 	movne	r9,-4
-80002a2a:	f9 b9 00 fe 	moveq	r9,-2
-80002a2e:	4a 8a       	lddpc	r10,80002acc <twim_master_interrupt_handler+0xc0>
-80002a30:	95 09       	st.w	r10[0x0],r9
+80002a32:	e2 19 03 00 	andl	r9,0x300,COH
+80002a36:	f9 b9 01 fc 	movne	r9,-4
+80002a3a:	f9 b9 00 fe 	moveq	r9,-2
+80002a3e:	4a 8a       	lddpc	r10,80002adc <twim_master_interrupt_handler+0xc0>
+80002a40:	95 09       	st.w	r10[0x0],r9
 							TWI_RECEIVE_NACK : TWI_ARBITRATION_LOST;
 		twim_inst->CMDR.valid = 0;
-80002a32:	70 3a       	ld.w	r10,r8[0xc]
-80002a34:	30 09       	mov	r9,0
-80002a36:	f5 d9 d1 e1 	bfins	r10,r9,0xf,0x1
-80002a3a:	91 3a       	st.w	r8[0xc],r10
+80002a42:	70 3a       	ld.w	r10,r8[0xc]
+80002a44:	30 09       	mov	r9,0
+80002a46:	f5 d9 d1 e1 	bfins	r10,r9,0xf,0x1
+80002a4a:	91 3a       	st.w	r8[0xc],r10
 		twim_inst->scr = ~0UL;
-80002a3c:	3f fa       	mov	r10,-1
-80002a3e:	91 ba       	st.w	r8[0x2c],r10
+80002a4c:	3f fa       	mov	r10,-1
+80002a4e:	91 ba       	st.w	r8[0x2c],r10
 		twim_inst->idr = ~0UL;
-80002a40:	91 9a       	st.w	r8[0x24],r10
+80002a50:	91 9a       	st.w	r8[0x24],r10
 		twim_next = false;
-80002a42:	4a 48       	lddpc	r8,80002ad0 <twim_master_interrupt_handler+0xc4>
-80002a44:	b0 89       	st.b	r8[0x0],r9
-80002a46:	d6 03       	rete
+80002a52:	4a 48       	lddpc	r8,80002ae0 <twim_master_interrupt_handler+0xc4>
+80002a54:	b0 89       	st.b	r8[0x0],r9
+80002a56:	d6 03       	rete
 	}
 	// this is a RXRDY
 	else if (status & AVR32_TWIM_SR_RXRDY_MASK) {
-80002a48:	f5 d9 c0 01 	bfextu	r10,r9,0x0,0x1
-80002a4c:	c1 30       	breq	80002a72 <twim_master_interrupt_handler+0x66>
+80002a58:	f5 d9 c0 01 	bfextu	r10,r9,0x0,0x1
+80002a5c:	c1 30       	breq	80002a82 <twim_master_interrupt_handler+0x66>
 		// get data from Receive Holding Register
 		*twim_rx_data = twim_inst->rhr;
-80002a4e:	4a 2a       	lddpc	r10,80002ad4 <twim_master_interrupt_handler+0xc8>
-80002a50:	70 5b       	ld.w	r11,r8[0x14]
-80002a52:	74 09       	ld.w	r9,r10[0x0]
-80002a54:	12 cb       	st.b	r9++,r11
+80002a5e:	4a 2a       	lddpc	r10,80002ae4 <twim_master_interrupt_handler+0xc8>
+80002a60:	70 5b       	ld.w	r11,r8[0x14]
+80002a62:	74 09       	ld.w	r9,r10[0x0]
+80002a64:	12 cb       	st.b	r9++,r11
 		twim_rx_data++;
-80002a56:	95 09       	st.w	r10[0x0],r9
+80002a66:	95 09       	st.w	r10[0x0],r9
 		// decrease received bytes number
 		twim_rx_nb_bytes--;
-80002a58:	4a 09       	lddpc	r9,80002ad8 <twim_master_interrupt_handler+0xcc>
-80002a5a:	72 0a       	ld.w	r10,r9[0x0]
-80002a5c:	20 1a       	sub	r10,1
-80002a5e:	93 0a       	st.w	r9[0x0],r10
+80002a68:	4a 09       	lddpc	r9,80002ae8 <twim_master_interrupt_handler+0xcc>
+80002a6a:	72 0a       	ld.w	r10,r9[0x0]
+80002a6c:	20 1a       	sub	r10,1
+80002a6e:	93 0a       	st.w	r9[0x0],r10
 		// receive complete
 		if (twim_rx_nb_bytes == 0) {
-80002a60:	72 09       	ld.w	r9,r9[0x0]
-80002a62:	58 09       	cp.w	r9,0
-80002a64:	c2 f1       	brne	80002ac2 <twim_master_interrupt_handler+0xb6>
+80002a70:	72 09       	ld.w	r9,r9[0x0]
+80002a72:	58 09       	cp.w	r9,0
+80002a74:	c2 f1       	brne	80002ad2 <twim_master_interrupt_handler+0xb6>
 			// finish the receive operation
 			twim_inst->idr = AVR32_TWIM_IDR_RXRDY_MASK;
-80002a66:	30 19       	mov	r9,1
-80002a68:	91 99       	st.w	r8[0x24],r9
+80002a76:	30 19       	mov	r9,1
+80002a78:	91 99       	st.w	r8[0x24],r9
 			// set busy to false
 			twim_next = false;
-80002a6a:	30 09       	mov	r9,0
-80002a6c:	49 98       	lddpc	r8,80002ad0 <twim_master_interrupt_handler+0xc4>
-80002a6e:	b0 89       	st.b	r8[0x0],r9
-80002a70:	d6 03       	rete
+80002a7a:	30 09       	mov	r9,0
+80002a7c:	49 98       	lddpc	r8,80002ae0 <twim_master_interrupt_handler+0xc4>
+80002a7e:	b0 89       	st.b	r8[0x0],r9
+80002a80:	d6 03       	rete
 		}
 	}
 	// this is a TXRDY
 	else if (status & AVR32_TWIM_SR_TXRDY_MASK) {
-80002a72:	e2 19 00 02 	andl	r9,0x2,COH
-80002a76:	c2 60       	breq	80002ac2 <twim_master_interrupt_handler+0xb6>
+80002a82:	e2 19 00 02 	andl	r9,0x2,COH
+80002a86:	c2 60       	breq	80002ad2 <twim_master_interrupt_handler+0xb6>
 		// no more bytes to transmit
 		if (twim_tx_nb_bytes == 0) {
-80002a78:	49 99       	lddpc	r9,80002adc <twim_master_interrupt_handler+0xd0>
-80002a7a:	72 09       	ld.w	r9,r9[0x0]
-80002a7c:	58 09       	cp.w	r9,0
-80002a7e:	c0 71       	brne	80002a8c <twim_master_interrupt_handler+0x80>
+80002a88:	49 99       	lddpc	r9,80002aec <twim_master_interrupt_handler+0xd0>
+80002a8a:	72 09       	ld.w	r9,r9[0x0]
+80002a8c:	58 09       	cp.w	r9,0
+80002a8e:	c0 71       	brne	80002a9c <twim_master_interrupt_handler+0x80>
 			// finish the receive operation
 			twim_inst->idr = AVR32_TWIM_IDR_TXRDY_MASK;
-80002a80:	30 29       	mov	r9,2
-80002a82:	91 99       	st.w	r8[0x24],r9
+80002a90:	30 29       	mov	r9,2
+80002a92:	91 99       	st.w	r8[0x24],r9
 			// set busy to false
 			twim_next = false;
-80002a84:	30 09       	mov	r9,0
-80002a86:	49 38       	lddpc	r8,80002ad0 <twim_master_interrupt_handler+0xc4>
-80002a88:	b0 89       	st.b	r8[0x0],r9
-80002a8a:	d6 03       	rete
+80002a94:	30 09       	mov	r9,0
+80002a96:	49 38       	lddpc	r8,80002ae0 <twim_master_interrupt_handler+0xc4>
+80002a98:	b0 89       	st.b	r8[0x0],r9
+80002a9a:	d6 03       	rete
 		} else {
 			// put the byte in the Transmit Holding Register
 			twim_inst->thr = *twim_tx_data++;
-80002a8c:	49 5a       	lddpc	r10,80002ae0 <twim_master_interrupt_handler+0xd4>
-80002a8e:	74 09       	ld.w	r9,r10[0x0]
-80002a90:	13 3b       	ld.ub	r11,r9++
-80002a92:	91 6b       	st.w	r8[0x18],r11
-80002a94:	95 09       	st.w	r10[0x0],r9
+80002a9c:	49 5a       	lddpc	r10,80002af0 <twim_master_interrupt_handler+0xd4>
+80002a9e:	74 09       	ld.w	r9,r10[0x0]
+80002aa0:	13 3b       	ld.ub	r11,r9++
+80002aa2:	91 6b       	st.w	r8[0x18],r11
+80002aa4:	95 09       	st.w	r10[0x0],r9
 			// decrease transmitted bytes number
 			twim_tx_nb_bytes--;
-80002a96:	49 28       	lddpc	r8,80002adc <twim_master_interrupt_handler+0xd0>
-80002a98:	70 09       	ld.w	r9,r8[0x0]
-80002a9a:	20 19       	sub	r9,1
-80002a9c:	91 09       	st.w	r8[0x0],r9
+80002aa6:	49 28       	lddpc	r8,80002aec <twim_master_interrupt_handler+0xd0>
+80002aa8:	70 09       	ld.w	r9,r8[0x0]
+80002aaa:	20 19       	sub	r9,1
+80002aac:	91 09       	st.w	r8[0x0],r9
 			if (twim_tx_nb_bytes == 0) {
-80002a9e:	70 08       	ld.w	r8,r8[0x0]
-80002aa0:	58 08       	cp.w	r8,0
-80002aa2:	c1 01       	brne	80002ac2 <twim_master_interrupt_handler+0xb6>
+80002aae:	70 08       	ld.w	r8,r8[0x0]
+80002ab0:	58 08       	cp.w	r8,0
+80002ab2:	c1 01       	brne	80002ad2 <twim_master_interrupt_handler+0xb6>
 				// Check for next transfer
 				if(twim_next) {
-80002aa4:	48 b8       	lddpc	r8,80002ad0 <twim_master_interrupt_handler+0xc4>
-80002aa6:	11 88       	ld.ub	r8,r8[0x0]
-80002aa8:	58 08       	cp.w	r8,0
-80002aaa:	c0 c0       	breq	80002ac2 <twim_master_interrupt_handler+0xb6>
+80002ab4:	48 b8       	lddpc	r8,80002ae0 <twim_master_interrupt_handler+0xc4>
+80002ab6:	11 88       	ld.ub	r8,r8[0x0]
+80002ab8:	58 08       	cp.w	r8,0
+80002aba:	c0 c0       	breq	80002ad2 <twim_master_interrupt_handler+0xb6>
 					twim_next = false;
-80002aac:	30 09       	mov	r9,0
-80002aae:	48 98       	lddpc	r8,80002ad0 <twim_master_interrupt_handler+0xc4>
-80002ab0:	b0 89       	st.b	r8[0x0],r9
+80002abc:	30 09       	mov	r9,0
+80002abe:	48 98       	lddpc	r8,80002ae0 <twim_master_interrupt_handler+0xc4>
+80002ac0:	b0 89       	st.b	r8[0x0],r9
 					twim_tx_nb_bytes = twim_package->length;
-80002ab2:	48 d8       	lddpc	r8,80002ae4 <twim_master_interrupt_handler+0xd8>
-80002ab4:	70 08       	ld.w	r8,r8[0x0]
-80002ab6:	70 3a       	ld.w	r10,r8[0xc]
-80002ab8:	48 99       	lddpc	r9,80002adc <twim_master_interrupt_handler+0xd0>
-80002aba:	93 0a       	st.w	r9[0x0],r10
+80002ac2:	48 d8       	lddpc	r8,80002af4 <twim_master_interrupt_handler+0xd8>
+80002ac4:	70 08       	ld.w	r8,r8[0x0]
+80002ac6:	70 3a       	ld.w	r10,r8[0xc]
+80002ac8:	48 99       	lddpc	r9,80002aec <twim_master_interrupt_handler+0xd0>
+80002aca:	93 0a       	st.w	r9[0x0],r10
 					twim_tx_data = twim_package->buffer;
-80002abc:	70 29       	ld.w	r9,r8[0x8]
-80002abe:	48 98       	lddpc	r8,80002ae0 <twim_master_interrupt_handler+0xd4>
-80002ac0:	91 09       	st.w	r8[0x0],r9
-80002ac2:	d6 03       	rete
-80002ac4:	00 00       	add	r0,r0
-80002ac6:	00 0c       	add	r12,r0
-80002ac8:	00 00       	add	r0,r0
-80002aca:	00 20       	rsub	r0,r0
-80002acc:	00 00       	add	r0,r0
-80002ace:	00 18       	sub	r8,r0
-80002ad0:	00 00       	add	r0,r0
-80002ad2:	00 24       	rsub	r4,r0
+80002acc:	70 29       	ld.w	r9,r8[0x8]
+80002ace:	48 98       	lddpc	r8,80002af0 <twim_master_interrupt_handler+0xd4>
+80002ad0:	91 09       	st.w	r8[0x0],r9
+80002ad2:	d6 03       	rete
 80002ad4:	00 00       	add	r0,r0
-80002ad6:	00 10       	sub	r0,r0
+80002ad6:	00 0c       	add	r12,r0
 80002ad8:	00 00       	add	r0,r0
-80002ada:	00 14       	sub	r4,r0
+80002ada:	00 20       	rsub	r0,r0
 80002adc:	00 00       	add	r0,r0
-80002ade:	00 2c       	rsub	r12,r0
+80002ade:	00 18       	sub	r8,r0
 80002ae0:	00 00       	add	r0,r0
-80002ae2:	00 1c       	sub	r12,r0
+80002ae2:	00 24       	rsub	r4,r0
 80002ae4:	00 00       	add	r0,r0
-80002ae6:	00 28       	rsub	r8,r0
+80002ae6:	00 10       	sub	r0,r0
+80002ae8:	00 00       	add	r0,r0
+80002aea:	00 14       	sub	r4,r0
+80002aec:	00 00       	add	r0,r0
+80002aee:	00 2c       	rsub	r12,r0
+80002af0:	00 00       	add	r0,r0
+80002af2:	00 1c       	sub	r12,r0
+80002af4:	00 00       	add	r0,r0
+80002af6:	00 28       	rsub	r8,r0
 
-80002ae8 <twim_set_speed>:
+80002af8 <twim_set_speed>:
  * \retval STATUS_OK        Transaction is successful
  * \retval ERR_INVALID_ARG  Invalid arg resulting in wrong CWGR Exponential
  */
 status_code_t twim_set_speed (volatile avr32_twim_t *twim, uint32_t speed,
 		uint32_t pba_hz)
 {
-80002ae8:	eb cd 40 80 	pushm	r7,lr
+80002af8:	eb cd 40 80 	pushm	r7,lr
 	uint32_t f_prescaled;
 	uint8_t cwgr_exp = 0;
 	f_prescaled = (pba_hz / speed / 2);
-80002aec:	f4 0b 0d 0a 	divu	r10,r10,r11
-80002af0:	f4 08 16 01 	lsr	r8,r10,0x1
+80002afc:	f4 0b 0d 0a 	divu	r10,r10,r11
+80002b00:	f4 08 16 01 	lsr	r8,r10,0x1
 	// f_prescaled must fit in 8 bits, cwgr_exp must fit in 3 bits
 	while ((f_prescaled > 0xFF) && (cwgr_exp <= 0x7)) {
-80002af4:	e0 48 00 ff 	cp.w	r8,255
-80002af8:	e0 8b 00 04 	brhi	80002b00 <twim_set_speed+0x18>
-80002afc:	30 09       	mov	r9,0
-80002afe:	c1 a8       	rjmp	80002b32 <twim_set_speed+0x4a>
-80002b00:	30 09       	mov	r9,0
-80002b02:	30 77       	mov	r7,7
-80002b04:	30 0e       	mov	lr,0
+80002b04:	e0 48 00 ff 	cp.w	r8,255
+80002b08:	e0 8b 00 04 	brhi	80002b10 <twim_set_speed+0x18>
+80002b0c:	30 09       	mov	r9,0
+80002b0e:	c1 a8       	rjmp	80002b42 <twim_set_speed+0x4a>
+80002b10:	30 09       	mov	r9,0
+80002b12:	30 77       	mov	r7,7
+80002b14:	30 0e       	mov	lr,0
 		// increase clock divider
 		cwgr_exp++;
-80002b06:	2f f9       	sub	r9,-1
-80002b08:	5c 59       	castu.b	r9
+80002b16:	2f f9       	sub	r9,-1
+80002b18:	5c 59       	castu.b	r9
 		// divide f_prescaled value
 		f_prescaled /= 2;
-80002b0a:	a1 98       	lsr	r8,0x1
+80002b1a:	a1 98       	lsr	r8,0x1
 {
 	uint32_t f_prescaled;
 	uint8_t cwgr_exp = 0;
 	f_prescaled = (pba_hz / speed / 2);
 	// f_prescaled must fit in 8 bits, cwgr_exp must fit in 3 bits
 	while ((f_prescaled > 0xFF) && (cwgr_exp <= 0x7)) {
-80002b0c:	e0 48 00 ff 	cp.w	r8,255
-80002b10:	5f bb       	srhi	r11
-80002b12:	ee 09 18 00 	cp.b	r9,r7
-80002b16:	5f 8a       	srls	r10
-80002b18:	f7 ea 00 0a 	and	r10,r11,r10
-80002b1c:	fc 0a 18 00 	cp.b	r10,lr
-80002b20:	cf 31       	brne	80002b06 <twim_set_speed+0x1e>
+80002b1c:	e0 48 00 ff 	cp.w	r8,255
+80002b20:	5f bb       	srhi	r11
+80002b22:	ee 09 18 00 	cp.b	r9,r7
+80002b26:	5f 8a       	srls	r10
+80002b28:	f7 ea 00 0a 	and	r10,r11,r10
+80002b2c:	fc 0a 18 00 	cp.b	r10,lr
+80002b30:	cf 31       	brne	80002b16 <twim_set_speed+0x1e>
 		// increase clock divider
 		cwgr_exp++;
 		// divide f_prescaled value
 		f_prescaled /= 2;
 	}
 	if (cwgr_exp > 0x7) {
-80002b22:	30 7a       	mov	r10,7
-80002b24:	f4 09 18 00 	cp.b	r9,r10
-80002b28:	e0 88 00 05 	brls	80002b32 <twim_set_speed+0x4a>
-80002b2c:	3f 8c       	mov	r12,-8
-80002b2e:	e3 cd 80 80 	ldm	sp++,r7,pc
+80002b32:	30 7a       	mov	r10,7
+80002b34:	f4 09 18 00 	cp.b	r9,r10
+80002b38:	e0 88 00 05 	brls	80002b42 <twim_set_speed+0x4a>
+80002b3c:	3f 8c       	mov	r12,-8
+80002b3e:	e3 cd 80 80 	ldm	sp++,r7,pc
 		return ERR_INVALID_ARG;
 	}
 	// set clock waveform generator register
 	twim->cwgr = ((f_prescaled/2) << AVR32_TWIM_CWGR_LOW_OFFSET)
 			| ((f_prescaled - f_prescaled/2) << AVR32_TWIM_CWGR_HIGH_OFFSET)
-80002b32:	f0 0a 16 01 	lsr	r10,r8,0x1
+80002b42:	f0 0a 16 01 	lsr	r10,r8,0x1
 	}
 	if (cwgr_exp > 0x7) {
 		return ERR_INVALID_ARG;
 	}
 	// set clock waveform generator register
 	twim->cwgr = ((f_prescaled/2) << AVR32_TWIM_CWGR_LOW_OFFSET)
-80002b36:	f5 e8 11 0b 	or	r11,r10,r8<<0x10
-80002b3a:	14 18       	sub	r8,r10
-80002b3c:	f7 e8 10 88 	or	r8,r11,r8<<0x8
-80002b40:	f1 e9 11 c9 	or	r9,r8,r9<<0x1c
-80002b44:	99 19       	st.w	r12[0x4],r9
-80002b46:	e3 cf 80 80 	ldm	sp++,r7,pc,r12=0
-80002b4a:	d7 03       	nop
+80002b46:	f5 e8 11 0b 	or	r11,r10,r8<<0x10
+80002b4a:	14 18       	sub	r8,r10
+80002b4c:	f7 e8 10 88 	or	r8,r11,r8<<0x8
+80002b50:	f1 e9 11 c9 	or	r9,r8,r9<<0x1c
+80002b54:	99 19       	st.w	r12[0x4],r9
+80002b56:	e3 cf 80 80 	ldm	sp++,r7,pc,r12=0
+80002b5a:	d7 03       	nop
 
-80002b4c <twim_status>:
+80002b5c <twim_status>:
 /**
  * \brief Information about the current status of the TWI Bus
  */
 uint8_t twim_status ( void )
 {
 	uint32_t status = twim_inst->sr;
-80002b4c:	48 38       	lddpc	r8,80002b58 <twim_status+0xc>
-80002b4e:	70 08       	ld.w	r8,r8[0x0]
-80002b50:	70 7c       	ld.w	r12,r8[0x1c]
+80002b5c:	48 38       	lddpc	r8,80002b68 <twim_status+0xc>
+80002b5e:	70 08       	ld.w	r8,r8[0x0]
+80002b60:	70 7c       	ld.w	r12,r8[0x1c]
 		) {
 		return 1;
 	} else {
 		return 0;
 	}
 }
-80002b52:	f9 dc c0 81 	bfextu	r12,r12,0x4,0x1
-80002b56:	5e fc       	retal	r12
-80002b58:	00 00       	add	r0,r0
-80002b5a:	00 0c       	add	r12,r0
+80002b62:	f9 dc c0 81 	bfextu	r12,r12,0x4,0x1
+80002b66:	5e fc       	retal	r12
+80002b68:	00 00       	add	r0,r0
+80002b6a:	00 0c       	add	r12,r0
 
-80002b5c <twim_disable_interrupt>:
+80002b6c <twim_disable_interrupt>:
  *
  * \param twim         Base address of the TWIM (i.e. &AVR32_TWI).
  */
 void twim_disable_interrupt (volatile avr32_twim_t *twim)
 {
 	bool global_interrupt_enabled = cpu_irq_is_enabled ();
-80002b5c:	e1 b8 00 00 	mfsr	r8,0x0
+80002b6c:	e1 b8 00 00 	mfsr	r8,0x0
 	if (global_interrupt_enabled) {
-80002b60:	e6 18 00 01 	andh	r8,0x1,COH
-80002b64:	c0 21       	brne	80002b68 <twim_disable_interrupt+0xc>
+80002b70:	e6 18 00 01 	andh	r8,0x1,COH
+80002b74:	c0 21       	brne	80002b78 <twim_disable_interrupt+0xc>
 		cpu_irq_disable ();
-80002b66:	d3 03       	ssrf	0x10
+80002b76:	d3 03       	ssrf	0x10
 	}
 	// Clear the interrupt flags
 	twim->idr = ~0UL;
-80002b68:	3f f8       	mov	r8,-1
-80002b6a:	99 98       	st.w	r12[0x24],r8
+80002b78:	3f f8       	mov	r8,-1
+80002b7a:	99 98       	st.w	r12[0x24],r8
 	// Clear the status flags
 	twim->scr = ~0UL;
-80002b6c:	99 b8       	st.w	r12[0x2c],r8
+80002b7c:	99 b8       	st.w	r12[0x2c],r8
 }
-80002b6e:	5e fc       	retal	r12
+80002b7e:	5e fc       	retal	r12
 
-80002b70 <twim_write>:
+80002b80 <twim_write>:
  * \retval STATUS_OK      If all bytes were send successfully
  * \retval ERR_IO_ERROR   NACK received or Bus Arbitration lost
  */
 status_code_t twim_write (volatile avr32_twim_t *twim, uint8_t const *buffer,
 		uint32_t nbytes, uint32_t saddr, bool tenbit)
 {
-80002b70:	eb cd 40 fe 	pushm	r1-r7,lr
-80002b74:	18 97       	mov	r7,r12
-80002b76:	16 93       	mov	r3,r11
-80002b78:	14 95       	mov	r5,r10
-80002b7a:	12 92       	mov	r2,r9
-80002b7c:	10 91       	mov	r1,r8
+80002b80:	eb cd 40 fe 	pushm	r1-r7,lr
+80002b84:	18 97       	mov	r7,r12
+80002b86:	16 93       	mov	r3,r11
+80002b88:	14 95       	mov	r5,r10
+80002b8a:	12 92       	mov	r2,r9
+80002b8c:	10 91       	mov	r1,r8
 	// Reset the TWIM module to clear the THR register
 	twim->cr = AVR32_TWIM_CR_MEN_MASK;
-80002b7e:	30 14       	mov	r4,1
-80002b80:	99 04       	st.w	r12[0x0],r4
+80002b8e:	30 14       	mov	r4,1
+80002b90:	99 04       	st.w	r12[0x0],r4
 	twim->cr = AVR32_TWIM_CR_SWRST_MASK;
-80002b82:	e0 68 00 80 	mov	r8,128
-80002b86:	99 08       	st.w	r12[0x0],r8
+80002b92:	e0 68 00 80 	mov	r8,128
+80002b96:	99 08       	st.w	r12[0x0],r8
 	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
-80002b88:	30 28       	mov	r8,2
-80002b8a:	99 08       	st.w	r12[0x0],r8
+80002b98:	30 28       	mov	r8,2
+80002b9a:	99 08       	st.w	r12[0x0],r8
 	// Set pointer to TWIM instance for IT
 	twim_inst = twim;
-80002b8c:	49 e6       	lddpc	r6,80002c04 <twim_write+0x94>
-80002b8e:	8d 0c       	st.w	r6[0x0],r12
+80002b9c:	49 e6       	lddpc	r6,80002c14 <twim_write+0x94>
+80002b9e:	8d 0c       	st.w	r6[0x0],r12
 	// Disable the TWIM interrupts
 	twim_disable_interrupt (twim_inst);
-80002b90:	f0 1f 00 1e 	mcall	80002c08 <twim_write+0x98>
+80002ba0:	f0 1f 00 1e 	mcall	80002c18 <twim_write+0x98>
 	// get a pointer to applicative data
 	twim_tx_data = buffer;
-80002b94:	49 e8       	lddpc	r8,80002c0c <twim_write+0x9c>
-80002b96:	91 03       	st.w	r8[0x0],r3
+80002ba4:	49 e8       	lddpc	r8,80002c1c <twim_write+0x9c>
+80002ba6:	91 03       	st.w	r8[0x0],r3
 	// set the number of bytes to transmit
 	twim_tx_nb_bytes = nbytes;
-80002b98:	49 e8       	lddpc	r8,80002c10 <twim_write+0xa0>
-80002b9a:	91 05       	st.w	r8[0x0],r5
+80002ba8:	49 e8       	lddpc	r8,80002c20 <twim_write+0xa0>
+80002baa:	91 05       	st.w	r8[0x0],r5
 	// Set next transfer to false
 	twim_next = false;
-80002b9c:	30 09       	mov	r9,0
-80002b9e:	49 e8       	lddpc	r8,80002c14 <twim_write+0xa4>
-80002ba0:	b0 89       	st.b	r8[0x0],r9
+80002bac:	30 09       	mov	r9,0
+80002bae:	49 e8       	lddpc	r8,80002c24 <twim_write+0xa4>
+80002bb0:	b0 89       	st.b	r8[0x0],r9
 	// Initialize bus transfer status
 	transfer_status = TWI_SUCCESS;
-80002ba2:	49 e9       	lddpc	r9,80002c18 <twim_write+0xa8>
-80002ba4:	30 08       	mov	r8,0
-80002ba6:	93 08       	st.w	r9[0x0],r8
+80002bb2:	49 e9       	lddpc	r9,80002c28 <twim_write+0xa8>
+80002bb4:	30 08       	mov	r8,0
+80002bb6:	93 08       	st.w	r9[0x0],r8
 	// set the command to start the transfer
 	twim_inst->cmdr = (saddr << AVR32_TWIM_CMDR_SADR_OFFSET)
-80002ba8:	6c 08       	ld.w	r8,r6[0x0]
-80002baa:	b1 65       	lsl	r5,0x10
-80002bac:	e8 15 e0 00 	orl	r5,0xe000
-80002bb0:	eb e2 10 12 	or	r2,r5,r2<<0x1
-80002bb4:	e5 e1 10 b1 	or	r1,r2,r1<<0xb
-80002bb8:	91 31       	st.w	r8[0xc],r1
+80002bb8:	6c 08       	ld.w	r8,r6[0x0]
+80002bba:	b1 65       	lsl	r5,0x10
+80002bbc:	e8 15 e0 00 	orl	r5,0xe000
+80002bc0:	eb e2 10 12 	or	r2,r5,r2<<0x1
+80002bc4:	e5 e1 10 b1 	or	r1,r2,r1<<0xb
+80002bc8:	91 31       	st.w	r8[0xc],r1
 			| (AVR32_TWIM_CMDR_START_MASK)
 			| (AVR32_TWIM_CMDR_STOP_MASK)
 			| ((tenbit ? 1 : 0) << AVR32_TWIM_CMDR_TENBIT_OFFSET)
 			| (0 << AVR32_TWIM_CMDR_READ_OFFSET);
 	// mask NACK and TXRDY interrupts
 	twim_it_mask = AVR32_TWIM_IER_NAK_MASK | AVR32_TWIM_IER_TXRDY_MASK;
-80002bba:	49 9a       	lddpc	r10,80002c1c <twim_write+0xac>
-80002bbc:	e0 6b 03 02 	mov	r11,770
-80002bc0:	95 0b       	st.w	r10[0x0],r11
+80002bca:	49 9a       	lddpc	r10,80002c2c <twim_write+0xac>
+80002bcc:	e0 6b 03 02 	mov	r11,770
+80002bd0:	95 0b       	st.w	r10[0x0],r11
 	// update IMR through IER
 	twim_inst->ier = twim_it_mask;
-80002bc2:	74 0a       	ld.w	r10,r10[0x0]
-80002bc4:	91 8a       	st.w	r8[0x20],r10
+80002bd2:	74 0a       	ld.w	r10,r10[0x0]
+80002bd4:	91 8a       	st.w	r8[0x20],r10
 	// Enable master transfer
 	twim_inst->cr = AVR32_TWIM_CR_MEN_MASK;
-80002bc6:	91 04       	st.w	r8[0x0],r4
+80002bd6:	91 04       	st.w	r8[0x0],r4
 	// Enable all interrupts
 	cpu_irq_enable ();
-80002bc8:	d5 03       	csrf	0x10
+80002bd8:	d5 03       	csrf	0x10
 	// send data
 	while (!(transfer_status) && !(twim_status ())) {
-80002bca:	72 08       	ld.w	r8,r9[0x0]
-80002bcc:	58 08       	cp.w	r8,0
-80002bce:	c0 80       	breq	80002bde <twim_write+0x6e>
-80002bd0:	c0 b8       	rjmp	80002be6 <twim_write+0x76>
+80002bda:	72 08       	ld.w	r8,r9[0x0]
+80002bdc:	58 08       	cp.w	r8,0
+80002bde:	c0 80       	breq	80002bee <twim_write+0x6e>
+80002be0:	c0 b8       	rjmp	80002bf6 <twim_write+0x76>
 		cpu_relax();
-80002bd2:	fe cf ff fc 	sub	pc,pc,-4
+80002be2:	fe cf ff fc 	sub	pc,pc,-4
 	// Enable master transfer
 	twim_inst->cr = AVR32_TWIM_CR_MEN_MASK;
 	// Enable all interrupts
 	cpu_irq_enable ();
 	// send data
 	while (!(transfer_status) && !(twim_status ())) {
-80002bd6:	6c 08       	ld.w	r8,r6[0x0]
-80002bd8:	58 08       	cp.w	r8,0
-80002bda:	c0 30       	breq	80002be0 <twim_write+0x70>
-80002bdc:	c0 58       	rjmp	80002be6 <twim_write+0x76>
-80002bde:	48 f6       	lddpc	r6,80002c18 <twim_write+0xa8>
-80002be0:	f0 1f 00 10 	mcall	80002c20 <twim_write+0xb0>
-80002be4:	cf 70       	breq	80002bd2 <twim_write+0x62>
+80002be6:	6c 08       	ld.w	r8,r6[0x0]
+80002be8:	58 08       	cp.w	r8,0
+80002bea:	c0 30       	breq	80002bf0 <twim_write+0x70>
+80002bec:	c0 58       	rjmp	80002bf6 <twim_write+0x76>
+80002bee:	48 f6       	lddpc	r6,80002c28 <twim_write+0xa8>
+80002bf0:	f0 1f 00 10 	mcall	80002c30 <twim_write+0xb0>
+80002bf4:	cf 70       	breq	80002be2 <twim_write+0x62>
 		cpu_relax();
 	}
 #if AVR32_TWIM_H_VERSION > 101	// Removed in twim100 module due to IC bug
 	// Disable master transfer
 	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
-80002be6:	30 28       	mov	r8,2
-80002be8:	8f 08       	st.w	r7[0x0],r8
+80002bf6:	30 28       	mov	r8,2
+80002bf8:	8f 08       	st.w	r7[0x0],r8
 #endif
 	if (transfer_status == TWI_RECEIVE_NACK
 			|| transfer_status == TWI_ARBITRATION_LOST) {
-80002bea:	48 c8       	lddpc	r8,80002c18 <twim_write+0xa8>
-80002bec:	70 08       	ld.w	r8,r8[0x0]
+80002bfa:	48 c8       	lddpc	r8,80002c28 <twim_write+0xa8>
+80002bfc:	70 08       	ld.w	r8,r8[0x0]
 	}
 #if AVR32_TWIM_H_VERSION > 101	// Removed in twim100 module due to IC bug
 	// Disable master transfer
 	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
 #endif
 	if (transfer_status == TWI_RECEIVE_NACK
-80002bee:	5b c8       	cp.w	r8,-4
-80002bf0:	c0 70       	breq	80002bfe <twim_write+0x8e>
+80002bfe:	5b c8       	cp.w	r8,-4
+80002c00:	c0 70       	breq	80002c0e <twim_write+0x8e>
 			|| transfer_status == TWI_ARBITRATION_LOST) {
-80002bf2:	48 a8       	lddpc	r8,80002c18 <twim_write+0xa8>
-80002bf4:	70 08       	ld.w	r8,r8[0x0]
+80002c02:	48 a8       	lddpc	r8,80002c28 <twim_write+0xa8>
+80002c04:	70 08       	ld.w	r8,r8[0x0]
 	}
 #if AVR32_TWIM_H_VERSION > 101	// Removed in twim100 module due to IC bug
 	// Disable master transfer
 	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
 #endif
 	if (transfer_status == TWI_RECEIVE_NACK
-80002bf6:	5b e8       	cp.w	r8,-2
-80002bf8:	c0 30       	breq	80002bfe <twim_write+0x8e>
-80002bfa:	e3 cf 80 fe 	ldm	sp++,r1-r7,pc,r12=0
-80002bfe:	e3 cf c0 fe 	ldm	sp++,r1-r7,pc,r12=-1
-80002c02:	00 00       	add	r0,r0
-80002c04:	00 00       	add	r0,r0
-80002c06:	00 0c       	add	r12,r0
-80002c08:	80 00       	ld.sh	r0,r0[0x0]
-80002c0a:	2b 5c       	sub	r12,-75
-80002c0c:	00 00       	add	r0,r0
-80002c0e:	00 1c       	sub	r12,r0
-80002c10:	00 00       	add	r0,r0
-80002c12:	00 2c       	rsub	r12,r0
+80002c06:	5b e8       	cp.w	r8,-2
+80002c08:	c0 30       	breq	80002c0e <twim_write+0x8e>
+80002c0a:	e3 cf 80 fe 	ldm	sp++,r1-r7,pc,r12=0
+80002c0e:	e3 cf c0 fe 	ldm	sp++,r1-r7,pc,r12=-1
+80002c12:	00 00       	add	r0,r0
 80002c14:	00 00       	add	r0,r0
-80002c16:	00 24       	rsub	r4,r0
-80002c18:	00 00       	add	r0,r0
-80002c1a:	00 18       	sub	r8,r0
+80002c16:	00 0c       	add	r12,r0
+80002c18:	80 00       	ld.sh	r0,r0[0x0]
+80002c1a:	2b 6c       	sub	r12,-74
 80002c1c:	00 00       	add	r0,r0
-80002c1e:	00 20       	rsub	r0,r0
-80002c20:	80 00       	ld.sh	r0,r0[0x0]
-80002c22:	2b 4c       	sub	r12,-76
+80002c1e:	00 1c       	sub	r12,r0
+80002c20:	00 00       	add	r0,r0
+80002c22:	00 2c       	rsub	r12,r0
+80002c24:	00 00       	add	r0,r0
+80002c26:	00 24       	rsub	r4,r0
+80002c28:	00 00       	add	r0,r0
+80002c2a:	00 18       	sub	r8,r0
+80002c2c:	00 00       	add	r0,r0
+80002c2e:	00 20       	rsub	r0,r0
+80002c30:	80 00       	ld.sh	r0,r0[0x0]
+80002c32:	2b 5c       	sub	r12,-75
 
-80002c24 <twim_probe>:
+80002c34 <twim_probe>:
  * \param chip_addr       Address of the chip which is searched for
  * \retval STATUS_OK      Slave Found
  * \retval ERR_IO_ERROR   ANAK received or Bus Arbitration lost
  */
 status_code_t twim_probe (volatile avr32_twim_t *twim, uint32_t chip_addr)
 {
-80002c24:	d4 01       	pushm	lr
-80002c26:	20 1d       	sub	sp,4
+80002c34:	d4 01       	pushm	lr
+80002c36:	20 1d       	sub	sp,4
 	uint8_t data[1] = { 0 };
-80002c28:	30 08       	mov	r8,0
-80002c2a:	ba 88       	st.b	sp[0x0],r8
+80002c38:	30 08       	mov	r8,0
+80002c3a:	ba 88       	st.b	sp[0x0],r8
 	return (twim_write (twim,data,0,chip_addr,0));
-80002c2c:	30 08       	mov	r8,0
-80002c2e:	16 99       	mov	r9,r11
-80002c30:	10 9a       	mov	r10,r8
-80002c32:	1a 9b       	mov	r11,sp
-80002c34:	f0 1f 00 02 	mcall	80002c3c <twim_probe+0x18>
+80002c3c:	30 08       	mov	r8,0
+80002c3e:	16 99       	mov	r9,r11
+80002c40:	10 9a       	mov	r10,r8
+80002c42:	1a 9b       	mov	r11,sp
+80002c44:	f0 1f 00 02 	mcall	80002c4c <twim_probe+0x18>
 }
-80002c38:	2f fd       	sub	sp,-4
-80002c3a:	d8 02       	popm	pc
-80002c3c:	80 00       	ld.sh	r0,r0[0x0]
-80002c3e:	2b 70       	sub	r0,-73
+80002c48:	2f fd       	sub	sp,-4
+80002c4a:	d8 02       	popm	pc
+80002c4c:	80 00       	ld.sh	r0,r0[0x0]
+80002c4e:	2b 80       	sub	r0,-72
 
-80002c40 <twim_read_packet>:
+80002c50 <twim_read_packet>:
  * \retval STATUS_OK      If all bytes were read successfully
  * \retval ERR_IO_ERROR   NACK received or Bus Arbitration lost
  */
 status_code_t twim_read_packet (volatile avr32_twim_t *twim,
 		const twim_package_t *package)
 {
-80002c40:	eb cd 40 c0 	pushm	r6-r7,lr
-80002c44:	18 96       	mov	r6,r12
-80002c46:	16 97       	mov	r7,r11
+80002c50:	eb cd 40 c0 	pushm	r6-r7,lr
+80002c54:	18 96       	mov	r6,r12
+80002c56:	16 97       	mov	r7,r11
 	// Disable master transfer
 	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
-80002c48:	30 28       	mov	r8,2
-80002c4a:	99 08       	st.w	r12[0x0],r8
+80002c58:	30 28       	mov	r8,2
+80002c5a:	99 08       	st.w	r12[0x0],r8
 	// Set pointer to TWIM instance for IT
 	twim_inst = twim;
-80002c4c:	4b 78       	lddpc	r8,80002d28 <twim_read_packet+0xe8>
-80002c4e:	91 0c       	st.w	r8[0x0],r12
+80002c5c:	4b 78       	lddpc	r8,80002d38 <twim_read_packet+0xe8>
+80002c5e:	91 0c       	st.w	r8[0x0],r12
 	// Disable the TWIM interrupts
 	twim_disable_interrupt (twim_inst);
-80002c50:	f0 1f 00 37 	mcall	80002d2c <twim_read_packet+0xec>
+80002c60:	f0 1f 00 37 	mcall	80002d3c <twim_read_packet+0xec>
 	// get a pointer to applicative data
 	twim_rx_data = package->buffer;
-80002c54:	6e 29       	ld.w	r9,r7[0x8]
-80002c56:	4b 78       	lddpc	r8,80002d30 <twim_read_packet+0xf0>
-80002c58:	91 09       	st.w	r8[0x0],r9
+80002c64:	6e 29       	ld.w	r9,r7[0x8]
+80002c66:	4b 78       	lddpc	r8,80002d40 <twim_read_packet+0xf0>
+80002c68:	91 09       	st.w	r8[0x0],r9
 	// get a copy of nb bytes to read
 	twim_rx_nb_bytes = package->length;
-80002c5a:	6e 39       	ld.w	r9,r7[0xc]
-80002c5c:	4b 68       	lddpc	r8,80002d34 <twim_read_packet+0xf4>
-80002c5e:	91 09       	st.w	r8[0x0],r9
+80002c6a:	6e 39       	ld.w	r9,r7[0xc]
+80002c6c:	4b 68       	lddpc	r8,80002d44 <twim_read_packet+0xf4>
+80002c6e:	91 09       	st.w	r8[0x0],r9
 	// Set next write transfer to false
 	twim_next = false;
-80002c60:	30 08       	mov	r8,0
-80002c62:	4b 6a       	lddpc	r10,80002d38 <twim_read_packet+0xf8>
-80002c64:	b4 88       	st.b	r10[0x0],r8
+80002c70:	30 08       	mov	r8,0
+80002c72:	4b 6a       	lddpc	r10,80002d48 <twim_read_packet+0xf8>
+80002c74:	b4 88       	st.b	r10[0x0],r8
 	// Initialize bus transfer status
 	transfer_status = TWI_SUCCESS;
-80002c66:	30 0b       	mov	r11,0
-80002c68:	4b 5a       	lddpc	r10,80002d3c <twim_read_packet+0xfc>
-80002c6a:	95 0b       	st.w	r10[0x0],r11
+80002c76:	30 0b       	mov	r11,0
+80002c78:	4b 5a       	lddpc	r10,80002d4c <twim_read_packet+0xfc>
+80002c7a:	95 0b       	st.w	r10[0x0],r11
 	//check if internal address access is performed
 	if (package->addr_length) {
-80002c6c:	0f fa       	ld.ub	r10,r7[0x7]
-80002c6e:	f0 0a 18 00 	cp.b	r10,r8
-80002c72:	c2 50       	breq	80002cbc <twim_read_packet+0x7c>
+80002c7c:	0f fa       	ld.ub	r10,r7[0x7]
+80002c7e:	f0 0a 18 00 	cp.b	r10,r8
+80002c82:	c2 50       	breq	80002ccc <twim_read_packet+0x7c>
 		// Reset the TWIM module to clear the THR register
 		twim_inst->cr = AVR32_TWIM_CR_MEN_MASK;
-80002c74:	4a d8       	lddpc	r8,80002d28 <twim_read_packet+0xe8>
-80002c76:	70 08       	ld.w	r8,r8[0x0]
-80002c78:	30 19       	mov	r9,1
-80002c7a:	91 09       	st.w	r8[0x0],r9
+80002c84:	4a d8       	lddpc	r8,80002d38 <twim_read_packet+0xe8>
+80002c86:	70 08       	ld.w	r8,r8[0x0]
+80002c88:	30 19       	mov	r9,1
+80002c8a:	91 09       	st.w	r8[0x0],r9
 		twim_inst->cr = AVR32_TWIM_CR_SWRST_MASK;
-80002c7c:	e0 69 00 80 	mov	r9,128
-80002c80:	91 09       	st.w	r8[0x0],r9
+80002c8c:	e0 69 00 80 	mov	r9,128
+80002c90:	91 09       	st.w	r8[0x0],r9
 		twim_inst->cr = AVR32_TWIM_CR_MDIS_MASK;
-80002c82:	30 29       	mov	r9,2
-80002c84:	91 09       	st.w	r8[0x0],r9
+80002c92:	30 29       	mov	r9,2
+80002c94:	91 09       	st.w	r8[0x0],r9
 		// selection of first valid byte of the address
 		twim_tx_data = package->addr;
-80002c86:	ee ca ff fc 	sub	r10,r7,-4
-80002c8a:	4a e9       	lddpc	r9,80002d40 <twim_read_packet+0x100>
-80002c8c:	93 0a       	st.w	r9[0x0],r10
+80002c96:	ee ca ff fc 	sub	r10,r7,-4
+80002c9a:	4a e9       	lddpc	r9,80002d50 <twim_read_packet+0x100>
+80002c9c:	93 0a       	st.w	r9[0x0],r10
 		// set the number of bytes to transmit
 		twim_tx_nb_bytes = package->addr_length;
-80002c8e:	0f f9       	ld.ub	r9,r7[0x7]
-80002c90:	4a da       	lddpc	r10,80002d44 <twim_read_packet+0x104>
-80002c92:	95 09       	st.w	r10[0x0],r9
+80002c9e:	0f f9       	ld.ub	r9,r7[0x7]
+80002ca0:	4a da       	lddpc	r10,80002d54 <twim_read_packet+0x104>
+80002ca2:	95 09       	st.w	r10[0x0],r9
 		// mask NACK, TXRDY and RXRDY interrupts
 		twim_it_mask = AVR32_TWIM_IER_STD_MASK |
-80002c94:	e0 6b 07 03 	mov	r11,1795
-80002c98:	4a ca       	lddpc	r10,80002d48 <twim_read_packet+0x108>
-80002c9a:	95 0b       	st.w	r10[0x0],r11
+80002ca4:	e0 6b 07 03 	mov	r11,1795
+80002ca8:	4a ca       	lddpc	r10,80002d58 <twim_read_packet+0x108>
+80002caa:	95 0b       	st.w	r10[0x0],r11
 				AVR32_TWIM_IER_TXRDY_MASK | AVR32_TWIM_IER_RXRDY_MASK;
 		// Set the command register to initiate the transfer
 		twim_inst->cmdr = (package->chip << AVR32_TWIM_CMDR_SADR_OFFSET)
-80002c9c:	6e 0a       	ld.w	r10,r7[0x0]
-80002c9e:	a1 7a       	lsl	r10,0x1
-80002ca0:	e8 1a a0 00 	orl	r10,0xa000
-80002ca4:	f5 e9 11 09 	or	r9,r10,r9<<0x10
-80002ca8:	91 39       	st.w	r8[0xc],r9
+80002cac:	6e 0a       	ld.w	r10,r7[0x0]
+80002cae:	a1 7a       	lsl	r10,0x1
+80002cb0:	e8 1a a0 00 	orl	r10,0xa000
+80002cb4:	f5 e9 11 09 	or	r9,r10,r9<<0x10
+80002cb8:	91 39       	st.w	r8[0xc],r9
 				| (package->addr_length << AVR32_TWIM_CMDR_NBYTES_OFFSET)
 				| (AVR32_TWIM_CMDR_VALID_MASK)
 				| (AVR32_TWIM_CMDR_START_MASK)
 				| (0 << AVR32_TWIM_CMDR_READ_OFFSET);
 		// set the next command register to followup with the previous command
 		twim_inst->ncmdr = ((package->chip) << AVR32_TWIM_CMDR_SADR_OFFSET)
-80002caa:	6e 0a       	ld.w	r10,r7[0x0]
-80002cac:	6e 39       	ld.w	r9,r7[0xc]
-80002cae:	b1 69       	lsl	r9,0x10
-80002cb0:	f3 ea 10 19 	or	r9,r9,r10<<0x1
-80002cb4:	e8 19 e0 01 	orl	r9,0xe001
-80002cb8:	91 49       	st.w	r8[0x10],r9
-80002cba:	c1 18       	rjmp	80002cdc <twim_read_packet+0x9c>
+80002cba:	6e 0a       	ld.w	r10,r7[0x0]
+80002cbc:	6e 39       	ld.w	r9,r7[0xc]
+80002cbe:	b1 69       	lsl	r9,0x10
+80002cc0:	f3 ea 10 19 	or	r9,r9,r10<<0x1
+80002cc4:	e8 19 e0 01 	orl	r9,0xe001
+80002cc8:	91 49       	st.w	r8[0x10],r9
+80002cca:	c1 18       	rjmp	80002cec <twim_read_packet+0x9c>
 				| (AVR32_TWIM_CMDR_VALID_MASK)
 				| (AVR32_TWIM_CMDR_START_MASK)
 				| (AVR32_TWIM_CMDR_STOP_MASK)
 				| (AVR32_TWIM_CMDR_READ_MASK);
 	} else {
 		twim_tx_nb_bytes = 0;
-80002cbc:	30 0a       	mov	r10,0
-80002cbe:	4a 28       	lddpc	r8,80002d44 <twim_read_packet+0x104>
-80002cc0:	91 0a       	st.w	r8[0x0],r10
+80002ccc:	30 0a       	mov	r10,0
+80002cce:	4a 28       	lddpc	r8,80002d54 <twim_read_packet+0x104>
+80002cd0:	91 0a       	st.w	r8[0x0],r10
 		// mask NACK and RXRDY interrupts
 		twim_it_mask = AVR32_TWIM_IER_STD_MASK | AVR32_TWIM_IER_RXRDY_MASK;
-80002cc2:	e0 6a 07 01 	mov	r10,1793
-80002cc6:	4a 18       	lddpc	r8,80002d48 <twim_read_packet+0x108>
-80002cc8:	91 0a       	st.w	r8[0x0],r10
+80002cd2:	e0 6a 07 01 	mov	r10,1793
+80002cd6:	4a 18       	lddpc	r8,80002d58 <twim_read_packet+0x108>
+80002cd8:	91 0a       	st.w	r8[0x0],r10
 		// Set the command register to initiate the transfer
 		twim_inst->cmdr = (package->chip << AVR32_TWIM_CMDR_SADR_OFFSET)
-80002cca:	49 88       	lddpc	r8,80002d28 <twim_read_packet+0xe8>
-80002ccc:	70 08       	ld.w	r8,r8[0x0]
-80002cce:	6e 0a       	ld.w	r10,r7[0x0]
-80002cd0:	b1 69       	lsl	r9,0x10
-80002cd2:	f3 ea 10 19 	or	r9,r9,r10<<0x1
-80002cd6:	e8 19 e0 01 	orl	r9,0xe001
-80002cda:	91 39       	st.w	r8[0xc],r9
+80002cda:	49 88       	lddpc	r8,80002d38 <twim_read_packet+0xe8>
+80002cdc:	70 08       	ld.w	r8,r8[0x0]
+80002cde:	6e 0a       	ld.w	r10,r7[0x0]
+80002ce0:	b1 69       	lsl	r9,0x10
+80002ce2:	f3 ea 10 19 	or	r9,r9,r10<<0x1
+80002ce6:	e8 19 e0 01 	orl	r9,0xe001
+80002cea:	91 39       	st.w	r8[0xc],r9
 				| (AVR32_TWIM_CMDR_START_MASK)
 				| (AVR32_TWIM_CMDR_STOP_MASK)
 				| (AVR32_TWIM_CMDR_READ_MASK);
 	}
 	// update IMR through IER
 	twim_inst->ier = twim_it_mask;
-80002cdc:	49 38       	lddpc	r8,80002d28 <twim_read_packet+0xe8>
-80002cde:	70 08       	ld.w	r8,r8[0x0]
-80002ce0:	49 a9       	lddpc	r9,80002d48 <twim_read_packet+0x108>
-80002ce2:	72 09       	ld.w	r9,r9[0x0]
-80002ce4:	91 89       	st.w	r8[0x20],r9
-	// Enable master transfer
-	twim->cr = AVR32_TWIM_CR_MEN_MASK;
-80002ce6:	30 18       	mov	r8,1
-80002ce8:	8d 08       	st.w	r6[0x0],r8
-	// Enable all interrupts
-	cpu_irq_enable ();
-80002cea:	d5 03       	csrf	0x10
-	// get data
-	while (!(transfer_status) && !(twim_status ())) {
-80002cec:	49 48       	lddpc	r8,80002d3c <twim_read_packet+0xfc>
+80002cec:	49 38       	lddpc	r8,80002d38 <twim_read_packet+0xe8>
 80002cee:	70 08       	ld.w	r8,r8[0x0]
-80002cf0:	58 08       	cp.w	r8,0
-80002cf2:	c0 80       	breq	80002d02 <twim_read_packet+0xc2>
-80002cf4:	c0 b8       	rjmp	80002d0a <twim_read_packet+0xca>
+80002cf0:	49 a9       	lddpc	r9,80002d58 <twim_read_packet+0x108>
+80002cf2:	72 09       	ld.w	r9,r9[0x0]
+80002cf4:	91 89       	st.w	r8[0x20],r9
+	// Enable master transfer
+	twim->cr = AVR32_TWIM_CR_MEN_MASK;
+80002cf6:	30 18       	mov	r8,1
+80002cf8:	8d 08       	st.w	r6[0x0],r8
+	// Enable all interrupts
+	cpu_irq_enable ();
+80002cfa:	d5 03       	csrf	0x10
+	// get data
+	while (!(transfer_status) && !(twim_status ())) {
+80002cfc:	49 48       	lddpc	r8,80002d4c <twim_read_packet+0xfc>
+80002cfe:	70 08       	ld.w	r8,r8[0x0]
+80002d00:	58 08       	cp.w	r8,0
+80002d02:	c0 80       	breq	80002d12 <twim_read_packet+0xc2>
+80002d04:	c0 b8       	rjmp	80002d1a <twim_read_packet+0xca>
 		cpu_relax();
-80002cf6:	fe cf ff fc 	sub	pc,pc,-4
+80002d06:	fe cf ff fc 	sub	pc,pc,-4
 	// Enable master transfer
 	twim->cr = AVR32_TWIM_CR_MEN_MASK;
 	// Enable all interrupts
 	cpu_irq_enable ();
 	// get data
 	while (!(transfer_status) && !(twim_status ())) {
-80002cfa:	6e 08       	ld.w	r8,r7[0x0]
-80002cfc:	58 08       	cp.w	r8,0
-80002cfe:	c0 30       	breq	80002d04 <twim_read_packet+0xc4>
-80002d00:	c0 58       	rjmp	80002d0a <twim_read_packet+0xca>
-80002d02:	48 f7       	lddpc	r7,80002d3c <twim_read_packet+0xfc>
-80002d04:	f0 1f 00 12 	mcall	80002d4c <twim_read_packet+0x10c>
-80002d08:	cf 70       	breq	80002cf6 <twim_read_packet+0xb6>
+80002d0a:	6e 08       	ld.w	r8,r7[0x0]
+80002d0c:	58 08       	cp.w	r8,0
+80002d0e:	c0 30       	breq	80002d14 <twim_read_packet+0xc4>
+80002d10:	c0 58       	rjmp	80002d1a <twim_read_packet+0xca>
+80002d12:	48 f7       	lddpc	r7,80002d4c <twim_read_packet+0xfc>
+80002d14:	f0 1f 00 12 	mcall	80002d5c <twim_read_packet+0x10c>
+80002d18:	cf 70       	breq	80002d06 <twim_read_packet+0xb6>
 		cpu_relax();
 	}
 	// Disable master transfer
 	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
-80002d0a:	30 28       	mov	r8,2
-80002d0c:	8d 08       	st.w	r6[0x0],r8
+80002d1a:	30 28       	mov	r8,2
+80002d1c:	8d 08       	st.w	r6[0x0],r8
 	if (transfer_status == TWI_RECEIVE_NACK
 			|| transfer_status == TWI_ARBITRATION_LOST) {
-80002d0e:	48 c8       	lddpc	r8,80002d3c <twim_read_packet+0xfc>
-80002d10:	70 08       	ld.w	r8,r8[0x0]
+80002d1e:	48 c8       	lddpc	r8,80002d4c <twim_read_packet+0xfc>
+80002d20:	70 08       	ld.w	r8,r8[0x0]
 	while (!(transfer_status) && !(twim_status ())) {
 		cpu_relax();
 	}
 	// Disable master transfer
 	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
 	if (transfer_status == TWI_RECEIVE_NACK
-80002d12:	5b c8       	cp.w	r8,-4
-80002d14:	c0 70       	breq	80002d22 <twim_read_packet+0xe2>
+80002d22:	5b c8       	cp.w	r8,-4
+80002d24:	c0 70       	breq	80002d32 <twim_read_packet+0xe2>
 			|| transfer_status == TWI_ARBITRATION_LOST) {
-80002d16:	48 a8       	lddpc	r8,80002d3c <twim_read_packet+0xfc>
-80002d18:	70 08       	ld.w	r8,r8[0x0]
+80002d26:	48 a8       	lddpc	r8,80002d4c <twim_read_packet+0xfc>
+80002d28:	70 08       	ld.w	r8,r8[0x0]
 	while (!(transfer_status) && !(twim_status ())) {
 		cpu_relax();
 	}
 	// Disable master transfer
 	twim->cr = AVR32_TWIM_CR_MDIS_MASK;
 	if (transfer_status == TWI_RECEIVE_NACK
-80002d1a:	5b e8       	cp.w	r8,-2
-80002d1c:	c0 30       	breq	80002d22 <twim_read_packet+0xe2>
-80002d1e:	e3 cf 80 c0 	ldm	sp++,r6-r7,pc,r12=0
-80002d22:	e3 cf c0 c0 	ldm	sp++,r6-r7,pc,r12=-1
-80002d26:	00 00       	add	r0,r0
-80002d28:	00 00       	add	r0,r0
-80002d2a:	00 0c       	add	r12,r0
-80002d2c:	80 00       	ld.sh	r0,r0[0x0]
-80002d2e:	2b 5c       	sub	r12,-75
-80002d30:	00 00       	add	r0,r0
-80002d32:	00 10       	sub	r0,r0
-80002d34:	00 00       	add	r0,r0
-80002d36:	00 14       	sub	r4,r0
+80002d2a:	5b e8       	cp.w	r8,-2
+80002d2c:	c0 30       	breq	80002d32 <twim_read_packet+0xe2>
+80002d2e:	e3 cf 80 c0 	ldm	sp++,r6-r7,pc,r12=0
+80002d32:	e3 cf c0 c0 	ldm	sp++,r6-r7,pc,r12=-1
+80002d36:	00 00       	add	r0,r0
 80002d38:	00 00       	add	r0,r0
-80002d3a:	00 24       	rsub	r4,r0
-80002d3c:	00 00       	add	r0,r0
-80002d3e:	00 18       	sub	r8,r0
+80002d3a:	00 0c       	add	r12,r0
+80002d3c:	80 00       	ld.sh	r0,r0[0x0]
+80002d3e:	2b 6c       	sub	r12,-74
 80002d40:	00 00       	add	r0,r0
-80002d42:	00 1c       	sub	r12,r0
+80002d42:	00 10       	sub	r0,r0
 80002d44:	00 00       	add	r0,r0
-80002d46:	00 2c       	rsub	r12,r0
+80002d46:	00 14       	sub	r4,r0
 80002d48:	00 00       	add	r0,r0
-80002d4a:	00 20       	rsub	r0,r0
-80002d4c:	80 00       	ld.sh	r0,r0[0x0]
-80002d4e:	2b 4c       	sub	r12,-76
+80002d4a:	00 24       	rsub	r4,r0
+80002d4c:	00 00       	add	r0,r0
+80002d4e:	00 18       	sub	r8,r0
+80002d50:	00 00       	add	r0,r0
+80002d52:	00 1c       	sub	r12,r0
+80002d54:	00 00       	add	r0,r0
+80002d56:	00 2c       	rsub	r12,r0
+80002d58:	00 00       	add	r0,r0
+80002d5a:	00 20       	rsub	r0,r0
+80002d5c:	80 00       	ld.sh	r0,r0[0x0]
+80002d5e:	2b 5c       	sub	r12,-75
 
-80002d50 <twim_master_init>:
+80002d60 <twim_master_init>:
  * \retval ERR_INVALID_ARG  Invalid arg resulting in wrong CWGR Exponential
  * \retval ERR_IO_ERROR     NACK is received or Bus Arbitration lost
  */
 status_code_t twim_master_init (volatile avr32_twim_t *twim,
 		const twim_options_t *opt)
 {
-80002d50:	eb cd 40 e0 	pushm	r5-r7,lr
-80002d54:	20 1d       	sub	sp,4
-80002d56:	18 97       	mov	r7,r12
-80002d58:	16 95       	mov	r5,r11
+80002d60:	eb cd 40 e0 	pushm	r5-r7,lr
+80002d64:	20 1d       	sub	sp,4
+80002d66:	18 97       	mov	r7,r12
+80002d68:	16 95       	mov	r5,r11
 	bool global_interrupt_enabled = cpu_irq_is_enabled ();
-80002d5a:	e1 b8 00 00 	mfsr	r8,0x0
+80002d6a:	e1 b8 00 00 	mfsr	r8,0x0
 	// Initialize bus transfer status
 	transfer_status = TWI_SUCCESS;
-80002d5e:	30 0a       	mov	r10,0
-80002d60:	4a 79       	lddpc	r9,80002dfc <twim_master_init+0xac>
-80002d62:	93 0a       	st.w	r9[0x0],r10
+80002d6e:	30 0a       	mov	r10,0
+80002d70:	4a 79       	lddpc	r9,80002e0c <twim_master_init+0xac>
+80002d72:	93 0a       	st.w	r9[0x0],r10
 	// Disable TWI interrupts
 	if (global_interrupt_enabled) {
-80002d64:	e6 18 00 01 	andh	r8,0x1,COH
-80002d68:	c0 b1       	brne	80002d7e <twim_master_init+0x2e>
+80002d74:	e6 18 00 01 	andh	r8,0x1,COH
+80002d78:	c0 b1       	brne	80002d8e <twim_master_init+0x2e>
 		cpu_irq_disable ();
-80002d6a:	d3 03       	ssrf	0x10
+80002d7a:	d3 03       	ssrf	0x10
 	}
 	twim->idr = ~0UL;
-80002d6c:	3f f8       	mov	r8,-1
-80002d6e:	99 98       	st.w	r12[0x24],r8
+80002d7c:	3f f8       	mov	r8,-1
+80002d7e:	99 98       	st.w	r12[0x24],r8
 	// Enable master transfer
 	twim->cr = AVR32_TWIM_CR_MEN_MASK;
-80002d70:	30 18       	mov	r8,1
-80002d72:	99 08       	st.w	r12[0x0],r8
+80002d80:	30 18       	mov	r8,1
+80002d82:	99 08       	st.w	r12[0x0],r8
 	// Reset TWI
 	twim->cr = AVR32_TWIM_CR_SWRST_MASK;
-80002d74:	e0 68 00 80 	mov	r8,128
-80002d78:	99 08       	st.w	r12[0x0],r8
+80002d84:	e0 68 00 80 	mov	r8,128
+80002d88:	99 08       	st.w	r12[0x0],r8
 	if (global_interrupt_enabled) {
 		cpu_irq_enable ();
-80002d7a:	d5 03       	csrf	0x10
-80002d7c:	c0 88       	rjmp	80002d8c <twim_master_init+0x3c>
+80002d8a:	d5 03       	csrf	0x10
+80002d8c:	c0 88       	rjmp	80002d9c <twim_master_init+0x3c>
 	transfer_status = TWI_SUCCESS;
 	// Disable TWI interrupts
 	if (global_interrupt_enabled) {
 		cpu_irq_disable ();
 	}
 	twim->idr = ~0UL;
-80002d7e:	3f f8       	mov	r8,-1
-80002d80:	99 98       	st.w	r12[0x24],r8
+80002d8e:	3f f8       	mov	r8,-1
+80002d90:	99 98       	st.w	r12[0x24],r8
 	// Enable master transfer
 	twim->cr = AVR32_TWIM_CR_MEN_MASK;
-80002d82:	30 18       	mov	r8,1
-80002d84:	99 08       	st.w	r12[0x0],r8
+80002d92:	30 18       	mov	r8,1
+80002d94:	99 08       	st.w	r12[0x0],r8
 	// Reset TWI
 	twim->cr = AVR32_TWIM_CR_SWRST_MASK;
-80002d86:	e0 68 00 80 	mov	r8,128
-80002d8a:	99 08       	st.w	r12[0x0],r8
+80002d96:	e0 68 00 80 	mov	r8,128
+80002d9a:	99 08       	st.w	r12[0x0],r8
 	if (global_interrupt_enabled) {
 		cpu_irq_enable ();
 	}
 	// Clear SR
 	twim->scr = ~0UL;
-80002d8c:	3f f8       	mov	r8,-1
-80002d8e:	8f b8       	st.w	r7[0x2c],r8
+80002d9c:	3f f8       	mov	r8,-1
+80002d9e:	8f b8       	st.w	r7[0x2c],r8
 
 static inline irqflags_t cpu_irq_save(void)
 {
 	volatile irqflags_t flags;
 
 	flags = sysreg_read(AVR32_SR);
-80002d90:	e1 b8 00 00 	mfsr	r8,0x0
-80002d94:	50 08       	stdsp	sp[0x0],r8
+80002da0:	e1 b8 00 00 	mfsr	r8,0x0
+80002da4:	50 08       	stdsp	sp[0x0],r8
 	cpu_irq_disable();
-80002d96:	d3 03       	ssrf	0x10
+80002da6:	d3 03       	ssrf	0x10
 
 	return flags;
-80002d98:	40 06       	lddsp	r6,sp[0x0]
+80002da8:	40 06       	lddsp	r6,sp[0x0]
 
 	// register Register twim_master_interrupt_handler interrupt on level CONF_TWIM_IRQ_LEVEL
 	irqflags_t flags = cpu_irq_save();
 	irq_register_handler(twim_master_interrupt_handler,
-80002d9a:	30 1a       	mov	r10,1
-80002d9c:	e0 6b 01 40 	mov	r11,320
-80002da0:	49 8c       	lddpc	r12,80002e00 <twim_master_init+0xb0>
-80002da2:	f0 1f 00 19 	mcall	80002e04 <twim_master_init+0xb4>
+80002daa:	30 1a       	mov	r10,1
+80002dac:	e0 6b 01 40 	mov	r11,320
+80002db0:	49 8c       	lddpc	r12,80002e10 <twim_master_init+0xb0>
+80002db2:	f0 1f 00 19 	mcall	80002e14 <twim_master_init+0xb4>
 static inline void cpu_irq_restore(irqflags_t flags)
 {
 	barrier();
 
    /* Restore the global IRQ mask status flag if it was previously set */
    if ( cpu_irq_is_enabled_flags(flags) ) {
-80002da6:	e6 16 00 01 	andh	r6,0x1,COH
-80002daa:	c0 21       	brne	80002dae <twim_master_init+0x5e>
+80002db6:	e6 16 00 01 	andh	r6,0x1,COH
+80002dba:	c0 21       	brne	80002dbe <twim_master_init+0x5e>
       cpu_irq_enable();
-80002dac:	d5 03       	csrf	0x10
+80002dbc:	d5 03       	csrf	0x10
 			CONF_TWIM_IRQ_LINE, CONF_TWIM_IRQ_LEVEL);
 	cpu_irq_restore(flags);
 
 	if (opt->smbus) {
-80002dae:	eb 39 00 0c 	ld.ub	r9,r5[12]
-80002db2:	30 08       	mov	r8,0
+80002dbe:	eb 39 00 0c 	ld.ub	r9,r5[12]
+80002dc2:	30 08       	mov	r8,0
 		// Enable SMBUS Transfer
 		twim->cr = AVR32_TWIM_CR_SMEN_MASK;
-80002db4:	f0 09 18 00 	cp.b	r9,r8
-80002db8:	f9 b8 01 10 	movne	r8,16
-80002dbc:	ef f8 1a 00 	st.wne	r7[0x0],r8
+80002dc4:	f0 09 18 00 	cp.b	r9,r8
+80002dc8:	f9 b8 01 10 	movne	r8,16
+80002dcc:	ef f8 1a 00 	st.wne	r7[0x0],r8
 		twim->smbtr = (uint32_t) -1;
-80002dc0:	f9 b8 01 ff 	movne	r8,-1
-80002dc4:	ef f8 1a 02 	st.wne	r7[0x8],r8
+80002dd0:	f9 b8 01 ff 	movne	r8,-1
+80002dd4:	ef f8 1a 02 	st.wne	r7[0x8],r8
 	}
 	// Select the speed
 	if (twim_set_speed (twim, opt->speed, opt->pba_hz) ==
-80002dc8:	6a 0a       	ld.w	r10,r5[0x0]
-80002dca:	6a 1b       	ld.w	r11,r5[0x4]
-80002dcc:	0e 9c       	mov	r12,r7
-80002dce:	f0 1f 00 0f 	mcall	80002e08 <twim_master_init+0xb8>
-80002dd2:	5b 8c       	cp.w	r12,-8
-80002dd4:	c1 00       	breq	80002df4 <twim_master_init+0xa4>
+80002dd8:	6a 0a       	ld.w	r10,r5[0x0]
+80002dda:	6a 1b       	ld.w	r11,r5[0x4]
+80002ddc:	0e 9c       	mov	r12,r7
+80002dde:	f0 1f 00 0f 	mcall	80002e18 <twim_master_init+0xb8>
+80002de2:	5b 8c       	cp.w	r12,-8
+80002de4:	c1 00       	breq	80002e04 <twim_master_init+0xa4>
 			ERR_INVALID_ARG) {
 		return ERR_INVALID_ARG;
 	}
 	// Probe the component
 	twim_probe (twim, opt->chip);
-80002dd6:	6a 2b       	ld.w	r11,r5[0x8]
-80002dd8:	0e 9c       	mov	r12,r7
-80002dda:	f0 1f 00 0d 	mcall	80002e0c <twim_master_init+0xbc>
+80002de6:	6a 2b       	ld.w	r11,r5[0x8]
+80002de8:	0e 9c       	mov	r12,r7
+80002dea:	f0 1f 00 0d 	mcall	80002e1c <twim_master_init+0xbc>
 	//Check for nack and arbitration
 	if (transfer_status == TWI_RECEIVE_NACK
 			|| transfer_status == TWI_ARBITRATION_LOST) {
-80002dde:	48 88       	lddpc	r8,80002dfc <twim_master_init+0xac>
-80002de0:	70 08       	ld.w	r8,r8[0x0]
+80002dee:	48 88       	lddpc	r8,80002e0c <twim_master_init+0xac>
+80002df0:	70 08       	ld.w	r8,r8[0x0]
 		return ERR_INVALID_ARG;
 	}
 	// Probe the component
 	twim_probe (twim, opt->chip);
 	//Check for nack and arbitration
 	if (transfer_status == TWI_RECEIVE_NACK
-80002de2:	5b c8       	cp.w	r8,-4
-80002de4:	c0 70       	breq	80002df2 <twim_master_init+0xa2>
+80002df2:	5b c8       	cp.w	r8,-4
+80002df4:	c0 70       	breq	80002e02 <twim_master_init+0xa2>
 			|| transfer_status == TWI_ARBITRATION_LOST) {
-80002de6:	48 68       	lddpc	r8,80002dfc <twim_master_init+0xac>
-80002de8:	70 08       	ld.w	r8,r8[0x0]
+80002df6:	48 68       	lddpc	r8,80002e0c <twim_master_init+0xac>
+80002df8:	70 08       	ld.w	r8,r8[0x0]
 		return ERR_INVALID_ARG;
 	}
 	// Probe the component
 	twim_probe (twim, opt->chip);
 	//Check for nack and arbitration
 	if (transfer_status == TWI_RECEIVE_NACK
-80002dea:	5b e8       	cp.w	r8,-2
-80002dec:	c0 30       	breq	80002df2 <twim_master_init+0xa2>
-80002dee:	30 0c       	mov	r12,0
-80002df0:	c0 28       	rjmp	80002df4 <twim_master_init+0xa4>
-80002df2:	3f fc       	mov	r12,-1
+80002dfa:	5b e8       	cp.w	r8,-2
+80002dfc:	c0 30       	breq	80002e02 <twim_master_init+0xa2>
+80002dfe:	30 0c       	mov	r12,0
+80002e00:	c0 28       	rjmp	80002e04 <twim_master_init+0xa4>
+80002e02:	3f fc       	mov	r12,-1
 			|| transfer_status == TWI_ARBITRATION_LOST) {
 		return ERR_IO_ERROR;
 	}
 	return STATUS_OK;
 }
-80002df4:	2f fd       	sub	sp,-4
-80002df6:	e3 cd 80 e0 	ldm	sp++,r5-r7,pc
-80002dfa:	00 00       	add	r0,r0
-80002dfc:	00 00       	add	r0,r0
-80002dfe:	00 18       	sub	r8,r0
-80002e00:	80 00       	ld.sh	r0,r0[0x0]
-80002e02:	2a 0c       	sub	r12,-96
-80002e04:	80 00       	ld.sh	r0,r0[0x0]
-80002e06:	2e 14       	sub	r4,-31
-80002e08:	80 00       	ld.sh	r0,r0[0x0]
-80002e0a:	2a e8       	sub	r8,-82
-80002e0c:	80 00       	ld.sh	r0,r0[0x0]
-80002e0e:	2c 24       	sub	r4,-62
+80002e04:	2f fd       	sub	sp,-4
+80002e06:	e3 cd 80 e0 	ldm	sp++,r5-r7,pc
+80002e0a:	00 00       	add	r0,r0
+80002e0c:	00 00       	add	r0,r0
+80002e0e:	00 18       	sub	r8,r0
+80002e10:	80 00       	ld.sh	r0,r0[0x0]
+80002e12:	2a 1c       	sub	r12,-95
+80002e14:	80 00       	ld.sh	r0,r0[0x0]
+80002e16:	2e 24       	sub	r4,-30
+80002e18:	80 00       	ld.sh	r0,r0[0x0]
+80002e1a:	2a f8       	sub	r8,-81
+80002e1c:	80 00       	ld.sh	r0,r0[0x0]
+80002e1e:	2c 34       	sub	r4,-61
 
-80002e10 <_unhandled_interrupt>:
+80002e20 <_unhandled_interrupt>:
 __attribute__((__interrupt__))
 #elif (defined __ICCAVR32__)
 __interrupt
 #endif
 static void _unhandled_interrupt(void)
 {
-80002e10:	c0 08       	rjmp	80002e10 <_unhandled_interrupt>
-80002e12:	d7 03       	nop
+80002e20:	c0 08       	rjmp	80002e20 <_unhandled_interrupt>
+80002e22:	d7 03       	nop
 
-80002e14 <INTC_register_interrupt>:
+80002e24 <INTC_register_interrupt>:
  */
 void INTC_register_interrupt(__int_handler handler, uint32_t irq,
 	uint32_t int_level)
 {
 	// Determine the group of the IRQ.
 	uint32_t int_grp = irq / AVR32_INTC_MAX_NUM_IRQS_PER_GRP;
-80002e14:	f6 08 16 05 	lsr	r8,r11,0x5
+80002e24:	f6 08 16 05 	lsr	r8,r11,0x5
 
 	/* Store in _int_line_handler_table_x the pointer to the interrupt
 	handler, so that _get_interrupt_handler can retrieve it when the
 	interrupt is vectored. */
 	_int_handler_table[int_grp]
 		._int_line_handler_table[irq % AVR32_INTC_MAX_NUM_IRQS_PER_GRP]
-80002e18:	49 99       	lddpc	r9,80002e7c <INTC_register_interrupt+0x68>
-80002e1a:	f2 08 00 39 	add	r9,r9,r8<<0x3
-80002e1e:	f7 db c0 05 	bfextu	r11,r11,0x0,0x5
-80002e22:	72 19       	ld.w	r9,r9[0x4]
+80002e28:	49 99       	lddpc	r9,80002e8c <INTC_register_interrupt+0x68>
+80002e2a:	f2 08 00 39 	add	r9,r9,r8<<0x3
+80002e2e:	f7 db c0 05 	bfextu	r11,r11,0x0,0x5
+80002e32:	72 19       	ld.w	r9,r9[0x4]
 	uint32_t int_grp = irq / AVR32_INTC_MAX_NUM_IRQS_PER_GRP;
 
 	/* Store in _int_line_handler_table_x the pointer to the interrupt
 	handler, so that _get_interrupt_handler can retrieve it when the
 	interrupt is vectored. */
 	_int_handler_table[int_grp]
-80002e24:	f2 0b 09 2c 	st.w	r9[r11<<0x2],r12
+80002e34:	f2 0b 09 2c 	st.w	r9[r11<<0x2],r12
 	/* Program the corresponding IPRX register to set the interrupt priority
 	level and the interrupt vector offset that will be fetched by the core
 	interrupt system.
 	NOTE: The _intx functions are intermediate assembly functions between
 	the core interrupt system and the user interrupt handler. */
 	if (int_level == AVR32_INTC_INT0) {
-80002e28:	58 0a       	cp.w	r10,0
-80002e2a:	c0 91       	brne	80002e3c <INTC_register_interrupt+0x28>
+80002e38:	58 0a       	cp.w	r10,0
+80002e3a:	c0 91       	brne	80002e4c <INTC_register_interrupt+0x28>
 		AVR32_INTC.ipr[int_grp] = IPR_INT0;
-80002e2c:	49 59       	lddpc	r9,80002e80 <INTC_register_interrupt+0x6c>
-80002e2e:	49 6a       	lddpc	r10,80002e84 <INTC_register_interrupt+0x70>
-80002e30:	12 1a       	sub	r10,r9
-80002e32:	fe 79 10 00 	mov	r9,-61440
-80002e36:	f2 08 09 2a 	st.w	r9[r8<<0x2],r10
-80002e3a:	5e fc       	retal	r12
+80002e3c:	49 59       	lddpc	r9,80002e90 <INTC_register_interrupt+0x6c>
+80002e3e:	49 6a       	lddpc	r10,80002e94 <INTC_register_interrupt+0x70>
+80002e40:	12 1a       	sub	r10,r9
+80002e42:	fe 79 10 00 	mov	r9,-61440
+80002e46:	f2 08 09 2a 	st.w	r9[r8<<0x2],r10
+80002e4a:	5e fc       	retal	r12
 	} else if (int_level == AVR32_INTC_INT1) {
-80002e3c:	58 1a       	cp.w	r10,1
-80002e3e:	c0 a1       	brne	80002e52 <INTC_register_interrupt+0x3e>
+80002e4c:	58 1a       	cp.w	r10,1
+80002e4e:	c0 a1       	brne	80002e62 <INTC_register_interrupt+0x3e>
 		AVR32_INTC.ipr[int_grp] = IPR_INT1;
-80002e40:	49 09       	lddpc	r9,80002e80 <INTC_register_interrupt+0x6c>
-80002e42:	49 2a       	lddpc	r10,80002e88 <INTC_register_interrupt+0x74>
-80002e44:	12 1a       	sub	r10,r9
-80002e46:	bf aa       	sbr	r10,0x1e
-80002e48:	fe 79 10 00 	mov	r9,-61440
-80002e4c:	f2 08 09 2a 	st.w	r9[r8<<0x2],r10
-80002e50:	5e fc       	retal	r12
+80002e50:	49 09       	lddpc	r9,80002e90 <INTC_register_interrupt+0x6c>
+80002e52:	49 2a       	lddpc	r10,80002e98 <INTC_register_interrupt+0x74>
+80002e54:	12 1a       	sub	r10,r9
+80002e56:	bf aa       	sbr	r10,0x1e
+80002e58:	fe 79 10 00 	mov	r9,-61440
+80002e5c:	f2 08 09 2a 	st.w	r9[r8<<0x2],r10
+80002e60:	5e fc       	retal	r12
 	} else if (int_level == AVR32_INTC_INT2) {
-80002e52:	58 2a       	cp.w	r10,2
-80002e54:	c0 a1       	brne	80002e68 <INTC_register_interrupt+0x54>
+80002e62:	58 2a       	cp.w	r10,2
+80002e64:	c0 a1       	brne	80002e78 <INTC_register_interrupt+0x54>
 		AVR32_INTC.ipr[int_grp] = IPR_INT2;
-80002e56:	48 b9       	lddpc	r9,80002e80 <INTC_register_interrupt+0x6c>
-80002e58:	48 da       	lddpc	r10,80002e8c <INTC_register_interrupt+0x78>
-80002e5a:	12 1a       	sub	r10,r9
-80002e5c:	bf ba       	sbr	r10,0x1f
-80002e5e:	fe 79 10 00 	mov	r9,-61440
-80002e62:	f2 08 09 2a 	st.w	r9[r8<<0x2],r10
-80002e66:	5e fc       	retal	r12
+80002e66:	48 b9       	lddpc	r9,80002e90 <INTC_register_interrupt+0x6c>
+80002e68:	48 da       	lddpc	r10,80002e9c <INTC_register_interrupt+0x78>
+80002e6a:	12 1a       	sub	r10,r9
+80002e6c:	bf ba       	sbr	r10,0x1f
+80002e6e:	fe 79 10 00 	mov	r9,-61440
+80002e72:	f2 08 09 2a 	st.w	r9[r8<<0x2],r10
+80002e76:	5e fc       	retal	r12
 	} else {
 		AVR32_INTC.ipr[int_grp] = IPR_INT3;
-80002e68:	48 69       	lddpc	r9,80002e80 <INTC_register_interrupt+0x6c>
-80002e6a:	48 aa       	lddpc	r10,80002e90 <INTC_register_interrupt+0x7c>
-80002e6c:	12 1a       	sub	r10,r9
-80002e6e:	ea 1a c0 00 	orh	r10,0xc000
-80002e72:	fe 79 10 00 	mov	r9,-61440
-80002e76:	f2 08 09 2a 	st.w	r9[r8<<0x2],r10
-80002e7a:	5e fc       	retal	r12
-80002e7c:	80 00       	ld.sh	r0,r0[0x0]
-80002e7e:	34 68       	mov	r8,70
-80002e80:	80 00       	ld.sh	r0,r0[0x0]
-80002e82:	32 00       	mov	r0,32
-80002e84:	80 00       	ld.sh	r0,r0[0x0]
-80002e86:	33 04       	mov	r4,48
-80002e88:	80 00       	ld.sh	r0,r0[0x0]
-80002e8a:	33 12       	mov	r2,49
+80002e78:	48 69       	lddpc	r9,80002e90 <INTC_register_interrupt+0x6c>
+80002e7a:	48 aa       	lddpc	r10,80002ea0 <INTC_register_interrupt+0x7c>
+80002e7c:	12 1a       	sub	r10,r9
+80002e7e:	ea 1a c0 00 	orh	r10,0xc000
+80002e82:	fe 79 10 00 	mov	r9,-61440
+80002e86:	f2 08 09 2a 	st.w	r9[r8<<0x2],r10
+80002e8a:	5e fc       	retal	r12
 80002e8c:	80 00       	ld.sh	r0,r0[0x0]
-80002e8e:	33 20       	mov	r0,50
+80002e8e:	34 68       	mov	r8,70
 80002e90:	80 00       	ld.sh	r0,r0[0x0]
-80002e92:	33 2e       	mov	lr,50
+80002e92:	32 00       	mov	r0,32
+80002e94:	80 00       	ld.sh	r0,r0[0x0]
+80002e96:	33 04       	mov	r4,48
+80002e98:	80 00       	ld.sh	r0,r0[0x0]
+80002e9a:	33 12       	mov	r2,49
+80002e9c:	80 00       	ld.sh	r0,r0[0x0]
+80002e9e:	33 20       	mov	r0,50
+80002ea0:	80 00       	ld.sh	r0,r0[0x0]
+80002ea2:	33 2e       	mov	lr,50
 
-80002e94 <INTC_init_interrupts>:
+80002ea4 <INTC_init_interrupts>:
 /**
  * \brief Initializes the hardware interrupt controller driver.
  *
  */
 void INTC_init_interrupts(void)
 {
-80002e94:	d4 21       	pushm	r4-r7,lr
+80002ea4:	d4 21       	pushm	r4-r7,lr
  * \brief Init EVBA address. This operation may or may not have been done by the
  * C startup process.
  */
 static __inline__ void INTC_init_evba(void)
 {
   Set_system_register(AVR32_EVBA, (int32_t)&_evba );
-80002e96:	49 18       	lddpc	r8,80002ed8 <INTC_init_interrupts+0x44>
-80002e98:	e3 b8 00 01 	mtsr	0x4,r8
-80002e9c:	49 0e       	lddpc	lr,80002edc <INTC_init_interrupts+0x48>
-80002e9e:	30 07       	mov	r7,0
-80002ea0:	0e 94       	mov	r4,r7
+80002ea6:	49 18       	lddpc	r8,80002ee8 <INTC_init_interrupts+0x44>
+80002ea8:	e3 b8 00 01 	mtsr	0x4,r8
+80002eac:	49 0e       	lddpc	lr,80002eec <INTC_init_interrupts+0x48>
+80002eae:	30 07       	mov	r7,0
+80002eb0:	0e 94       	mov	r4,r7
 			int_req < _int_handler_table[int_grp].num_irqs;
 			int_req++)
 		{
 			/* Assign _unhandled_interrupt as the default interrupt
 			handler. */
 			_int_handler_table[int_grp]
-80002ea2:	49 0c       	lddpc	r12,80002ee0 <INTC_init_interrupts+0x4c>
+80002eb2:	49 0c       	lddpc	r12,80002ef0 <INTC_init_interrupts+0x4c>
 
 		/* Set the interrupt group priority register to its default
 		value.
 		By default, all interrupt groups are linked to the interrupt
 		priority level 0 and to the interrupt vector _int0. */
 		AVR32_INTC.ipr[int_grp] = IPR_INT0;
-80002ea4:	49 05       	lddpc	r5,80002ee4 <INTC_init_interrupts+0x50>
-80002ea6:	10 15       	sub	r5,r8
-80002ea8:	fe 76 10 00 	mov	r6,-61440
-80002eac:	c1 08       	rjmp	80002ecc <INTC_init_interrupts+0x38>
+80002eb4:	49 05       	lddpc	r5,80002ef4 <INTC_init_interrupts+0x50>
+80002eb6:	10 15       	sub	r5,r8
+80002eb8:	fe 76 10 00 	mov	r6,-61440
+80002ebc:	c1 08       	rjmp	80002edc <INTC_init_interrupts+0x38>
  * \brief Init EVBA address. This operation may or may not have been done by the
  * C startup process.
  */
 static __inline__ void INTC_init_evba(void)
 {
   Set_system_register(AVR32_EVBA, (int32_t)&_evba );
-80002eae:	08 98       	mov	r8,r4
+80002ebe:	08 98       	mov	r8,r4
 			int_req++)
 		{
 			/* Assign _unhandled_interrupt as the default interrupt
 			handler. */
 			_int_handler_table[int_grp]
 				._int_line_handler_table[int_req]
-80002eb0:	7c 1b       	ld.w	r11,lr[0x4]
+80002ec0:	7c 1b       	ld.w	r11,lr[0x4]
 
 	// For all interrupt groups,
 	for (int_grp = 0; int_grp < AVR32_INTC_NUM_INT_GRPS; int_grp++)
 	{
 		// For all interrupt request lines of each group,
 		for (int_req = 0;
-80002eb2:	7c 0a       	ld.w	r10,lr[0x0]
+80002ec2:	7c 0a       	ld.w	r10,lr[0x0]
 			int_req < _int_handler_table[int_grp].num_irqs;
 			int_req++)
 		{
 			/* Assign _unhandled_interrupt as the default interrupt
 			handler. */
 			_int_handler_table[int_grp]
-80002eb4:	f6 08 09 2c 	st.w	r11[r8<<0x2],r12
+80002ec4:	f6 08 09 2c 	st.w	r11[r8<<0x2],r12
 	for (int_grp = 0; int_grp < AVR32_INTC_NUM_INT_GRPS; int_grp++)
 	{
 		// For all interrupt request lines of each group,
 		for (int_req = 0;
 			int_req < _int_handler_table[int_grp].num_irqs;
 			int_req++)
-80002eb8:	2f f8       	sub	r8,-1
+80002ec8:	2f f8       	sub	r8,-1
 
 	// For all interrupt groups,
 	for (int_grp = 0; int_grp < AVR32_INTC_NUM_INT_GRPS; int_grp++)
 	{
 		// For all interrupt request lines of each group,
 		for (int_req = 0;
-80002eba:	10 3a       	cp.w	r10,r8
-80002ebc:	fe 9b ff fc 	brhi	80002eb4 <INTC_init_interrupts+0x20>
+80002eca:	10 3a       	cp.w	r10,r8
+80002ecc:	fe 9b ff fc 	brhi	80002ec4 <INTC_init_interrupts+0x20>
 
 		/* Set the interrupt group priority register to its default
 		value.
 		By default, all interrupt groups are linked to the interrupt
 		priority level 0 and to the interrupt vector _int0. */
 		AVR32_INTC.ipr[int_grp] = IPR_INT0;
-80002ec0:	ec 07 09 25 	st.w	r6[r7<<0x2],r5
+80002ed0:	ec 07 09 25 	st.w	r6[r7<<0x2],r5
 	uint32_t int_grp, int_req;
 
 	INTC_init_evba();
 
 	// For all interrupt groups,
 	for (int_grp = 0; int_grp < AVR32_INTC_NUM_INT_GRPS; int_grp++)
-80002ec4:	2f f7       	sub	r7,-1
-80002ec6:	2f 8e       	sub	lr,-8
-80002ec8:	59 67       	cp.w	r7,22
-80002eca:	c0 50       	breq	80002ed4 <INTC_init_interrupts+0x40>
+80002ed4:	2f f7       	sub	r7,-1
+80002ed6:	2f 8e       	sub	lr,-8
+80002ed8:	59 67       	cp.w	r7,22
+80002eda:	c0 50       	breq	80002ee4 <INTC_init_interrupts+0x40>
 	{
 		// For all interrupt request lines of each group,
 		for (int_req = 0;
-80002ecc:	7c 08       	ld.w	r8,lr[0x0]
-80002ece:	58 08       	cp.w	r8,0
-80002ed0:	ce f1       	brne	80002eae <INTC_init_interrupts+0x1a>
-80002ed2:	cf 7b       	rjmp	80002ec0 <INTC_init_interrupts+0x2c>
-80002ed4:	d8 22       	popm	r4-r7,pc
-80002ed6:	00 00       	add	r0,r0
-80002ed8:	80 00       	ld.sh	r0,r0[0x0]
-80002eda:	32 00       	mov	r0,32
-80002edc:	80 00       	ld.sh	r0,r0[0x0]
-80002ede:	34 68       	mov	r8,70
-80002ee0:	80 00       	ld.sh	r0,r0[0x0]
-80002ee2:	2e 10       	sub	r0,-31
-80002ee4:	80 00       	ld.sh	r0,r0[0x0]
-80002ee6:	33 04       	mov	r4,48
+80002edc:	7c 08       	ld.w	r8,lr[0x0]
+80002ede:	58 08       	cp.w	r8,0
+80002ee0:	ce f1       	brne	80002ebe <INTC_init_interrupts+0x1a>
+80002ee2:	cf 7b       	rjmp	80002ed0 <INTC_init_interrupts+0x2c>
+80002ee4:	d8 22       	popm	r4-r7,pc
+80002ee6:	00 00       	add	r0,r0
+80002ee8:	80 00       	ld.sh	r0,r0[0x0]
+80002eea:	32 00       	mov	r0,32
+80002eec:	80 00       	ld.sh	r0,r0[0x0]
+80002eee:	34 68       	mov	r8,70
+80002ef0:	80 00       	ld.sh	r0,r0[0x0]
+80002ef2:	2e 20       	sub	r0,-30
+80002ef4:	80 00       	ld.sh	r0,r0[0x0]
+80002ef6:	33 04       	mov	r4,48
 
-80002ee8 <_get_interrupt_handler>:
+80002ef8 <_get_interrupt_handler>:
 __int_handler _get_interrupt_handler(uint32_t int_level)
 {
 	/* ICR3 is mapped first, ICR0 last.
 	Code in exception.S puts int_level in R12 which is used by the compiler
 	to pass a single argument to a function. */
 	uint32_t int_grp = AVR32_INTC.icr[AVR32_INTC_INT3 - int_level];
-80002ee8:	fe 78 10 00 	mov	r8,-61440
-80002eec:	e0 69 00 83 	mov	r9,131
-80002ef0:	f2 0c 01 0c 	sub	r12,r9,r12
-80002ef4:	f0 0c 03 29 	ld.w	r9,r8[r12<<0x2]
+80002ef8:	fe 78 10 00 	mov	r8,-61440
+80002efc:	e0 69 00 83 	mov	r9,131
+80002f00:	f2 0c 01 0c 	sub	r12,r9,r12
+80002f04:	f0 0c 03 29 	ld.w	r9,r8[r12<<0x2]
 	uint32_t int_req = AVR32_INTC.irr[int_grp];
-80002ef8:	f2 ca ff c0 	sub	r10,r9,-64
-80002efc:	f0 0a 03 28 	ld.w	r8,r8[r10<<0x2]
+80002f08:	f2 ca ff c0 	sub	r10,r9,-64
+80002f0c:	f0 0a 03 28 	ld.w	r8,r8[r10<<0x2]
 	exception.S will provide the interrupt handler with a clean interrupt
 	stack frame, with nothing more pushed onto the stack. The interrupt
 	handler must manage the `rete' instruction, which can be done using
 	pure assembly, inline assembly or the `__attribute__((__interrupt__))'
 	C function attribute.*/
 	return (int_req)
-80002f00:	58 08       	cp.w	r8,0
-80002f02:	c0 21       	brne	80002f06 <_get_interrupt_handler+0x1e>
-80002f04:	5e fd       	retal	0
+80002f10:	58 08       	cp.w	r8,0
+80002f12:	c0 21       	brne	80002f16 <_get_interrupt_handler+0x1e>
+80002f14:	5e fd       	retal	0
 		? _int_handler_table[int_grp]._int_line_handler_table[32
-80002f06:	f0 08 12 00 	clz	r8,r8
-80002f0a:	48 5a       	lddpc	r10,80002f1c <_get_interrupt_handler+0x34>
-80002f0c:	f4 09 00 39 	add	r9,r10,r9<<0x3
-80002f10:	f0 08 11 1f 	rsub	r8,r8,31
-80002f14:	72 19       	ld.w	r9,r9[0x4]
+80002f16:	f0 08 12 00 	clz	r8,r8
+80002f1a:	48 5a       	lddpc	r10,80002f2c <_get_interrupt_handler+0x34>
+80002f1c:	f4 09 00 39 	add	r9,r10,r9<<0x3
+80002f20:	f0 08 11 1f 	rsub	r8,r8,31
+80002f24:	72 19       	ld.w	r9,r9[0x4]
 	exception.S will provide the interrupt handler with a clean interrupt
 	stack frame, with nothing more pushed onto the stack. The interrupt
 	handler must manage the `rete' instruction, which can be done using
 	pure assembly, inline assembly or the `__attribute__((__interrupt__))'
 	C function attribute.*/
 	return (int_req)
-80002f16:	f2 08 03 2c 	ld.w	r12,r9[r8<<0x2]
+80002f26:	f2 08 03 2c 	ld.w	r12,r9[r8<<0x2]
 		? _int_handler_table[int_grp]._int_line_handler_table[32
 			- clz(int_req) - 1]
 		: NULL;
 }
-80002f1a:	5e fc       	retal	r12
-80002f1c:	80 00       	ld.sh	r0,r0[0x0]
-80002f1e:	34 68       	mov	r8,70
+80002f2a:	5e fc       	retal	r12
+80002f2c:	80 00       	ld.sh	r0,r0[0x0]
+80002f2e:	34 68       	mov	r8,70
 
-80002f20 <_stext>:
+80002f30 <_stext>:
 
   .global _stext
   .type _stext, @function
 _stext:
   // Set initial stack pointer.
   lda.w   sp, _estack
-80002f20:	e0 6d 40 00 	mov	sp,16384
+80002f30:	e0 6d 40 00 	mov	sp,16384
 
   // Set up EVBA so interrupts can be enabled.
   lda.w   r0, _evba
   mtsr    AVR32_EVBA, r0
-80002f24:	fe c0 fd 24 	sub	r0,pc,-732
+80002f34:	fe c0 fd 34 	sub	r0,pc,-716
 
   // Enable the exception processing.
   csrf    AVR32_SR_EM_OFFSET
-80002f28:	e3 b0 00 01 	mtsr	0x4,r0
+80002f38:	e3 b0 00 01 	mtsr	0x4,r0
 
   // Load initialized data having a global lifetime from the data LMA.
   lda.w   r0, _data
   lda.w   r1, _edata
-80002f2c:	d5 53       	csrf	0x15
+80002f3c:	d5 53       	csrf	0x15
   cp      r0, r1
-80002f2e:	30 40       	mov	r0,4
+80002f3e:	30 40       	mov	r0,4
   brhs    idata_load_loop_end
-80002f30:	30 81       	mov	r1,8
+80002f40:	30 81       	mov	r1,8
   lda.w   r2, _data_lma
-80002f32:	02 30       	cp.w	r0,r1
+80002f42:	02 30       	cp.w	r0,r1
 idata_load_loop:
   ld.d    r4, r2++
-80002f34:	c0 72       	brcc	80002f42 <idata_load_loop_end>
+80002f44:	c0 72       	brcc	80002f52 <idata_load_loop_end>
   st.d    r0++, r4
-80002f36:	fe c2 fa 1e 	sub	r2,pc,-1506
+80002f46:	fe c2 fa 2e 	sub	r2,pc,-1490
 
-80002f3a <idata_load_loop>:
+80002f4a <idata_load_loop>:
   cp      r0, r1
   brlo    idata_load_loop
-80002f3a:	a5 05       	ld.d	r4,r2++
+80002f4a:	a5 05       	ld.d	r4,r2++
 idata_load_loop_end:
 
   // Clear uninitialized data having a global lifetime in the blank static storage section.
   lda.w   r0, __bss_start
-80002f3c:	a1 24       	st.d	r0++,r4
+80002f4c:	a1 24       	st.d	r0++,r4
   lda.w   r1, _end
-80002f3e:	02 30       	cp.w	r0,r1
+80002f4e:	02 30       	cp.w	r0,r1
   cp      r0, r1
-80002f40:	cf d3       	brcs	80002f3a <idata_load_loop>
+80002f50:	cf d3       	brcs	80002f4a <idata_load_loop>
 
-80002f42 <idata_load_loop_end>:
+80002f52 <idata_load_loop_end>:
   brhs    udata_clear_loop_end
-80002f42:	30 80       	mov	r0,8
+80002f52:	30 80       	mov	r0,8
   mov     r2, 0
-80002f44:	e0 61 01 58 	mov	r1,344
+80002f54:	e0 61 01 58 	mov	r1,344
   mov     r3, 0
 udata_clear_loop:
   st.d    r0++, r2
-80002f48:	02 30       	cp.w	r0,r1
+80002f58:	02 30       	cp.w	r0,r1
   cp      r0, r1
-80002f4a:	c0 62       	brcc	80002f56 <udata_clear_loop_end>
+80002f5a:	c0 62       	brcc	80002f66 <udata_clear_loop_end>
   brlo    udata_clear_loop
-80002f4c:	30 02       	mov	r2,0
+80002f5c:	30 02       	mov	r2,0
   // Safety: Set the default "return" @ to the exit routine address.
   lda.w   lr, exit
 #endif
 
   // Start the show.
   lda.w   pc, main
-80002f4e:	30 03       	mov	r3,0
+80002f5e:	30 03       	mov	r3,0
 
-80002f50 <udata_clear_loop>:
-80002f50:	a1 22       	st.d	r0++,r2
-80002f52:	02 30       	cp.w	r0,r1
-80002f54:	cf e3       	brcs	80002f50 <udata_clear_loop>
+80002f60 <udata_clear_loop>:
+80002f60:	a1 22       	st.d	r0++,r2
+80002f62:	02 30       	cp.w	r0,r1
+80002f64:	cf e3       	brcs	80002f60 <udata_clear_loop>
 
-80002f56 <udata_clear_loop_end>:
-80002f56:	fe cf ff ae 	sub	pc,pc,-82
-80002f5a:	d7 03       	nop
+80002f66 <udata_clear_loop_end>:
+80002f66:	fe cf ff ae 	sub	pc,pc,-82
+80002f6a:	d7 03       	nop
 
-80002f5c <board_init>:
+80002f6c <board_init>:
 #include "com_spi.h"
 #include "motor_control.h"
 #include "settings_t.h"
 
 void board_init(void)
 {
-80002f5c:	d4 01       	pushm	lr
+80002f6c:	d4 01       	pushm	lr
 	sysclk_init();
-80002f5e:	f0 1f 00 0c 	mcall	80002f8c <board_init+0x30>
+80002f6e:	f0 1f 00 0c 	mcall	80002f9c <board_init+0x30>
 	INTC_init_interrupts();
-80002f62:	f0 1f 00 0c 	mcall	80002f90 <board_init+0x34>
-80002f66:	30 6b       	mov	r11,6
-80002f68:	30 2c       	mov	r12,2
-80002f6a:	f0 1f 00 0b 	mcall	80002f94 <board_init+0x38>
+80002f72:	f0 1f 00 0c 	mcall	80002fa0 <board_init+0x34>
+80002f76:	30 6b       	mov	r11,6
+80002f78:	30 2c       	mov	r12,2
+80002f7a:	f0 1f 00 0b 	mcall	80002fa4 <board_init+0x38>
 	ioport_init();
 	
 	settings_init();
-80002f6e:	f0 1f 00 0b 	mcall	80002f98 <board_init+0x3c>
+80002f7e:	f0 1f 00 0b 	mcall	80002fa8 <board_init+0x3c>
 	
 	sensor_init();
-80002f72:	f0 1f 00 0b 	mcall	80002f9c <board_init+0x40>
+80002f82:	f0 1f 00 0b 	mcall	80002fac <board_init+0x40>
 	motor_init();	
-80002f76:	f0 1f 00 0b 	mcall	80002fa0 <board_init+0x44>
+80002f86:	f0 1f 00 0b 	mcall	80002fb0 <board_init+0x44>
 	com_spi_init();
-80002f7a:	f0 1f 00 0b 	mcall	80002fa4 <board_init+0x48>
+80002f8a:	f0 1f 00 0b 	mcall	80002fb4 <board_init+0x48>
 
 __always_inline static void arch_ioport_set_pin_dir(ioport_pin_t pin,
 		enum ioport_direction dir)
 {
 	if (dir == IOPORT_DIR_OUTPUT) {
 		arch_ioport_pin_to_base(pin)->oders = arch_ioport_pin_to_mask(
-80002f7e:	fc 19 00 80 	movh	r9,0x80
-80002f82:	fe 78 28 00 	mov	r8,-55296
-80002f86:	f1 49 00 44 	st.w	r8[68],r9
+80002f8e:	fc 19 00 80 	movh	r9,0x80
+80002f92:	fe 78 28 00 	mov	r8,-55296
+80002f96:	f1 49 00 44 	st.w	r8[68],r9
 	//ioport_set_pin_dir(RST_ARDU_REG, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(LED_TRANS, IOPORT_DIR_OUTPUT);
 	
 }
-80002f8a:	d8 02       	popm	pc
-80002f8c:	80 00       	ld.sh	r0,r0[0x0]
-80002f8e:	29 3c       	sub	r12,-109
-80002f90:	80 00       	ld.sh	r0,r0[0x0]
-80002f92:	2e 94       	sub	r4,-23
-80002f94:	80 00       	ld.sh	r0,r0[0x0]
-80002f96:	29 7c       	sub	r12,-105
-80002f98:	80 00       	ld.sh	r0,r0[0x0]
-80002f9a:	27 00       	sub	r0,112
+80002f9a:	d8 02       	popm	pc
 80002f9c:	80 00       	ld.sh	r0,r0[0x0]
-80002f9e:	25 a4       	sub	r4,90
+80002f9e:	29 4c       	sub	r12,-108
 80002fa0:	80 00       	ld.sh	r0,r0[0x0]
-80002fa2:	23 b8       	sub	r8,59
+80002fa2:	2e a4       	sub	r4,-22
 80002fa4:	80 00       	ld.sh	r0,r0[0x0]
-80002fa6:	23 5c       	sub	r12,53
+80002fa6:	29 8c       	sub	r12,-104
+80002fa8:	80 00       	ld.sh	r0,r0[0x0]
+80002faa:	27 0c       	sub	r12,112
+80002fac:	80 00       	ld.sh	r0,r0[0x0]
+80002fae:	25 b0       	sub	r0,91
+80002fb0:	80 00       	ld.sh	r0,r0[0x0]
+80002fb2:	23 b8       	sub	r8,59
+80002fb4:	80 00       	ld.sh	r0,r0[0x0]
+80002fb6:	23 5c       	sub	r12,53
 
-80002fa8 <main>:
+80002fb8 <main>:
 #include "com_spi.h"
 
 struct bno055_euler_t sensor_euler;
 
 int main (void)
 {
-80002fa8:	d4 31       	pushm	r0-r7,lr
-80002faa:	20 3d       	sub	sp,12
+80002fb8:	d4 31       	pushm	r0-r7,lr
+80002fba:	20 3d       	sub	sp,12
 	board_init();		
-80002fac:	f0 1f 00 47 	mcall	800030c8 <main+0x120>
+80002fbc:	f0 1f 00 79 	mcall	800031a0 <main+0x1e8>
 
 	while (1)
 	{
 		sensor_euler = read_sensor_euler();
-80002fb0:	4c 70       	lddpc	r0,800030cc <main+0x124>
-80002fb2:	1a 92       	mov	r2,sp
+80002fc0:	4f 92       	lddpc	r2,800031a4 <main+0x1ec>
+80002fc2:	1a 95       	mov	r5,sp
+		
+		if (sensor_euler.r < 45*16 && sensor_euler.r > 0)
+		{
+			uint_fast32_t val;
+			val = (set.motor_esc_timer_value_interval * sensor_euler.r)/(45*16) + set.motor_esc_timer_value_min;
+80002fc4:	4f 91       	lddpc	r1,800031a8 <main+0x1f0>
+			
+			tc_write_ra(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, val);
+80002fc6:	30 00       	mov	r0,0
+80002fc8:	fe 73 50 00 	mov	r3,-45056
 {
 	if (level) {
 		arch_ioport_pin_to_base(pin)->ovrs
 			= arch_ioport_pin_to_mask(pin);
 	} else {
 		arch_ioport_pin_to_base(pin)->ovrc
-80002fb4:	fe 77 28 00 	mov	r7,-55296
-80002fb8:	fc 11 00 80 	movh	r1,0x80
+80002fcc:	fe 77 28 00 	mov	r7,-55296
+80002fd0:	fc 14 00 80 	movh	r4,0x80
+{
+	board_init();		
+
+	while (1)
+	{
+		sensor_euler = read_sensor_euler();
+80002fd4:	1a 9c       	mov	r12,sp
+80002fd6:	f0 1f 00 76 	mcall	800031ac <main+0x1f4>
+80002fda:	6a 09       	ld.w	r9,r5[0x0]
+80002fdc:	6a 18       	ld.w	r8,r5[0x4]
+80002fde:	85 09       	st.w	r2[0x0],r9
+80002fe0:	85 18       	st.w	r2[0x4],r8
+80002fe2:	6a 29       	ld.w	r9,r5[0x8]
+80002fe4:	85 29       	st.w	r2[0x8],r9
+		
+		if (sensor_euler.r < 45*16 && sensor_euler.r > 0)
+80002fe6:	f0 c9 00 01 	sub	r9,r8,1
+80002fea:	e0 49 02 ce 	cp.w	r9,718
+80002fee:	e0 8b 00 24 	brhi	80003036 <main+0x7e>
+		{
+			uint_fast32_t val;
+			val = (set.motor_esc_timer_value_interval * sensor_euler.r)/(45*16) + set.motor_esc_timer_value_min;
+80002ff2:	62 39       	ld.w	r9,r1[0xc]
+80002ff4:	62 16       	ld.w	r6,r1[0x4]
+			
+			tc_write_ra(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, val);
+80002ff6:	b3 38       	mul	r8,r9
+80002ff8:	f0 09 16 04 	lsr	r9,r8,0x4
+80002ffc:	e0 6a 5b 06 	mov	r10,23302
+80003000:	ea 1a 05 b0 	orh	r10,0x5b0
+80003004:	f2 0a 06 48 	mulu.d	r8,r9,r10
+80003008:	12 06       	add	r6,r9
+8000300a:	5c 76       	castu.h	r6
+8000300c:	0c 9a       	mov	r10,r6
+8000300e:	00 9b       	mov	r11,r0
+80003010:	06 9c       	mov	r12,r3
+80003012:	f0 1f 00 68 	mcall	800031b0 <main+0x1f8>
+			tc_write_ra(TIMER_ESC, TIMER_ESC_3_4_CHANNEL, val);
+80003016:	0c 9a       	mov	r10,r6
+80003018:	30 1b       	mov	r11,1
+8000301a:	06 9c       	mov	r12,r3
+8000301c:	f0 1f 00 65 	mcall	800031b0 <main+0x1f8>
+			tc_write_rb(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, val);
+80003020:	0c 9a       	mov	r10,r6
+80003022:	00 9b       	mov	r11,r0
+80003024:	06 9c       	mov	r12,r3
+80003026:	f0 1f 00 64 	mcall	800031b4 <main+0x1fc>
+			tc_write_rb(TIMER_ESC, TIMER_ESC_3_4_CHANNEL, val);
+8000302a:	0c 9a       	mov	r10,r6
+8000302c:	30 1b       	mov	r11,1
+8000302e:	06 9c       	mov	r12,r3
+80003030:	f0 1f 00 61 	mcall	800031b4 <main+0x1fc>
+80003034:	c1 98       	rjmp	80003066 <main+0xae>
+		}
+		else
+		{
+			tc_write_ra(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, set.motor_esc_timer_value_min);
+80003036:	62 1a       	ld.w	r10,r1[0x4]
+80003038:	5c 7a       	castu.h	r10
+8000303a:	00 9b       	mov	r11,r0
+8000303c:	06 9c       	mov	r12,r3
+8000303e:	f0 1f 00 5d 	mcall	800031b0 <main+0x1f8>
+			tc_write_ra(TIMER_ESC, TIMER_ESC_3_4_CHANNEL, set.motor_esc_timer_value_min);
+80003042:	62 1a       	ld.w	r10,r1[0x4]
+80003044:	5c 7a       	castu.h	r10
+80003046:	30 1b       	mov	r11,1
+80003048:	06 9c       	mov	r12,r3
+8000304a:	f0 1f 00 5a 	mcall	800031b0 <main+0x1f8>
+			tc_write_rb(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, set.motor_esc_timer_value_min);
+8000304e:	62 1a       	ld.w	r10,r1[0x4]
+80003050:	5c 7a       	castu.h	r10
+80003052:	00 9b       	mov	r11,r0
+80003054:	06 9c       	mov	r12,r3
+80003056:	f0 1f 00 58 	mcall	800031b4 <main+0x1fc>
+			tc_write_rb(TIMER_ESC, TIMER_ESC_3_4_CHANNEL, set.motor_esc_timer_value_min);
+8000305a:	62 1a       	ld.w	r10,r1[0x4]
+8000305c:	5c 7a       	castu.h	r10
+8000305e:	30 1b       	mov	r11,1
+80003060:	06 9c       	mov	r12,r3
+80003062:	f0 1f 00 55 	mcall	800031b4 <main+0x1fc>
+80003066:	ef 44 00 58 	st.w	r7[88],r4
 
 __always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
 		bool level)
 {
 	if (level) {
 		arch_ioport_pin_to_base(pin)->ovrs
-80002fbc:	e0 66 40 00 	mov	r6,16384
-80002fc0:	e0 65 80 00 	mov	r5,32768
-80002fc4:	e2 64 00 00 	mov	r4,131072
-80002fc8:	e0 63 c6 c0 	mov	r3,50880
-80002fcc:	ea 13 00 2d 	orh	r3,0x2d
-80002fd0:	1a 9c       	mov	r12,sp
-80002fd2:	f0 1f 00 40 	mcall	800030d0 <main+0x128>
-80002fd6:	e4 e8 00 00 	ld.d	r8,r2[0]
-80002fda:	e0 e9 00 00 	st.d	r0[0],r8
-80002fde:	64 28       	ld.w	r8,r2[0x8]
-80002fe0:	81 28       	st.w	r0[0x8],r8
+8000306a:	e0 68 40 00 	mov	r8,16384
+8000306e:	ef 48 00 54 	st.w	r7[84],r8
+80003072:	e0 68 80 00 	mov	r8,32768
+80003076:	ef 48 00 54 	st.w	r7[84],r8
+8000307a:	e2 68 00 00 	mov	r8,131072
+8000307e:	ef 48 00 54 	st.w	r7[84],r8
+ * \param  delay:   (input) delay in CPU cycles before timeout.
+ * \param  cpu_time: (output) internal information used by the timer API.
+ */
+__always_inline static void cpu_set_timeout(unsigned long delay, t_cpu_time *cpu_time)
+{
+  cpu_time->delay_start_cycle = Get_system_register(AVR32_COUNT);
+80003082:	e1 b8 00 42 	mfsr	r8,0x108
+  cpu_time->delay_end_cycle   = cpu_time->delay_start_cycle + delay;
+80003086:	e0 6a c6 c0 	mov	r10,50880
+8000308a:	ea 1a 00 2d 	orh	r10,0x2d
+8000308e:	f0 0a 00 0a 	add	r10,r8,r10
+ *
+ * \return true if timeout occurred, otherwise false.
+ */
+__always_inline static unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
+{
+  unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
+80003092:	e1 b9 00 42 	mfsr	r9,0x108
+  // Test if the timeout as already occurred.
+  else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
+    return true;
+
+  // If the ending cycle count of this timeout is wrapped, ...
+  else if (cpu_time->delay_start_cycle > cpu_time->delay_end_cycle)
+80003096:	14 38       	cp.w	r8,r10
+80003098:	e0 88 00 08 	brls	800030a8 <main+0xf0>
+  {
+    if (current_cycle_count < cpu_time->delay_start_cycle && current_cycle_count > cpu_time->delay_end_cycle)
+8000309c:	12 38       	cp.w	r8,r9
+8000309e:	fe 98 ff fa 	brls	80003092 <main+0xda>
+800030a2:	12 3a       	cp.w	r10,r9
+800030a4:	c3 d3       	brcs	8000311e <main+0x166>
+800030a6:	cf 6b       	rjmp	80003092 <main+0xda>
+    }
+    return false;
+  }
+  else
+  {
+    if (current_cycle_count < cpu_time->delay_start_cycle || current_cycle_count > cpu_time->delay_end_cycle)
+800030a8:	12 38       	cp.w	r8,r9
+800030aa:	e0 8b 00 3a 	brhi	8000311e <main+0x166>
+800030ae:	12 3a       	cp.w	r10,r9
+800030b0:	c3 73       	brcs	8000311e <main+0x166>
+800030b2:	cf 0b       	rjmp	80003092 <main+0xda>
+ *
+ * \return true if timeout occurred, otherwise false.
+ */
+__always_inline static unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
+{
+  unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
+800030b4:	e1 b9 00 42 	mfsr	r9,0x108
+  // Test if the timeout as already occurred.
+  else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
+    return true;
+
+  // If the ending cycle count of this timeout is wrapped, ...
+  else if (cpu_time->delay_start_cycle > cpu_time->delay_end_cycle)
+800030b8:	14 38       	cp.w	r8,r10
+800030ba:	e0 88 00 08 	brls	800030ca <main+0x112>
+  {
+    if (current_cycle_count < cpu_time->delay_start_cycle && current_cycle_count > cpu_time->delay_end_cycle)
+800030be:	12 38       	cp.w	r8,r9
+800030c0:	fe 98 ff fa 	brls	800030b4 <main+0xfc>
+800030c4:	12 3a       	cp.w	r10,r9
+800030c6:	c4 13       	brcs	80003148 <main+0x190>
+800030c8:	cf 6b       	rjmp	800030b4 <main+0xfc>
+    }
+    return false;
+  }
+  else
+  {
+    if (current_cycle_count < cpu_time->delay_start_cycle || current_cycle_count > cpu_time->delay_end_cycle)
+800030ca:	12 38       	cp.w	r8,r9
+800030cc:	e0 8b 00 3e 	brhi	80003148 <main+0x190>
+800030d0:	12 3a       	cp.w	r10,r9
+800030d2:	c3 b3       	brcs	80003148 <main+0x190>
+800030d4:	cf 0b       	rjmp	800030b4 <main+0xfc>
+ *
+ * \return true if timeout occurred, otherwise false.
+ */
+__always_inline static unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
+{
+  unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
+800030d6:	e1 b9 00 42 	mfsr	r9,0x108
+  // Test if the timeout as already occurred.
+  else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
+    return true;
+
+  // If the ending cycle count of this timeout is wrapped, ...
+  else if (cpu_time->delay_start_cycle > cpu_time->delay_end_cycle)
+800030da:	14 38       	cp.w	r8,r10
+800030dc:	e0 88 00 08 	brls	800030ec <main+0x134>
+  {
+    if (current_cycle_count < cpu_time->delay_start_cycle && current_cycle_count > cpu_time->delay_end_cycle)
+800030e0:	12 38       	cp.w	r8,r9
+800030e2:	fe 98 ff fa 	brls	800030d6 <main+0x11e>
+800030e6:	12 3a       	cp.w	r10,r9
+800030e8:	c4 73       	brcs	80003176 <main+0x1be>
+800030ea:	cf 6b       	rjmp	800030d6 <main+0x11e>
+    }
+    return false;
+  }
+  else
+  {
+    if (current_cycle_count < cpu_time->delay_start_cycle || current_cycle_count > cpu_time->delay_end_cycle)
+800030ec:	12 38       	cp.w	r8,r9
+800030ee:	e0 8b 00 44 	brhi	80003176 <main+0x1be>
+800030f2:	12 3a       	cp.w	r10,r9
+800030f4:	c4 13       	brcs	80003176 <main+0x1be>
+800030f6:	cf 0b       	rjmp	800030d6 <main+0x11e>
+ *
+ * \return true if timeout occurred, otherwise false.
+ */
+__always_inline static unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
+{
+  unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
+800030f8:	e1 ba 00 42 	mfsr	r10,0x108
+  // Test if the timeout as already occurred.
+  else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
+    return true;
+
+  // If the ending cycle count of this timeout is wrapped, ...
+  else if (cpu_time->delay_start_cycle > cpu_time->delay_end_cycle)
+800030fc:	12 38       	cp.w	r8,r9
+800030fe:	e0 88 00 09 	brls	80003110 <main+0x158>
+  {
+    if (current_cycle_count < cpu_time->delay_start_cycle && current_cycle_count > cpu_time->delay_end_cycle)
+80003102:	14 38       	cp.w	r8,r10
+80003104:	fe 98 ff fa 	brls	800030f8 <main+0x140>
+80003108:	14 39       	cp.w	r9,r10
+8000310a:	fe 93 ff 65 	brlo	80002fd4 <main+0x1c>
+8000310e:	cf 5b       	rjmp	800030f8 <main+0x140>
+    }
+    return false;
+  }
+  else
+  {
+    if (current_cycle_count < cpu_time->delay_start_cycle || current_cycle_count > cpu_time->delay_end_cycle)
+80003110:	14 38       	cp.w	r8,r10
+80003112:	fe 9b ff 61 	brhi	80002fd4 <main+0x1c>
+80003116:	14 39       	cp.w	r9,r10
+80003118:	fe 93 ff 5e 	brlo	80002fd4 <main+0x1c>
+8000311c:	ce eb       	rjmp	800030f8 <main+0x140>
 			= arch_ioport_pin_to_mask(pin);
 	} else {
 		arch_ioport_pin_to_base(pin)->ovrc
-80002fe2:	ef 41 00 58 	st.w	r7[88],r1
+8000311e:	e0 68 40 00 	mov	r8,16384
+80003122:	ef 48 00 58 	st.w	r7[88],r8
 
 __always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
 		bool level)
 {
 	if (level) {
 		arch_ioport_pin_to_base(pin)->ovrs
-80002fe6:	ef 46 00 54 	st.w	r7[84],r6
-80002fea:	ef 45 00 54 	st.w	r7[84],r5
-80002fee:	ef 44 00 54 	st.w	r7[84],r4
+80003126:	e0 68 80 00 	mov	r8,32768
+8000312a:	ef 48 00 54 	st.w	r7[84],r8
+8000312e:	e2 68 00 00 	mov	r8,131072
+80003132:	ef 48 00 54 	st.w	r7[84],r8
  * \param  delay:   (input) delay in CPU cycles before timeout.
  * \param  cpu_time: (output) internal information used by the timer API.
  */
 __always_inline static void cpu_set_timeout(unsigned long delay, t_cpu_time *cpu_time)
 {
   cpu_time->delay_start_cycle = Get_system_register(AVR32_COUNT);
-80002ff2:	e1 b8 00 42 	mfsr	r8,0x108
+80003136:	e1 b8 00 42 	mfsr	r8,0x108
   cpu_time->delay_end_cycle   = cpu_time->delay_start_cycle + delay;
-80002ff6:	f0 03 00 0a 	add	r10,r8,r3
- *
- * \return true if timeout occurred, otherwise false.
- */
-__always_inline static unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
-{
-  unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
-80002ffa:	e1 b9 00 42 	mfsr	r9,0x108
-  // Test if the timeout as already occurred.
-  else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
-    return true;
-
-  // If the ending cycle count of this timeout is wrapped, ...
-  else if (cpu_time->delay_start_cycle > cpu_time->delay_end_cycle)
-80002ffe:	14 38       	cp.w	r8,r10
-80003000:	e0 88 00 08 	brls	80003010 <main+0x68>
-  {
-    if (current_cycle_count < cpu_time->delay_start_cycle && current_cycle_count > cpu_time->delay_end_cycle)
-80003004:	12 38       	cp.w	r8,r9
-80003006:	fe 98 ff fa 	brls	80002ffa <main+0x52>
-8000300a:	12 3a       	cp.w	r10,r9
-8000300c:	c3 b3       	brcs	80003082 <main+0xda>
-8000300e:	cf 6b       	rjmp	80002ffa <main+0x52>
-    }
-    return false;
-  }
-  else
-  {
-    if (current_cycle_count < cpu_time->delay_start_cycle || current_cycle_count > cpu_time->delay_end_cycle)
-80003010:	12 38       	cp.w	r8,r9
-80003012:	e0 8b 00 38 	brhi	80003082 <main+0xda>
-80003016:	12 3a       	cp.w	r10,r9
-80003018:	c3 53       	brcs	80003082 <main+0xda>
-8000301a:	cf 0b       	rjmp	80002ffa <main+0x52>
- *
- * \return true if timeout occurred, otherwise false.
- */
-__always_inline static unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
-{
-  unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
-8000301c:	e1 b9 00 42 	mfsr	r9,0x108
-  // Test if the timeout as already occurred.
-  else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
-    return true;
-
-  // If the ending cycle count of this timeout is wrapped, ...
-  else if (cpu_time->delay_start_cycle > cpu_time->delay_end_cycle)
-80003020:	14 38       	cp.w	r8,r10
-80003022:	e0 88 00 08 	brls	80003032 <main+0x8a>
-  {
-    if (current_cycle_count < cpu_time->delay_start_cycle && current_cycle_count > cpu_time->delay_end_cycle)
-80003026:	12 38       	cp.w	r8,r9
-80003028:	fe 98 ff fa 	brls	8000301c <main+0x74>
-8000302c:	12 3a       	cp.w	r10,r9
-8000302e:	c3 53       	brcs	80003098 <main+0xf0>
-80003030:	cf 6b       	rjmp	8000301c <main+0x74>
-    }
-    return false;
-  }
-  else
-  {
-    if (current_cycle_count < cpu_time->delay_start_cycle || current_cycle_count > cpu_time->delay_end_cycle)
-80003032:	12 38       	cp.w	r8,r9
-80003034:	e0 8b 00 32 	brhi	80003098 <main+0xf0>
-80003038:	12 3a       	cp.w	r10,r9
-8000303a:	c2 f3       	brcs	80003098 <main+0xf0>
-8000303c:	cf 0b       	rjmp	8000301c <main+0x74>
- *
- * \return true if timeout occurred, otherwise false.
- */
-__always_inline static unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
-{
-  unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
-8000303e:	e1 b9 00 42 	mfsr	r9,0x108
-  // Test if the timeout as already occurred.
-  else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
-    return true;
-
-  // If the ending cycle count of this timeout is wrapped, ...
-  else if (cpu_time->delay_start_cycle > cpu_time->delay_end_cycle)
-80003042:	14 38       	cp.w	r8,r10
-80003044:	e0 88 00 08 	brls	80003054 <main+0xac>
-  {
-    if (current_cycle_count < cpu_time->delay_start_cycle && current_cycle_count > cpu_time->delay_end_cycle)
-80003048:	12 38       	cp.w	r8,r9
-8000304a:	fe 98 ff fa 	brls	8000303e <main+0x96>
-8000304e:	12 3a       	cp.w	r10,r9
-80003050:	c3 13       	brcs	800030b2 <main+0x10a>
-80003052:	cf 6b       	rjmp	8000303e <main+0x96>
-    }
-    return false;
-  }
-  else
-  {
-    if (current_cycle_count < cpu_time->delay_start_cycle || current_cycle_count > cpu_time->delay_end_cycle)
-80003054:	12 38       	cp.w	r8,r9
-80003056:	e0 8b 00 2e 	brhi	800030b2 <main+0x10a>
-8000305a:	12 3a       	cp.w	r10,r9
-8000305c:	c2 b3       	brcs	800030b2 <main+0x10a>
-8000305e:	cf 0b       	rjmp	8000303e <main+0x96>
- *
- * \return true if timeout occurred, otherwise false.
- */
-__always_inline static unsigned long cpu_is_timeout(t_cpu_time *cpu_time)
-{
-  unsigned long current_cycle_count = Get_system_register(AVR32_COUNT);
-80003060:	e1 ba 00 42 	mfsr	r10,0x108
-  // Test if the timeout as already occurred.
-  else if (cpu_time->timer_state == CPU_TIMER_STATE_REACHED)
-    return true;
-
-  // If the ending cycle count of this timeout is wrapped, ...
-  else if (cpu_time->delay_start_cycle > cpu_time->delay_end_cycle)
-80003064:	12 38       	cp.w	r8,r9
-80003066:	e0 88 00 08 	brls	80003076 <main+0xce>
-  {
-    if (current_cycle_count < cpu_time->delay_start_cycle && current_cycle_count > cpu_time->delay_end_cycle)
-8000306a:	14 38       	cp.w	r8,r10
-8000306c:	fe 98 ff fa 	brls	80003060 <main+0xb8>
-80003070:	14 39       	cp.w	r9,r10
-80003072:	ca f3       	brcs	80002fd0 <main+0x28>
-80003074:	cf 6b       	rjmp	80003060 <main+0xb8>
-    }
-    return false;
-  }
-  else
-  {
-    if (current_cycle_count < cpu_time->delay_start_cycle || current_cycle_count > cpu_time->delay_end_cycle)
-80003076:	14 38       	cp.w	r8,r10
-80003078:	fe 9b ff ac 	brhi	80002fd0 <main+0x28>
-8000307c:	14 39       	cp.w	r9,r10
-8000307e:	ca 93       	brcs	80002fd0 <main+0x28>
-80003080:	cf 0b       	rjmp	80003060 <main+0xb8>
+8000313a:	e0 6a c6 c0 	mov	r10,50880
+8000313e:	ea 1a 00 2d 	orh	r10,0x2d
+80003142:	f0 0a 00 0a 	add	r10,r8,r10
+80003146:	cb 7b       	rjmp	800030b4 <main+0xfc>
+80003148:	ef 44 00 54 	st.w	r7[84],r4
+8000314c:	e0 68 40 00 	mov	r8,16384
+80003150:	ef 48 00 54 	st.w	r7[84],r8
 			= arch_ioport_pin_to_mask(pin);
 	} else {
 		arch_ioport_pin_to_base(pin)->ovrc
-80003082:	ef 46 00 58 	st.w	r7[88],r6
+80003154:	e0 68 80 00 	mov	r8,32768
+80003158:	ef 48 00 58 	st.w	r7[88],r8
 
 __always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
 		bool level)
 {
 	if (level) {
 		arch_ioport_pin_to_base(pin)->ovrs
-80003086:	ef 45 00 54 	st.w	r7[84],r5
-8000308a:	ef 44 00 54 	st.w	r7[84],r4
+8000315c:	e2 68 00 00 	mov	r8,131072
+80003160:	ef 48 00 54 	st.w	r7[84],r8
  * \param  delay:   (input) delay in CPU cycles before timeout.
  * \param  cpu_time: (output) internal information used by the timer API.
  */
 __always_inline static void cpu_set_timeout(unsigned long delay, t_cpu_time *cpu_time)
 {
   cpu_time->delay_start_cycle = Get_system_register(AVR32_COUNT);
-8000308e:	e1 b8 00 42 	mfsr	r8,0x108
+80003164:	e1 b8 00 42 	mfsr	r8,0x108
   cpu_time->delay_end_cycle   = cpu_time->delay_start_cycle + delay;
-80003092:	f0 03 00 0a 	add	r10,r8,r3
-80003096:	cc 3b       	rjmp	8000301c <main+0x74>
-80003098:	ef 41 00 54 	st.w	r7[84],r1
-8000309c:	ef 46 00 54 	st.w	r7[84],r6
+80003168:	e0 6a c6 c0 	mov	r10,50880
+8000316c:	ea 1a 00 2d 	orh	r10,0x2d
+80003170:	f0 0a 00 0a 	add	r10,r8,r10
+80003174:	cb 1b       	rjmp	800030d6 <main+0x11e>
+80003176:	e0 68 40 00 	mov	r8,16384
+8000317a:	ef 48 00 54 	st.w	r7[84],r8
+8000317e:	e0 68 80 00 	mov	r8,32768
+80003182:	ef 48 00 54 	st.w	r7[84],r8
 			= arch_ioport_pin_to_mask(pin);
 	} else {
 		arch_ioport_pin_to_base(pin)->ovrc
-800030a0:	ef 45 00 58 	st.w	r7[88],r5
-
-__always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
-		bool level)
-{
-	if (level) {
-		arch_ioport_pin_to_base(pin)->ovrs
-800030a4:	ef 44 00 54 	st.w	r7[84],r4
+80003186:	e2 68 00 00 	mov	r8,131072
+8000318a:	ef 48 00 58 	st.w	r7[88],r8
  * \param  delay:   (input) delay in CPU cycles before timeout.
  * \param  cpu_time: (output) internal information used by the timer API.
  */
 __always_inline static void cpu_set_timeout(unsigned long delay, t_cpu_time *cpu_time)
 {
   cpu_time->delay_start_cycle = Get_system_register(AVR32_COUNT);
-800030a8:	e1 b8 00 42 	mfsr	r8,0x108
+8000318e:	e1 b8 00 42 	mfsr	r8,0x108
   cpu_time->delay_end_cycle   = cpu_time->delay_start_cycle + delay;
-800030ac:	f0 03 00 0a 	add	r10,r8,r3
-800030b0:	cc 7b       	rjmp	8000303e <main+0x96>
-800030b2:	ef 46 00 54 	st.w	r7[84],r6
-800030b6:	ef 45 00 54 	st.w	r7[84],r5
-			= arch_ioport_pin_to_mask(pin);
-	} else {
-		arch_ioport_pin_to_base(pin)->ovrc
-800030ba:	ef 44 00 58 	st.w	r7[88],r4
- * \param  delay:   (input) delay in CPU cycles before timeout.
- * \param  cpu_time: (output) internal information used by the timer API.
- */
-__always_inline static void cpu_set_timeout(unsigned long delay, t_cpu_time *cpu_time)
-{
-  cpu_time->delay_start_cycle = Get_system_register(AVR32_COUNT);
-800030be:	e1 b8 00 42 	mfsr	r8,0x108
-  cpu_time->delay_end_cycle   = cpu_time->delay_start_cycle + delay;
-800030c2:	f0 03 00 09 	add	r9,r8,r3
-800030c6:	cc db       	rjmp	80003060 <main+0xb8>
-800030c8:	80 00       	ld.sh	r0,r0[0x0]
-800030ca:	2f 5c       	sub	r12,-11
-800030cc:	00 00       	add	r0,r0
-800030ce:	01 48       	ld.w	r8,--r0
-800030d0:	80 00       	ld.sh	r0,r0[0x0]
-800030d2:	25 68       	sub	r8,86
+80003192:	e0 69 c6 c0 	mov	r9,50880
+80003196:	ea 19 00 2d 	orh	r9,0x2d
+8000319a:	f0 09 00 09 	add	r9,r8,r9
+8000319e:	ca db       	rjmp	800030f8 <main+0x140>
+800031a0:	80 00       	ld.sh	r0,r0[0x0]
+800031a2:	2f 6c       	sub	r12,-10
+800031a4:	00 00       	add	r0,r0
+800031a6:	01 48       	ld.w	r8,--r0
+800031a8:	00 00       	add	r0,r0
+800031aa:	00 fc       	st.b	--r0,r12
+800031ac:	80 00       	ld.sh	r0,r0[0x0]
+800031ae:	25 74       	sub	r4,87
+800031b0:	80 00       	ld.sh	r0,r0[0x0]
+800031b2:	27 fe       	sub	lr,127
+800031b4:	80 00       	ld.sh	r0,r0[0x0]
+800031b6:	28 32       	sub	r2,-125
 
 Disassembly of section .exception:
 
@@ -3765,7 +3869,7 @@ _handle_Supervisor_Call:
 #endif
 	// Pass the int_level parameter to the _get_interrupt_handler function.
 80003304:	30 0c       	mov	r12,0
-80003306:	fe b0 fd f1 	rcall	80002ee8 <_get_interrupt_handler>
+80003306:	fe b0 fd f9 	rcall	80002ef8 <_get_interrupt_handler>
 8000330a:	58 0c       	cp.w	r12,0
 8000330c:	f8 0f 17 10 	movne	pc,r12
 	popm    r8-r12, lr
@@ -3784,7 +3888,7 @@ _handle_Supervisor_Call:
 #endif
 	// Pass the int_level parameter to the _get_interrupt_handler function.
 80003312:	30 1c       	mov	r12,1
-80003314:	fe b0 fd ea 	rcall	80002ee8 <_get_interrupt_handler>
+80003314:	fe b0 fd f2 	rcall	80002ef8 <_get_interrupt_handler>
 80003318:	58 0c       	cp.w	r12,0
 8000331a:	f8 0f 17 10 	movne	pc,r12
 	popm    r8-r12, lr
@@ -3803,7 +3907,7 @@ _handle_Supervisor_Call:
 #endif
 	// Pass the int_level parameter to the _get_interrupt_handler function.
 80003320:	30 2c       	mov	r12,2
-80003322:	fe b0 fd e3 	rcall	80002ee8 <_get_interrupt_handler>
+80003322:	fe b0 fd eb 	rcall	80002ef8 <_get_interrupt_handler>
 80003326:	58 0c       	cp.w	r12,0
 80003328:	f8 0f 17 10 	movne	pc,r12
 	popm    r8-r12, lr
@@ -3822,7 +3926,7 @@ _handle_Supervisor_Call:
 #endif
 	// Pass the int_level parameter to the _get_interrupt_handler function.
 8000332e:	30 3c       	mov	r12,3
-80003330:	fe b0 fd dc 	rcall	80002ee8 <_get_interrupt_handler>
+80003330:	fe b0 fd e4 	rcall	80002ef8 <_get_interrupt_handler>
 80003334:	58 0c       	cp.w	r12,0
 80003336:	f8 0f 17 10 	movne	pc,r12
 	popm    r8-r12, lr

@@ -39,7 +39,7 @@ typedef struct{
 		sensor_offset_t	sensor_offset;  
 	} settings_t;
 
-extern settings_t set;
+extern volatile settings_t set;
 
 void settings_init(void);
 
