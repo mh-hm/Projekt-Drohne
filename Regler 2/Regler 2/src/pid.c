@@ -31,8 +31,8 @@ uint_fast32_t get_time_since_last_pid(void)
 }
 	
 
-struct bno055_euler_t set_point = {0,0,0};
-uint_fast32_t throotle = 0;
+
+
 	
 //w ist Sollwert, x ist Istwert
 int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, int_fast32_t x, pid_tmp *_tmp)
@@ -81,12 +81,19 @@ void actuate()
 	uint_fast32_t _esc3 =(-y.r) + (-y.h) +  (-y.p) + _thr;
 	
 	//TODO: check
-	motor_speeds_t speed = get_motor_speeds();
-	speed.position[MOTOR_POS_FL] += _esc0;
-	speed.position[MOTOR_POS_FR] += _esc1;
-	speed.position[MOTOR_POS_BL] += _esc2;
-	speed.position[MOTOR_POS_BR] += _esc3;
+	//motor_speeds_t speed = get_motor_speeds();
+	motor_speeds_t speed;
+	speed.position[MOTOR_POS_FL] = _esc0;
+	speed.position[MOTOR_POS_FR] = _esc1;
+	speed.position[MOTOR_POS_BL] = _esc2;
+	speed.position[MOTOR_POS_BR] = _esc3;
 	//Funktion zum Inkrementeiren/Dekrementeiren kommt noch
+	//NICHT NOTWENDIG: ANSONSTEN SUMMIERT SICH THROTTLE IN JEDEM ZYKLUS AUF UND ALLE MOTOREN AUF VOLLGAS
+	
+	for (uint_fast8_t i = 0; i < 3; i++)
+	{
+		if (speed.position[i]>esc_timer_values.max) speed.position[i] = esc_timer_values.max;
+	}
 	
 	//TODO: check
 	set_motor_speeds(speed);

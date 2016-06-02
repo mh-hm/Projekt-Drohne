@@ -175,7 +175,7 @@ motor_speeds_t motor_speeds_pref(int_fast16_t _int)
 
 // start motor with defined speed or change speed
 // -1 as motor_speed in struct means that the specific speed is not set
-void set_motors_speed(motor_speeds_t motor_speeds)
+void set_motor_speeds(motor_speeds_t motor_speeds)
 {
 	for (uint_fast8_t i=0; i<4; ++i)
 	{

@@ -55,6 +55,12 @@
 // From module: CPU Cycle Counter
 #include <cycle_counter.h>
 
+// From module: CPU Reset Cause
+#include <avr32_reset_cause.h>
+
+// From module: Chip Reset Cause Access - UC3 implementation
+#include <reset_cause.h>
+
 // From module: Common build items for user board support templates
 #include <user_board.h>
 
@@ -121,5 +127,8 @@
 
 // From module: USART - Universal Synchronous/Asynchronous Receiver/Transmitter
 #include <usart.h>
+
+// From module: WDT Watchdog Timer - UC3 C/L implementation
+#include <wdt.h>
 
 #endif // ASF_H
