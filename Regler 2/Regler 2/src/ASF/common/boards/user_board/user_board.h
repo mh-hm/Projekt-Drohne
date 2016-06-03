@@ -101,13 +101,16 @@
 #define ADC2					AVR32_PIN_PA05
 #define ADC4					AVR32_PIN_PA07
 
-#define	GPIO_PB17				AVR32_PIN_PB17
+#define	GPIO_PB17				AVR32_PIN_PB17	//SAVE PIN
 #define	GPIO_PB18				AVR32_PIN_PB18
 #define	GPIO_PA24				AVR32_PIN_PA24
 #define	GPIO_PA25				AVR32_PIN_PA25
 #define	GPIO_PA18				AVR32_PIN_PA18
 #define	GPIO_PA19				AVR32_PIN_PA19
 #define	GPIO_PA20				AVR32_PIN_PA20
+
+//SAVE PIN
+#define PIN_SAVE				GPIO_PB17
 
 // External oscillator settings.
 // Uncomment and set correct values if external oscillator is used.

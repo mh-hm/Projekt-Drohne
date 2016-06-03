@@ -37,8 +37,12 @@ typedef struct{
 
 extern volatile settings_t set;
 
-void settings_init(void);
+void settings_init(bool iopin_save);
 
 void settings_save(void);
+
+void check_save(void);
+
+
 
 #endif /* SETTINGS_H_ */

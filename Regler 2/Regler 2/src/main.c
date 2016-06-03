@@ -57,6 +57,8 @@ int main (void)
 		else
 		actuate();
 		
+		check_save();
+		
 		//ioport_set_pin_level(LED_TRANS,LOW);
 		//ioport_set_pin_level(LED_B_SENS, LED_SENS_OFF);
 		//ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);

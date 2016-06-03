@@ -22,7 +22,7 @@ void board_init(void)
 	//wdt_disable();
 	INTC_init_interrupts();
 	ioport_init();
-	settings_init();
+	settings_init(true);
 	sensor_init();
 	motor_init();	
 	com_spi_init();
