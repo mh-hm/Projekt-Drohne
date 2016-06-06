@@ -77,6 +77,7 @@ src/com_spi.d src/com_spi.o src/com_spi.o: ../src/com_spi.c ../src/asf.h \
  ../src/ASF/avr32/drivers/gpio/gpio.h \
  ../src/ASF/common/services/ioport/ioport.h \
  ../src/ASF/common/services/ioport/uc3/ioport.h \
+ ../src/ASF/avr32/drivers/pdca/pdca.h \
  ../src/ASF/avr32/drivers/pm/power_clocks_lib.h \
  ../src/ASF/avr32/drivers/pm/pm_uc3d.h \
  ../src/ASF/avr32/drivers/scif/scif_uc3d.h \
@@ -255,6 +256,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bi
 ../src/ASF/common/services/ioport/ioport.h:
 
 ../src/ASF/common/services/ioport/uc3/ioport.h:
+
+../src/ASF/avr32/drivers/pdca/pdca.h:
 
 ../src/ASF/avr32/drivers/pm/power_clocks_lib.h:
 

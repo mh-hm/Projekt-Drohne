@@ -36,9 +36,13 @@ void settings_save(void)
 
 void check_save(void)
 {
-	if(ioport_get_pin_level(PIN_SAVE) == LOW)
+	static bool pin_old = LOW;
+	bool pin = ioport_get_pin_level(PIN_SAVE) ;
+	if(pin == LOW && pin_old == HIGH)
 	{
 		settings_save();
 		//TODO: check and add status LED blink
 	}
+	pin_old = pin;
+	
 }

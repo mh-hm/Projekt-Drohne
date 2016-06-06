@@ -37,15 +37,16 @@
     <option id="avr32.drivers.scif" value="Add" config="" content-id="Atmel.ASF" />
     <option id="avr32.drivers.tc" value="Add" config="" content-id="Atmel.ASF" />
     <option id="avr32.drivers.twim" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="avr32.drivers.wdt" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.boards" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.services.basic.clock" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="common.services.basic.cpu" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.services.delay" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.services.ioport" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.services.basic.serial" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.services.basic.sleepmgr" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.services.basic.spi_master" value="Add" config="standard_spi" content-id="Atmel.ASF" />
-    <option id="avr32.drivers.wdt" value="Add" config="" content-id="Atmel.ASF" />
-    <option id="common.services.basic.cpu" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="avr32.drivers.pdca" value="Add" config="" content-id="Atmel.ASF" />
   </options>
   <configurations>
     <configuration key="config.avr32.utils.trampoline" value="yes" default="yes" content-id="Atmel.ASF" />
@@ -158,6 +159,8 @@
     <file path="src/ASF/avr32/drivers/wdt/wdt4.c" framework="" version="3.31.0" source="avr32\drivers\wdt\wdt4.c" changed="False" content-id="Atmel.ASF" />
     <file path="src/ASF/avr32/drivers/wdt/wdt.h" framework="" version="3.31.0" source="avr32\drivers\wdt\wdt.h" changed="False" content-id="Atmel.ASF" />
     <file path="src/ASF/common/services/cpu/reset_cause.h" framework="" version="3.31.0" source="common\services\cpu\reset_cause.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/avr32/drivers/pdca/pdca.c" framework="" version="3.31.0" source="avr32\drivers\pdca\pdca.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/avr32/drivers/pdca/pdca.h" framework="" version="3.31.0" source="avr32\drivers\pdca\pdca.h" changed="False" content-id="Atmel.ASF" />
   </files>
   <documentation help="http://asf.atmel.com/docs/3.31.0/common.applications.user_application.user_board.uc3d/html/index.html" />
   <offline-documentation help="" />
@@ -242,6 +245,7 @@
       <Value>../src/ASF/avr32/drivers/cpu</Value>
       <Value>../src/ASF/avr32/drivers/wdt</Value>
       <Value>../src/ASF/common/services/cpu</Value>
+      <Value>../src/ASF/avr32/drivers/pdca</Value>
     </ListValues>
   </avr32gcc.compiler.directories.IncludePaths>
   <avr32gcc.compiler.optimization.level>Optimize for size (-Os)</avr32gcc.compiler.optimization.level>
@@ -294,6 +298,7 @@
       <Value>../src/ASF/avr32/drivers/cpu</Value>
       <Value>../src/ASF/avr32/drivers/wdt</Value>
       <Value>../src/ASF/common/services/cpu</Value>
+      <Value>../src/ASF/avr32/drivers/pdca</Value>
     </ListValues>
   </avr32gcc.assembler.general.IncludePaths>
   <avr32gcc.preprocessingassembler.general.AssemblerFlags>-mrelax -DBOARD=USER_BOARD</avr32gcc.preprocessingassembler.general.AssemblerFlags>
@@ -330,6 +335,7 @@
       <Value>../src/ASF/avr32/drivers/cpu</Value>
       <Value>../src/ASF/avr32/drivers/wdt</Value>
       <Value>../src/ASF/common/services/cpu</Value>
+      <Value>../src/ASF/avr32/drivers/pdca</Value>
     </ListValues>
   </avr32gcc.preprocessingassembler.general.IncludePaths>
 </Avr32Gcc>
@@ -381,6 +387,7 @@
       <Value>../src/ASF/avr32/drivers/cpu</Value>
       <Value>../src/ASF/avr32/drivers/wdt</Value>
       <Value>../src/ASF/common/services/cpu</Value>
+      <Value>../src/ASF/avr32/drivers/pdca</Value>
     </ListValues>
   </avr32gcc.compiler.directories.IncludePaths>
   <avr32gcc.compiler.optimization.level>Optimize (-O1)</avr32gcc.compiler.optimization.level>
@@ -434,6 +441,7 @@
       <Value>../src/ASF/avr32/drivers/cpu</Value>
       <Value>../src/ASF/avr32/drivers/wdt</Value>
       <Value>../src/ASF/common/services/cpu</Value>
+      <Value>../src/ASF/avr32/drivers/pdca</Value>
     </ListValues>
   </avr32gcc.assembler.general.IncludePaths>
   <avr32gcc.assembler.debugging.DebugLevel>Default (-g)</avr32gcc.assembler.debugging.DebugLevel>
@@ -471,6 +479,7 @@
       <Value>../src/ASF/avr32/drivers/cpu</Value>
       <Value>../src/ASF/avr32/drivers/wdt</Value>
       <Value>../src/ASF/common/services/cpu</Value>
+      <Value>../src/ASF/avr32/drivers/pdca</Value>
     </ListValues>
   </avr32gcc.preprocessingassembler.general.IncludePaths>
   <avr32gcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</avr32gcc.preprocessingassembler.debugging.DebugLevel>
@@ -490,6 +499,7 @@
     <Folder Include="src\ASF\avr32\drivers\flashcdw\" />
     <Folder Include="src\ASF\avr32\drivers\gpio\" />
     <Folder Include="src\ASF\avr32\drivers\intc\" />
+    <Folder Include="src\ASF\avr32\drivers\pdca\" />
     <Folder Include="src\ASF\avr32\drivers\pm\" />
     <Folder Include="src\ASF\avr32\drivers\pwma\" />
     <Folder Include="src\ASF\avr32\drivers\scif\" />
@@ -536,6 +546,12 @@
     <Compile Include="src\ASF\avr32\drivers\gpio\gpio.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\ASF\avr32\drivers\pdca\pdca.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\avr32\drivers\pdca\pdca.h">
+      <SubType>compile</SubType>
+    </None>
     <Compile Include="src\ASF\avr32\drivers\pm\pm_uc3d.c">
       <SubType>compile</SubType>
     </Compile>

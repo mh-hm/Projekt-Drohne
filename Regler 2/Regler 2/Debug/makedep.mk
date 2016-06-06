@@ -6,6 +6,8 @@ src\ASF\avr32\drivers\flashcdw\flashcdw.c
 
 src\ASF\avr32\drivers\gpio\gpio.c
 
+src\ASF\avr32\drivers\pdca\pdca.c
+
 src\ASF\avr32\drivers\pm\pm_uc3d.c
 
 src\ASF\avr32\drivers\scif\scif_uc3d.c
