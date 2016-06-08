@@ -34,53 +34,49 @@
 #include "sensor.h"
 #include "bno055.h"
 #include "com_spi.h"
+#include "pid.h"
 
 struct bno055_euler_t sensor_euler;
 
 int main (void)
 {
 	board_init();		
-
+	bool w_done = false;
 	while (1)
 	{
-		sensor_euler = read_sensor_euler();
-		
-		if (sensor_euler.r < 45*16 && sensor_euler.r > 0)
+		if (!w_done)
 		{
-			uint_fast32_t val;
-			val = (set.motor_esc_timer_value_interval * sensor_euler.r)/(45*16) + set.motor_esc_timer_value_min;
-			
-			tc_write_ra(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, val);
-			tc_write_ra(TIMER_ESC, TIMER_ESC_3_4_CHANNEL, val);
-			tc_write_rb(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, val);
-			tc_write_rb(TIMER_ESC, TIMER_ESC_3_4_CHANNEL, val);
+			sensor_euler = read_sensor_euler();
+			if(sensor_euler.h != 0 || sensor_euler.p != 0 || sensor_euler.r != 0)
+			{
+				set_point = sensor_euler;
+				throotle = 50;
+				w_done = true;
+			}
 		}
 		else
-		{
-			tc_write_ra(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, set.motor_esc_timer_value_min);
-			tc_write_ra(TIMER_ESC, TIMER_ESC_3_4_CHANNEL, set.motor_esc_timer_value_min);
-			tc_write_rb(TIMER_ESC, TIMER_ESC_1_2_CHANNEL, set.motor_esc_timer_value_min);
-			tc_write_rb(TIMER_ESC, TIMER_ESC_3_4_CHANNEL, set.motor_esc_timer_value_min);
-		}
+		actuate();
 		
-		ioport_set_pin_level(LED_TRANS,LOW);
-		ioport_set_pin_level(LED_B_SENS, LED_SENS_OFF);
-		ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);
-		ioport_set_pin_level(LED_G_SENS, LED_SENS_OFF);
-		delay_ms(100);
-		ioport_set_pin_level(LED_B_SENS, LED_SENS_ON);
-		ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);
-		ioport_set_pin_level(LED_G_SENS, LED_SENS_OFF);
-		delay_ms(100);
-		ioport_set_pin_level(LED_TRANS,HIGH);
-		ioport_set_pin_level(LED_B_SENS, LED_SENS_OFF);
-		ioport_set_pin_level(LED_R_SENS, LED_SENS_ON);
-		ioport_set_pin_level(LED_G_SENS, LED_SENS_OFF);
-		delay_ms(100);
-		ioport_set_pin_level(LED_B_SENS, LED_SENS_OFF);
-		ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);
-		ioport_set_pin_level(LED_G_SENS, LED_SENS_ON);
-		delay_ms(100);
+		check_save();
+		
+		//ioport_set_pin_level(LED_TRANS,LOW);
+		//ioport_set_pin_level(LED_B_SENS, LED_SENS_OFF);
+		//ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);
+		//ioport_set_pin_level(LED_G_SENS, LED_SENS_OFF);
+		//delay_ms(100);
+		//ioport_set_pin_level(LED_B_SENS, LED_SENS_ON);
+		//ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);
+		//ioport_set_pin_level(LED_G_SENS, LED_SENS_OFF);
+		//delay_ms(100);
+		//ioport_set_pin_level(LED_TRANS,HIGH);
+		//ioport_set_pin_level(LED_B_SENS, LED_SENS_OFF);
+		//ioport_set_pin_level(LED_R_SENS, LED_SENS_ON);
+		//ioport_set_pin_level(LED_G_SENS, LED_SENS_OFF);
+		//delay_ms(100);
+		//ioport_set_pin_level(LED_B_SENS, LED_SENS_OFF);
+		//ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);
+		//ioport_set_pin_level(LED_G_SENS, LED_SENS_ON);
+		//delay_ms(100);
 	}
 }
 

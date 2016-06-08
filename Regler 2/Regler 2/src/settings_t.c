@@ -11,19 +11,20 @@ volatile settings_t set;
 
 //Read settings set of UserPage on Controller
 //If no data -> Default-values
-void settings_init(void)
+void settings_init(bool iopin_save)
 {
 	if (flashcdw_quick_user_page_read())
 	{
 		//User page empty -> default values
-		set.motor_esc_timer_period = 3750;
-		set.motor_esc_timer_value_max = 1875;
-		set.motor_esc_timer_value_min = 937;
-		set.motor_esc_timer_value_interval = set.motor_esc_timer_value_max - set.motor_esc_timer_value_min;
 	}	
 	else
 	{
 		flashcdw_memcpy(&set, (uint32_t*) AVR32_USER_PAGE_ADDRESS, sizeof(set), false);
+	}
+	if (iopin_save)
+	{
+		ioport_set_pin_dir(PIN_SAVE, IOPORT_DIR_INPUT);
+		ioport_set_pin_mode(PIN_SAVE, IOPORT_MODE_PULLUP);
 	}
 }
 
@@ -31,4 +32,17 @@ void settings_init(void)
 void settings_save(void)
 {
 	flashcdw_memcpy((uint32_t*) AVR32_USER_PAGE_ADDRESS,&set, sizeof(set), true);
+}
+
+void check_save(void)
+{
+	static bool pin_old = LOW;
+	bool pin = ioport_get_pin_level(PIN_SAVE) ;
+	if(pin == LOW && pin_old == HIGH)
+	{
+		settings_save();
+		//TODO: check and add status LED blink
+	}
+	pin_old = pin;
+	
 }

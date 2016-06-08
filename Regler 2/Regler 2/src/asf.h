@@ -55,6 +55,12 @@
 // From module: CPU Cycle Counter
 #include <cycle_counter.h>
 
+// From module: CPU Reset Cause
+#include <avr32_reset_cause.h>
+
+// From module: Chip Reset Cause Access - UC3 implementation
+#include <reset_cause.h>
+
 // From module: Common build items for user board support templates
 #include <user_board.h>
 
@@ -82,6 +88,9 @@
 
 // From module: Interrupt management - UC3 implementation
 #include <interrupt.h>
+
+// From module: PDCA - Peripheral DMA Controller
+#include <pdca.h>
 
 // From module: PM Power Manager - UC3 D implementation
 #include <power_clocks_lib.h>
@@ -121,5 +130,8 @@
 
 // From module: USART - Universal Synchronous/Asynchronous Receiver/Transmitter
 #include <usart.h>
+
+// From module: WDT Watchdog Timer - UC3 C/L implementation
+#include <wdt.h>
 
 #endif // ASF_H

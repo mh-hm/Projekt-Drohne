@@ -62,21 +62,25 @@ src/ASF/common/boards/user_board/init.d \
  ../src/ASF/common/utils/interrupt/interrupt_avr32.h \
  ../src/ASF/avr32/utils/preprocessor/tpaste.h \
  ../src/ASF/avr32/drivers/intc/intc.h \
- ../src/ASF/common/boards/user_board/user_board.h \
- ../src/config/conf_board.h ../src/ASF/avr32/utils/status_codes.h \
- ../src/ASF/common/services/delay/delay.h \
+ ../src/ASF/avr32/drivers/cpu/avr32_reset_cause.h \
  ../src/ASF/common/services/clock/sysclk.h ../src/config/conf_clock.h \
  ../src/ASF/common/services/clock/uc3d/sysclk.h \
- ../src/ASF/common/boards/board.h ../src/ASF/common/services/clock/osc.h \
+ ../src/ASF/common/boards/board.h \
+ ../src/ASF/common/boards/user_board/user_board.h \
+ ../src/config/conf_board.h ../src/ASF/common/services/clock/osc.h \
  ../src/ASF/common/services/clock/uc3d/osc.h \
  ../src/ASF/common/services/clock/pll.h \
  ../src/ASF/common/services/clock/uc3d/pll.h \
  ../src/ASF/common/services/clock/genclk.h \
  ../src/ASF/common/services/clock/uc3d/genclk.h \
+ ../src/ASF/common/services/cpu/reset_cause.h \
+ ../src/ASF/avr32/utils/status_codes.h \
+ ../src/ASF/common/services/delay/delay.h \
  ../src/ASF/avr32/drivers/flashcdw/flashcdw.h \
  ../src/ASF/avr32/drivers/gpio/gpio.h \
  ../src/ASF/common/services/ioport/ioport.h \
  ../src/ASF/common/services/ioport/uc3/ioport.h \
+ ../src/ASF/avr32/drivers/pdca/pdca.h \
  ../src/ASF/avr32/drivers/pm/power_clocks_lib.h \
  ../src/ASF/avr32/drivers/pm/pm_uc3d.h \
  ../src/ASF/avr32/drivers/scif/scif_uc3d.h \
@@ -92,8 +96,9 @@ src/ASF/common/boards/user_board/init.d \
  ../src/config/conf_twim.h ../src/ASF/common/services/serial/serial.h \
  ../src/ASF/common/services/serial/uc3_usart/usart_serial.h \
  ../src/ASF/avr32/drivers/usart/usart.h ../src/config/conf_usart_serial.h \
- ../src/sensor.h ../src/asf.h ../src/bno055.h ../src/com_spi.h \
- ../src/motor_control.h ../src/settings_t.h
+ ../src/ASF/avr32/drivers/wdt/wdt.h ../src/sensor.h ../src/asf.h \
+ ../src/bno055.h ../src/com_spi.h ../src/motor_control.h \
+ ../src/settings_t.h
 
 ../src/asf.h:
 
@@ -217,13 +222,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bi
 
 ../src/ASF/avr32/drivers/intc/intc.h:
 
-../src/ASF/common/boards/user_board/user_board.h:
-
-../src/config/conf_board.h:
-
-../src/ASF/avr32/utils/status_codes.h:
-
-../src/ASF/common/services/delay/delay.h:
+../src/ASF/avr32/drivers/cpu/avr32_reset_cause.h:
 
 ../src/ASF/common/services/clock/sysclk.h:
 
@@ -232,6 +231,10 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bi
 ../src/ASF/common/services/clock/uc3d/sysclk.h:
 
 ../src/ASF/common/boards/board.h:
+
+../src/ASF/common/boards/user_board/user_board.h:
+
+../src/config/conf_board.h:
 
 ../src/ASF/common/services/clock/osc.h:
 
@@ -245,6 +248,12 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bi
 
 ../src/ASF/common/services/clock/uc3d/genclk.h:
 
+../src/ASF/common/services/cpu/reset_cause.h:
+
+../src/ASF/avr32/utils/status_codes.h:
+
+../src/ASF/common/services/delay/delay.h:
+
 ../src/ASF/avr32/drivers/flashcdw/flashcdw.h:
 
 ../src/ASF/avr32/drivers/gpio/gpio.h:
@@ -252,6 +261,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bi
 ../src/ASF/common/services/ioport/ioport.h:
 
 ../src/ASF/common/services/ioport/uc3/ioport.h:
+
+../src/ASF/avr32/drivers/pdca/pdca.h:
 
 ../src/ASF/avr32/drivers/pm/power_clocks_lib.h:
 
@@ -290,6 +301,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bi
 ../src/ASF/avr32/drivers/usart/usart.h:
 
 ../src/config/conf_usart_serial.h:
+
+../src/ASF/avr32/drivers/wdt/wdt.h:
 
 ../src/sensor.h:
 

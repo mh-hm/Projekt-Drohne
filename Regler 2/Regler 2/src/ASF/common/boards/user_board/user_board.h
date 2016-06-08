@@ -28,17 +28,33 @@
 
 //ESC:
 //<Hannes,Jonas>
-#define TIMER_ESC				&AVR32_TC
-#define TIMER_ESC_1_2_CHANNEL	0
-#define TIMER_ESC_3_4_CHANNEL	1
-#define ESC1_SIGNAL				AVR32_PIN_PA26 //TCA0
-#define ESC1_SIGNAL_PER_FUNC	PER_FUNC_C
-#define ESC2_SIGNAL				AVR32_PIN_PA27 //TCB0
-#define ESC2_SIGNAL_PER_FUNC	PER_FUNC_C
-#define ESC3_SIGNAL				AVR32_PIN_PA21 //TCA1
-#define ESC3_SIGNAL_PER_FUNC	PER_FUNC_B
-#define ESC4_SIGNAL				AVR32_PIN_PA22 //TCB1
-#define ESC4_SIGNAL_PER_FUNC	PER_FUNC_B
+#define TIMER_ESC					&AVR32_TC
+//TODO: Anpassung! (bei Wechsel, bzw. bei konkretem Wissen, welcher ESC auf welchen Anschluss kommt)
+//front left (FL)
+#define ESC_FL__SIGNAL_PIN			AVR32_PIN_PA26 //TCA0
+#define ESC_FL__SIGNAL_PER_FUNC		PER_FUNC_C
+#define ESC_FL__TIMER_CHANNEL		0
+//front right (FR)
+#define ESC_FR__SIGNAL_PIN			AVR32_PIN_PA27 //TCB0
+#define ESC_FR__SIGNAL_PER_FUNC		PER_FUNC_C
+#define ESC_FR__TIMER_CHANNEL		0
+//back left (BL)
+#define ESC_BL__SIGNAL_PIN			AVR32_PIN_PA21 //TCA1
+#define ESC_BL__SIGNAL_PER_FUNC		PER_FUNC_B
+#define ESC_BL__TIMER_CHANNEL		1
+//back right (BR)
+#define ESC_BR__SIGNAL_PIN			AVR32_PIN_PA22 //TCB1
+#define ESC_BR__SIGNAL_PER_FUNC		PER_FUNC_B
+#define ESC_BR__TIMER_CHANNEL		1
+
+//TODO: Anpassung!
+#define MOTOR_POS_T_C1_A			MOTOR_POS_FL
+#define MOTOR_POS_T_C1_B			MOTOR_POS_FR
+#define MOTOR_POS_T_C2_A			MOTOR_POS_BL
+#define MOTOR_POS_T_C2_B			MOTOR_POS_BR
+
+#define ESC_TIMER_USED_CHANNEL1		0
+#define ESC_TIMER_USED_CHANNEL2		1
 //</Hannes,Jonas>
 
 
@@ -85,13 +101,16 @@
 #define ADC2					AVR32_PIN_PA05
 #define ADC4					AVR32_PIN_PA07
 
-#define	GPIO_PB17				AVR32_PIN_PB17
+#define	GPIO_PB17				AVR32_PIN_PB17	//SAVE PIN
 #define	GPIO_PB18				AVR32_PIN_PB18
 #define	GPIO_PA24				AVR32_PIN_PA24
 #define	GPIO_PA25				AVR32_PIN_PA25
 #define	GPIO_PA18				AVR32_PIN_PA18
 #define	GPIO_PA19				AVR32_PIN_PA19
 #define	GPIO_PA20				AVR32_PIN_PA20
+
+//SAVE PIN
+#define PIN_SAVE				GPIO_PB17
 
 // External oscillator settings.
 // Uncomment and set correct values if external oscillator is used.

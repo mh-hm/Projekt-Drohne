@@ -27,10 +27,6 @@ typedef struct{
 //TODO: motor_esc_timer_value_interval wird vom Regler nicht benötigt
 //TODO: sensor_offset sollte nicht benötigt werden 
 typedef struct{
-		uint_fast16_t   motor_esc_timer_period;
-		uint_fast16_t	motor_esc_timer_value_min;
-		uint_fast16_t	motor_esc_timer_value_max;
-		uint_fast16_t	motor_esc_timer_value_interval; //Regel-Interval
 		pid_settings_t	pid_yaw;
 		pid_settings_t	pid_pitch;
 		pid_settings_t	pid_roll;
@@ -40,8 +36,12 @@ typedef struct{
 
 extern volatile settings_t set;
 
-void settings_init(void);
+void settings_init(bool iopin_save);
 
 void settings_save(void);
+
+void check_save(void);
+
+
 
 #endif /* SETTINGS_H_ */

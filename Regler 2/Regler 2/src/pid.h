@@ -11,8 +11,16 @@
 
 #include <settings_t.h>
 
+<<<<<<< HEAD
 uint_fast32_t time_since_start;			//Runtime of the controller
 uint_fast32_t last_cycle_count;			//Variable vor calculating the runtime
+=======
+uint_fast32_t time_since_start;			//Laufzeit des Reglers (Zum Integrieren und Differenzieren)
+uint_fast32_t last_cycle_count;			//Variable zur bestimmen der Laufzeit
+
+struct bno055_euler_t set_point;
+uint_fast32_t throotle;
+>>>>>>> origin/master
 
 typedef struct pid_tmp
 {

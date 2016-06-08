@@ -49,7 +49,6 @@
 #include <stdbool.h>
 #include <sysclk.h>
 #include "flashcdw.h"
-#include "conf_clock.h"
 
 
 #define AVR32_PM_PBADIV 7
@@ -259,7 +258,6 @@ void sysclk_disable_usb(void)
 	genclk_disable(AVR32_USBC_GCLK_NUM);
 }
 #endif // CONFIG_USBCLK_SOURCE
-
 
 
 void sysclk_init(void)
