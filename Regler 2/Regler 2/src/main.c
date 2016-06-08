@@ -55,7 +55,7 @@ int main (void)
 			}
 		}
 		else
-		actuate();
+		control();
 		
 		check_save();
 		
