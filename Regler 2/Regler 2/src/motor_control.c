@@ -13,6 +13,11 @@
 #include "settings_t.h"
 #include "motor_control.h"
 
+
+
+
+
+// initializes the motor-functions, setting timer-preferences, etc. ...
 void motor_init(void) //TODO: static?
 {
 	//set-up the pins of all ESC
@@ -161,36 +166,85 @@ void t_c2_rc_isr(void)
 
 
 		
-//return struct motor_speeds_t with pre-filled _int
-motor_speeds_t motor_speeds_pref(int_fast16_t _int)
+// generate struct with pre-filled _int as values in struct-array
+motor_values_t motor_values_pref(int_fast16_t _int)
 {
-	motor_speeds_t struct_ms_ret;
+	motor_values_t struct_mv_ret;
 	for (uint_fast8_t i=0; i<4; ++i)
 	{
-		struct_ms_ret.position[i]=_int;
+		struct_mv_ret.position[i]=_int;
 	}
-	return struct_ms_ret;
+	return struct_mv_ret;
 }
 
 
 // start motor with defined speed or change speed
 // -1 as motor_speed in struct means that the specific speed is not set
-void set_motor_speeds(motor_speeds_t motor_speeds)
+// the values will be checked for right range:
+//		on underflow --> min_motorspeed=0 will be set
+//		on overflow --> max_motorspeed (as defined in esc_timer_values.max_motorspeed) will be set
+void set_motor_speeds(motor_values_t motor_speeds)
 {
 	for (uint_fast8_t i=0; i<4; ++i)
 	{
 		if (motor_speeds.position[i] != -1)
 		{
-			esc_timer_compare_values[i] = motor_speeds.position[i] + esc_timer_values.min;
+			if (motor_speeds.position[i] < 0) // check underflow
+			{
+				esc_timer_compare_values[i] = esc_timer_values.min;
+			}
+			else if (motor_speeds.position[i] > esc_timer_values.max_motorspeed) // check overflow
+			{
+				esc_timer_compare_values[i] = esc_timer_values.max;
+			}
+			else
+			{
+				// value ok
+				esc_timer_compare_values[i] = motor_speeds.position[i] + esc_timer_values.min;
+			}
 		}
 	}
 }
 
 
-// return motor_speeds in struct
-motor_speeds_t get_motor_speeds(void)
+// alter motor-speeds (decrement/increment)
+// 0 as motor_value in struct means that the specific speed stays the same
+// negative values will slow down the specific motor (decrement)
+// positive values will increment motor-speed
+// the values will be checked for right range, after altering:
+//		on speed underflow min_motorspeed=0 will be set
+//		on speed overflow max_motorspeed (as defined in esc_timer_values.max_motorspeed) will be set
+void alter_motor_speeds(motor_values_t motor_altering_values)
 {
-	motor_speeds_t struct_ms_ret;
+	for (uint_fast8_t i=0; i<4; ++i)
+	{
+		if (motor_altering_values.position[i] != 0)
+		{
+			motor_altering_values.position[i] += esc_timer_compare_values[i]; // altering
+			
+			// range-checking
+			if (motor_altering_values.position[i] < esc_timer_values.min) // underflow
+			{
+				esc_timer_compare_values[i] = esc_timer_values.min;
+			}
+			else if (motor_altering_values.position[i] > esc_timer_values.max) // overflow
+			{
+				esc_timer_compare_values[i] = esc_timer_values.max;
+			}
+			else
+			{
+				// ok --> setting
+				esc_timer_compare_values[i] = motor_altering_values.position[i];
+			}
+		}
+	}
+}
+
+
+// return all motor_speeds in struct
+motor_values_t get_motor_speeds(void)
+{
+	motor_values_t struct_ms_ret;
 	for (uint_fast8_t i=0; i<4; ++i)
 	{
 		struct_ms_ret.position[i] = esc_timer_compare_values[i] - esc_timer_values.min;

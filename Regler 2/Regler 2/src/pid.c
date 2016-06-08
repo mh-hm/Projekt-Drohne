@@ -82,12 +82,12 @@ void actuate()
 	
 	//TODO: check
 	//motor_speeds_t speed = get_motor_speeds();
-	motor_speeds_t speed;
+	motor_values_t speed;
 	speed.position[MOTOR_POS_FL] = _esc0;
 	speed.position[MOTOR_POS_FR] = _esc1;
 	speed.position[MOTOR_POS_BL] = _esc2;
 	speed.position[MOTOR_POS_BR] = _esc3;
-	//Funktion zum Inkrementeiren/Dekrementeiren kommt noch
+	//TODO: --> Funktion zum Inkrementeiren/Dekrementieren wurde implementiert!
 	//NICHT NOTWENDIG: ANSONSTEN SUMMIERT SICH THROTTLE IN JEDEM ZYKLUS AUF UND ALLE MOTOREN AUF VOLLGAS
 	
 	for (uint_fast8_t i = 0; i < 3; i++)
