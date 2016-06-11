@@ -56,6 +56,20 @@ int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, i
 		
 	return y;
 }
+
+void writeDataToSPI(uint_fast16_t data)
+{
+	//while(!spi_is_tx_empty(SPI_ARDU));
+	if(spi_is_tx_empty(SPI_ARDU))
+	{
+		spi_put(SPI_ARDU, data & 0xFF);
+		//while(!spi_is_tx_empty(SPI_ARDU));
+		//if(spi_is_tx_empty(SPI_ARDU))
+		//{
+		//	spi_put(SPI_ARDU, (data & 0xFF));
+		//}
+	}
+}
 	
 void control()
 {
@@ -63,6 +77,35 @@ void control()
 	x = read_sensor_euler();
 	struct bno055_euler_t y = {0,0,0};
 		
+	if(spi_is_rx_full(SPI_ARDU))
+	{
+		uint_fast8_t rxdata = spi_get(SPI_ARDU);
+		if(rxdata == 0x01)
+		{
+			writeDataToSPI((x.h & 0xFF));
+		}
+		else if(rxdata == 0x02)
+		{
+			writeDataToSPI((x.h >> 8));
+		}
+		if(rxdata == 0x05)
+		{
+			writeDataToSPI((x.p & 0xFF));
+		}
+		else if(rxdata == 0x06)
+		{
+			writeDataToSPI((x.p >> 8));
+		}
+		if(rxdata == 0x10)
+		{
+			writeDataToSPI((x.r & 0xFF));
+		}
+		else if(rxdata == 0x11)
+		{
+			writeDataToSPI((x.r >> 8));
+		}
+	}
+	
 		
 	//throttle constant for the controller
 	uint_fast32_t _thr = 0;
@@ -72,6 +115,7 @@ void control()
 	static pid_tmp h_tmp = {0,0};
 	static pid_tmp r_tmp = {0,0};
 //	static pid_tmp thr_tmp = {0,0};
+	
 	
 	//calculate all actuating variables 
 	y.p = calculate_actuating_variable(set.pid_pitch, set_point.p, x.p, &p_tmp);

@@ -12,9 +12,9 @@
 #include "asf.h"
 
 typedef struct{
-	int_fast32_t	p;
-	int_fast32_t	i;
-	int_fast32_t	d;
+	float	p;
+	float	i;
+	float	d;
 }pid_settings_t;
 
 typedef struct{

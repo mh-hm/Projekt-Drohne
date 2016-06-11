@@ -42,6 +42,7 @@ int main (void)
 {
 	board_init();		
 	bool w_done = false;
+	bool on= true;
 	while (1)
 	{
 		if (!w_done)
@@ -52,13 +53,20 @@ int main (void)
 				set_point = sensor_euler;
 				throotle = 50;
 				w_done = true;
+				set.pid_pitch.p = 2;
+				set.pid_roll.p = 2;
+				set.pid_yaw.p = 2;
 			}
 		}
 		else
 		control();
 		
 		check_save();
+		uint8_t calib_stat;
+		read_sensor_data(BNO055_CALIB_STAT_ADDR, &calib_stat, 1);
 		
+		ioport_set_pin_level(GPIO_PA25, (on == true)?IOPORT_PIN_LEVEL_LOW:IOPORT_PIN_LEVEL_HIGH);
+		on = !on;
 		//ioport_set_pin_level(LED_TRANS,LOW);
 		//ioport_set_pin_level(LED_B_SENS, LED_SENS_OFF);
 		//ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);
