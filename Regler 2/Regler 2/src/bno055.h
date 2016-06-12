@@ -297,7 +297,7 @@ s16 z;/**< Gravity z data */
 /*!
 * @brief struct for Accel offset
 */
-struct bno055_accel_offset_t {
+struct bno055_accel_offset_t{
 s16 x;/**< Accel offset x data */
 s16 y;/**< Accel offset y data */
 s16 z;/**< Accel offset z data */
@@ -306,7 +306,7 @@ s16 r;/**< Accel radius r data */
 /*!
 * @brief struct for Gyro offset
 */
-struct bno055_gyro_offset_t {
+struct bno055_gyro_offset_t{
 s16 x;/**< Gyro offset x data */
 s16 y;/**< Gyro offset y data */
 s16 z;/**< Gyro offset z data */
@@ -314,7 +314,7 @@ s16 z;/**< Gyro offset z data */
 /*!
 * @brief struct for Mag offset
 */
-struct bno055_mag_offset_t {
+struct bno055_mag_offset_t{
 s16 x;/**< Mag offset x data */
 s16 y;/**< Mag offset y data */
 s16 z;/**< Mag offset z data */

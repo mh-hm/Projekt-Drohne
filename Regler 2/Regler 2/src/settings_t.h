@@ -10,6 +10,7 @@
 #define SETTINGS_H_
 
 #include "asf.h"
+#include "bno055.h"
 
 typedef struct{
 	float	p;
@@ -17,21 +18,21 @@ typedef struct{
 	float	d;
 }pid_settings_t;
 
-typedef struct{
-	uint_fast16_t	yaw;
-	uint_fast16_t	pitch;
-	uint_fast16_t	roll;
-}sensor_offset_t;
+#define		SETTINGS_USERPAGE_OFFSET	32
+#define		SETTINGS_VERSION			10
 
-
-//TODO: motor_esc_timer_value_interval wird vom Regler nicht benötigt
-//TODO: sensor_offset sollte nicht benötigt werden 
+//TODO: read sensor_offset from sensor and save to settings
+//IF SETTINGS GET CHANGED -> CHANGE VERSION AND DEFAULT VALUES
 typedef struct{
-		pid_settings_t	pid_yaw;
-		pid_settings_t	pid_pitch;
-		pid_settings_t	pid_roll;
-		pid_settings_t	pid_throttle;
-		sensor_offset_t	sensor_offset;  
+		uint16_t						version;
+		pid_settings_t					pid_yaw;
+		pid_settings_t					pid_pitch;
+		pid_settings_t					pid_roll;
+		pid_settings_t					pid_throttle;
+		uint8_t							sensor_calibration;	//!= 0 if sensor calibration data was successfuly acquired
+		struct bno055_accel_offset_t	accel_offset;
+		struct bno055_gyro_offset_t		gyro_offset;
+		struct bno055_mag_offset_t		mag_offset;		 
 	} settings_t;
 
 extern volatile settings_t set;
@@ -42,6 +43,6 @@ void settings_save(void);
 
 void check_save(void);
 
-
+void set_default_values(void);
 
 #endif /* SETTINGS_H_ */
