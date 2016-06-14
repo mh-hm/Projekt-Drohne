@@ -13,13 +13,13 @@
 #include "bno055.h"
 
 typedef struct{
-	float	p;
-	float	i;
-	float	d;
+	uint32_t	p;
+	uint32_t	i;
+	uint32_t	d;
 }pid_settings_t;
 
 #define		SETTINGS_USERPAGE_OFFSET	32
-#define		SETTINGS_VERSION			10
+#define		SETTINGS_VERSION			11
 
 //TODO: read sensor_offset from sensor and save to settings
 //IF SETTINGS GET CHANGED -> CHANGE VERSION AND DEFAULT VALUES

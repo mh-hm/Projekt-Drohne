@@ -36,7 +36,7 @@
 #include "com_spi.h"
 #include "pid.h"
 
-struct bno055_euler_t sensor_euler;
+
 
 int main (void)
 {
@@ -50,12 +50,9 @@ int main (void)
 			sensor_euler = read_sensor_euler();
 			if(sensor_euler.h != 0 || sensor_euler.p != 0 || sensor_euler.r != 0)
 			{
-				set_point = sensor_euler;
+				app_euler = sensor_euler;
 				throotle = 50;
 				w_done = true;
-				set.pid_pitch.p = 2;
-				set.pid_roll.p = 2;
-				set.pid_yaw.p = 2;
 			}
 		}
 		else

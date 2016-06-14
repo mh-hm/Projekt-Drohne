@@ -12,10 +12,6 @@
 #include "motor_control.h"
 
 
-struct bno055_euler_t set_point = {0,0,0};
-uint_fast32_t throotle = 0;
-
-
 uint_fast32_t get_time_since_last_pid(void)
 {
 	uint_fast32_t count = Get_sys_count();
@@ -42,6 +38,8 @@ int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, i
 	
 	e = w - x;			//Calculatibg the controll deviation
 	
+	e = e << PID_SHIFT_AMOUNT;
+	
 	_tmp->e_int += e;	
 	
 	//Calculating the actuation variable out of the controlled system include a proportional, integration and a differentation part
@@ -53,11 +51,11 @@ int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, i
 	//Speichern des Wertes für die nächste Regelung
 	//Save the Control Deviation for the next controlling cycle
 	_tmp->e_old = e;
-		
-	return y;
+	
+	return y >> PID_SHIFT_AMOUNT;
 }
 
-void writeDataToSPI(uint_fast16_t data)
+/*void writeDataToSPI(uint_fast16_t data)
 {
 	//while(!spi_is_tx_empty(SPI_ARDU));
 	if(spi_is_tx_empty(SPI_ARDU))
@@ -69,7 +67,7 @@ void writeDataToSPI(uint_fast16_t data)
 		//	spi_put(SPI_ARDU, (data & 0xFF));
 		//}
 	}
-}
+}*/
 	
 void control()
 {
@@ -77,34 +75,34 @@ void control()
 	x = read_sensor_euler();
 	struct bno055_euler_t y = {0,0,0};
 		
-	if(spi_is_rx_full(SPI_ARDU))
-	{
-		uint_fast8_t rxdata = spi_get(SPI_ARDU);
-		if(rxdata == 0x01)
-		{
-			writeDataToSPI((x.h & 0xFF));
-		}
-		else if(rxdata == 0x02)
-		{
-			writeDataToSPI((x.h >> 8));
-		}
-		if(rxdata == 0x05)
-		{
-			writeDataToSPI((x.p & 0xFF));
-		}
-		else if(rxdata == 0x06)
-		{
-			writeDataToSPI((x.p >> 8));
-		}
-		if(rxdata == 0x10)
-		{
-			writeDataToSPI((x.r & 0xFF));
-		}
-		else if(rxdata == 0x11)
-		{
-			writeDataToSPI((x.r >> 8));
-		}
-	}
+	//if(spi_is_rx_full(SPI_ARDU))
+	//{
+		//uint_fast8_t rxdata = spi_get(SPI_ARDU);
+		//if(rxdata == 0x01)
+		//{
+			//writeDataToSPI((x.h & 0xFF));
+		//}
+		//else if(rxdata == 0x02)
+		//{
+			//writeDataToSPI((x.h >> 8));
+		//}
+		//if(rxdata == 0x05)
+		//{
+			//writeDataToSPI((x.p & 0xFF));
+		//}
+		//else if(rxdata == 0x06)
+		//{
+			//writeDataToSPI((x.p >> 8));
+		//}
+		//if(rxdata == 0x10)
+		//{
+			//writeDataToSPI((x.r & 0xFF));
+		//}
+		//else if(rxdata == 0x11)
+		//{
+			//writeDataToSPI((x.r >> 8));
+		//}
+	//}
 	
 		
 	//throttle constant for the controller
@@ -118,9 +116,9 @@ void control()
 	
 	
 	//calculate all actuating variables 
-	y.p = calculate_actuating_variable(set.pid_pitch, set_point.p, x.p, &p_tmp);
-	y.r = calculate_actuating_variable(set.pid_roll, set_point.r, x.r, &r_tmp);
-	y.h = calculate_actuating_variable(set.pid_yaw, set_point.h, x.h, &h_tmp);
+	y.p = calculate_actuating_variable(set.pid_pitch, app_euler.p, x.p, &p_tmp);
+	y.r = calculate_actuating_variable(set.pid_roll, app_euler.r, x.r, &r_tmp);
+	y.h = calculate_actuating_variable(set.pid_yaw, app_euler.h, x.h, &h_tmp);
 	//int_fast32_t throttle = calculate_actuating_variable(set.pid_throttle, throotle, _thr, &thr_tmp);
 	
 	//Add all actuating variables to the motor speeds

@@ -14,8 +14,10 @@
 uint_fast32_t time_since_start;			//Laufzeit des Reglers (Zum Integrieren und Differenzieren)
 uint_fast32_t last_cycle_count;			//Variable zur bestimmen der Laufzeit
 
-struct bno055_euler_t set_point;
 uint_fast32_t throotle;
+
+struct bno055_euler_t sensor_euler;
+struct bno055_euler_t app_euler;
 
 typedef struct pid_tmp
 {
