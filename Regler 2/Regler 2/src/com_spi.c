@@ -10,6 +10,8 @@
 #include "spi_protocol.h"
 #include "pid.h"
 
+#define MACRO_EN_SPI_RX_INTR		(*SPI_ARDU).ier = AVR32_SPI_IER_RDRF_MASK; //enable Interrupt
+#define MACRO_DIS_SPI_RX_INTR		(*SPI_ARDU).idr = AVR32_SPI_IER_RDRF_MASK; //disable Interrupt
 
 ISR(com_spi_interrupt_handler, AVR32_SPI_IRQ_GROUP, SPI_ARDU_IRQ_LEVEL)
 {
@@ -18,23 +20,26 @@ ISR(com_spi_interrupt_handler, AVR32_SPI_IRQ_GROUP, SPI_ARDU_IRQ_LEVEL)
 	pdca_channel_options_t pdca_opt;
 	pdca_opt.transfer_size	= PDCA_TRANSFER_SIZE_BYTE;
 	pdca_opt.etrig			= false;
-	pdca_opt.r_addr			= 0;
+	pdca_opt.r_addr			= NULL;
 	pdca_opt.r_size			= 0;
 
-	
 	uint8_t cmd = spi_get(SPI_ARDU);
 	switch (cmd)
 	{
 		case SPI_CMD_EULER_COORD:
 			pdca_opt.pid			= AVR32_SPI_PDCA_ID_RX;
-			pdca_opt.addr			= &app_euler;
+			pdca_opt.addr			= (void *)&app_euler;
 			pdca_opt.size			= SPI_CMD_EULER_COORD_NUM_BYTES;
 			pdca_init_channel(PDCA_CHANNEL_SPI_RX,&pdca_opt);
 			
 			pdca_opt.pid			= AVR32_SPI_PDCA_ID_TX;
-			pdca_opt.addr			= &sensor_euler;
+			pdca_opt.addr			= (void *)&sensor_euler;
 			pdca_opt.size			= SPI_CMD_EULER_COORD_NUM_BYTES;
 			pdca_init_channel(PDCA_CHANNEL_SPI_TX,&pdca_opt);
+			
+			MACRO_DIS_SPI_RX_INTR;
+			
+			pdca_enable_interrupt_transfer_complete(PDCA_CHANNEL_SPI_TX);
 			
 			pdca_enable(PDCA_CHANNEL_SPI_RX);
 			pdca_enable(PDCA_CHANNEL_SPI_TX);
@@ -44,6 +49,14 @@ ISR(com_spi_interrupt_handler, AVR32_SPI_IRQ_GROUP, SPI_ARDU_IRQ_LEVEL)
 		default:
 			break;
 	}
+};
+
+ISR(com_pdca_interrupt_handler, AVR32_PDCA_IRQ_GROUP, PDCA_IRQ_LEVEL)
+{
+	pdca_disable_interrupt_transfer_complete(PDCA_CHANNEL_SPI_TX);
+	pdca_disable(PDCA_CHANNEL_SPI_RX);
+	pdca_disable(PDCA_CHANNEL_SPI_TX);
+	MACRO_EN_SPI_RX_INTR;
 };
 
 spi_status_t com_spi_init(void)
@@ -59,18 +72,21 @@ spi_status_t com_spi_init(void)
 	sysclk_enable_peripheral_clock(SPI_ARDU);
 	
 	spi_initSlave(SPI_ARDU,8,SPI_MODE_0);
-	spi_enable(SPI_ARDU);
+	
 	
 	bool global_interrupt_enabled = cpu_irq_is_enabled ();
 	if (global_interrupt_enabled) cpu_irq_disable();
 	
 	irq_register_handler(com_spi_interrupt_handler, AVR32_SPI_IRQ, SPI_ARDU_IRQ_LEVEL);
-	(*SPI_ARDU).ier = AVR32_SPI_IER_RDRF_MASK; //enable Interrupt
-	cpu_irq_enable();
 	
 	sysclk_enable_peripheral_clock(&AVR32_PDCA);
-
-
+	irq_register_handler(com_pdca_interrupt_handler, PDCA_IRQ_NR, PDCA_IRQ_LEVEL);
+	
+	MACRO_EN_SPI_RX_INTR;
+	
+	
+	spi_enable(SPI_ARDU);
+	cpu_irq_enable();
 	
 	return SPI_OK;
 }

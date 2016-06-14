@@ -71,8 +71,7 @@ int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, i
 	
 void control()
 {
-	struct bno055_euler_t x;
-	x = read_sensor_euler();
+	sensor_euler =  read_sensor_euler();
 	struct bno055_euler_t y = {0,0,0};
 		
 	//if(spi_is_rx_full(SPI_ARDU))
@@ -116,9 +115,9 @@ void control()
 	
 	
 	//calculate all actuating variables 
-	y.p = calculate_actuating_variable(set.pid_pitch, app_euler.p, x.p, &p_tmp);
-	y.r = calculate_actuating_variable(set.pid_roll, app_euler.r, x.r, &r_tmp);
-	y.h = calculate_actuating_variable(set.pid_yaw, app_euler.h, x.h, &h_tmp);
+	y.p = calculate_actuating_variable(set.pid_pitch, app_euler.p, sensor_euler.p, &p_tmp);
+	y.r = calculate_actuating_variable(set.pid_roll, app_euler.r, sensor_euler.r, &r_tmp);
+	y.h = calculate_actuating_variable(set.pid_yaw, app_euler.h, sensor_euler.h, &h_tmp);
 	//int_fast32_t throttle = calculate_actuating_variable(set.pid_throttle, throotle, _thr, &thr_tmp);
 	
 	//Add all actuating variables to the motor speeds
