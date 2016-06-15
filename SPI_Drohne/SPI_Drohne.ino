@@ -5,7 +5,7 @@
 #define  SPI_CMD_SET_WRITE 0x02
 #define  SPI_CMD_SET_WRITE_NUM_BYTES 5
 
-#define DELAY 0
+#define DELAY 3
 
 signed int euler[3];
 signed int euler_app[3];
@@ -20,7 +20,7 @@ void setup() {
   euler_app[2] = 7;
   delay(500);
   Serial.begin(9600);
-  while(Serial.read() != 'a');
+  
   Serial.println("Read Euler Coordinates from the regler! \n");
 }
 
@@ -30,12 +30,14 @@ void loop() {
   //read MSB and LSB from the three euler coordinates
  
   //{
+  //if(Serial.available()) Serial.write(Serial.read());
+  while(Serial.read() != 'a');
   read_and_send_Euler();
-  Serial.print("H: \t");
+  //Serial.print("H: \t");
   Serial.print(euler[0], DEC);
-  Serial.print("R: \t");
+  Serial.print("\t");
   Serial.print(euler[1], DEC);
-  Serial.print("P: \t");
+  Serial.print("\t");
   Serial.print(euler[2], DEC);
   Serial.println();
   //}
