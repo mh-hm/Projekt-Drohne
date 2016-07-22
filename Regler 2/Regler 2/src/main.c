@@ -42,7 +42,6 @@ int main (void)
 {
 	board_init();		
 	bool w_done = false;
-	bool on= true;
 	while (1)
 	{
 		if (!w_done)
@@ -50,8 +49,8 @@ int main (void)
 			sensor_euler = read_sensor_euler();
 			if(sensor_euler.h != 0 || sensor_euler.p != 0 || sensor_euler.r != 0)
 			{
-				//app_euler = sensor_euler;
-				throotle = 50;
+				app_euler = sensor_euler;
+				throotle = 0;
 				w_done = true;
 			}
 		}
@@ -62,26 +61,8 @@ int main (void)
 		uint8_t calib_stat;
 		read_sensor_data(BNO055_CALIB_STAT_ADDR, &calib_stat, 1);
 		
-		ioport_set_pin_level(GPIO_PA25, (on == true)?IOPORT_PIN_LEVEL_LOW:IOPORT_PIN_LEVEL_HIGH);
-		on = !on;
-		//ioport_set_pin_level(LED_TRANS,LOW);
-		//ioport_set_pin_level(LED_B_SENS, LED_SENS_OFF);
-		//ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);
-		//ioport_set_pin_level(LED_G_SENS, LED_SENS_OFF);
-		//delay_ms(100);
-		//ioport_set_pin_level(LED_B_SENS, LED_SENS_ON);
-		//ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);
-		//ioport_set_pin_level(LED_G_SENS, LED_SENS_OFF);
-		//delay_ms(100);
-		//ioport_set_pin_level(LED_TRANS,HIGH);
-		//ioport_set_pin_level(LED_B_SENS, LED_SENS_OFF);
-		//ioport_set_pin_level(LED_R_SENS, LED_SENS_ON);
-		//ioport_set_pin_level(LED_G_SENS, LED_SENS_OFF);
-		//delay_ms(100);
-		//ioport_set_pin_level(LED_B_SENS, LED_SENS_OFF);
-		//ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);
-		//ioport_set_pin_level(LED_G_SENS, LED_SENS_ON);
-		//delay_ms(100);
+		ioport_toggle_pin_level(GPIO_PA25);
+				
 	}
 }
 

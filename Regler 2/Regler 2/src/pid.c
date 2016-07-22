@@ -12,6 +12,7 @@
 #include "motor_control.h"
 
 
+
 uint_fast32_t get_time_since_last_pid(void)
 {
 	uint_fast32_t count = Get_sys_count();
@@ -38,9 +39,9 @@ int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, i
 	
 	e = w - x;			//Calculating the control deviation
 	
-	if(abs(e) > 180)
+	if(abs(e) > 180*16)
 	{
-		e += (w>x)?(-360):(360);
+		e += (w>x)?(-360*16):(360*16);
 	}
 
 	e = e << PID_SHIFT_AMOUNT;
@@ -50,7 +51,7 @@ int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, i
 	//Calculating the actuation variable out of the controlled system include a proportional, integration and a differentation part
 	// y = KP * e + KI * INT(e,dt) + KD (de/dt)
 	y = _set.p * e;
-	y += _set.i * _tmp->e_int * time_since_start;
+	y += _set.i * _tmp->e_int * (time_since_start >> 6);
 	y += _set.d *(e - _tmp->e_old)/time_since_start;
 	
 	//Speichern des Wertes für die nächste Regelung
@@ -79,34 +80,6 @@ void control()
 	sensor_euler =  read_sensor_euler();
 	struct bno055_euler_t y = {0,0,0};
 		
-	//if(spi_is_rx_full(SPI_ARDU))
-	//{
-		//uint_fast8_t rxdata = spi_get(SPI_ARDU);
-		//if(rxdata == 0x01)
-		//{
-			//writeDataToSPI((x.h & 0xFF));
-		//}
-		//else if(rxdata == 0x02)
-		//{
-			//writeDataToSPI((x.h >> 8));
-		//}
-		//if(rxdata == 0x05)
-		//{
-			//writeDataToSPI((x.p & 0xFF));
-		//}
-		//else if(rxdata == 0x06)
-		//{
-			//writeDataToSPI((x.p >> 8));
-		//}
-		//if(rxdata == 0x10)
-		//{
-			//writeDataToSPI((x.r & 0xFF));
-		//}
-		//else if(rxdata == 0x11)
-		//{
-			//writeDataToSPI((x.r >> 8));
-		//}
-	//}
 	
 		
 	//throttle constant for the controller
@@ -120,19 +93,19 @@ void control()
 	
 	
 	//calculate all actuating variables 
-	y.p = calculate_actuating_variable(set.pid_pitch, (app_euler.p<0)?app_euler.p+180:app_euler.p, sensor_euler.p, &p_tmp);
+	y.p = calculate_actuating_variable(set.pid_pitch, (app_euler.p<0)?app_euler.p+360*16:app_euler.p, (sensor_euler.p<0)?sensor_euler.p+360*16:sensor_euler.p, &p_tmp);
 	y.r = calculate_actuating_variable(set.pid_roll, app_euler.r, sensor_euler.r, &r_tmp);
 	y.h = calculate_actuating_variable(set.pid_yaw, app_euler.h, sensor_euler.h, &h_tmp);
 	//int_fast32_t throttle = calculate_actuating_variable(set.pid_throttle, throotle, _thr, &thr_tmp);
 	
 	//Add all actuating variables to the motor speeds
-	uint_fast32_t _esc0 = y.r + y.h +  y.p + throotle;
-	uint_fast32_t _esc1 = (-y.r) + y.h +  (-y.p) + throotle;
-	uint_fast32_t _esc2 = y.r + (-y.h) +  y.p + throotle;
-	uint_fast32_t _esc3 =(-y.r) + (-y.h) +  (-y.p) + throotle;
+	int_fast32_t _esc0 =	 y.r	+	 y.h	+	-y.p	+	throotle;
+	int_fast32_t _esc1 =	-y.r	+	-y.h	+	-y.p	+	throotle;
+	int_fast32_t _esc2 =	 y.r	+	-y.h	+	 y.p	+	throotle;
+	int_fast32_t _esc3 =	-y.r	+	 y.h	+	 y.p	+	throotle;
 	
 	//TODO: check
-	motor_values_t speed;
+	
 	speed.position[MOTOR_POS_FL] = _esc0;
 	speed.position[MOTOR_POS_FR] = _esc1;
 	speed.position[MOTOR_POS_BL] = _esc2;

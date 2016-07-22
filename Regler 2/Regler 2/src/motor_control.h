@@ -32,7 +32,7 @@ esc_timer_values_t esc_timer_values;
 // getting pre-filled in motor_init() (motor_control.c)
 // change for setting the speed --> implemented by motor_speed()
 // values applied at rc-compare on timer-channel (interrupt)
-volatile uint_fast16_t  esc_timer_compare_values[4];
+volatile uint16_t  esc_timer_compare_values[4];
 
 
 
