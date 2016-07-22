@@ -36,8 +36,13 @@ int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, i
 	
 	int_fast32_t e,y;
 	
-	e = w - x;			//Calculatibg the controll deviation
+	e = w - x;			//Calculating the control deviation
 	
+	if(abs(e) > 180)
+	{
+		e += (w>x)?(-360):(360);
+	}
+
 	e = e << PID_SHIFT_AMOUNT;
 	
 	_tmp->e_int += e;	
@@ -115,7 +120,7 @@ void control()
 	
 	
 	//calculate all actuating variables 
-	y.p = calculate_actuating_variable(set.pid_pitch, app_euler.p, sensor_euler.p, &p_tmp);
+	y.p = calculate_actuating_variable(set.pid_pitch, (app_euler.p<0)?app_euler.p+180:app_euler.p, sensor_euler.p, &p_tmp);
 	y.r = calculate_actuating_variable(set.pid_roll, app_euler.r, sensor_euler.r, &r_tmp);
 	y.h = calculate_actuating_variable(set.pid_yaw, app_euler.h, sensor_euler.h, &h_tmp);
 	//int_fast32_t throttle = calculate_actuating_variable(set.pid_throttle, throotle, _thr, &thr_tmp);
