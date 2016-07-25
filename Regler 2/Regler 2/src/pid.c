@@ -20,11 +20,13 @@ uint_fast32_t get_time_since_last_pid(void)
 	if(last_cycle_count > count)
 	{
 		uint_fast32_t _c = (UINT32_MAX - last_cycle_count) + count;
+		last_cycle_count = count;
 		return cpu_cy_2_us(_c, sysclk_get_cpu_hz());
 	}
 	//No cycle counter overflow
 	else
 	{
+		last_cycle_count = count;
 		return cpu_cy_2_us(count-last_cycle_count, sysclk_get_cpu_hz());
 	}
 }
@@ -33,7 +35,8 @@ uint_fast32_t get_time_since_last_pid(void)
 //w ist Sollwert, x ist Istwert
 int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, int_fast32_t x, pid_tmp *_tmp)
 {
-	time_since_start += get_time_since_last_pid();		//Calculation of the Controllers runtime
+	uint_fast32_t act_time = get_time_since_last_pid();
+	time_since_start += act_time;		//Calculation of the Controllers runtime
 	
 	int_fast32_t e,y;
 	
@@ -51,29 +54,16 @@ int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, i
 	//Calculating the actuation variable out of the controlled system include a proportional, integration and a differentation part
 	// y = KP * e + KI * INT(e,dt) + KD (de/dt)
 	y = _set.p * e;
-	y += _set.i * _tmp->e_int * (time_since_start >> 6);
-	y += _set.d *(e - _tmp->e_old)/time_since_start;
+	y += _set.i * _tmp->e_int * (act_time - old_time);
+	y += _set.d *(e - _tmp->e_old)/(act_time - old_time);
 	
 	//Speichern des Wertes für die nächste Regelung
 	//Save the Control Deviation for the next controlling cycle
 	_tmp->e_old = e;
 	
+	old_time = act_time;
 	return y >> PID_SHIFT_AMOUNT;
 }
-
-/*void writeDataToSPI(uint_fast16_t data)
-{
-	//while(!spi_is_tx_empty(SPI_ARDU));
-	if(spi_is_tx_empty(SPI_ARDU))
-	{
-		spi_put(SPI_ARDU, data & 0xFF);
-		//while(!spi_is_tx_empty(SPI_ARDU));
-		//if(spi_is_tx_empty(SPI_ARDU))
-		//{
-		//	spi_put(SPI_ARDU, (data & 0xFF));
-		//}
-	}
-}*/
 	
 void control()
 {

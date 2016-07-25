@@ -12,8 +12,9 @@
 #include <settings_t.h>
 #include "motor_control.h"
 
-uint_fast32_t time_since_start;			//Laufzeit des Reglers (Zum Integrieren und Differenzieren)
-uint_fast32_t last_cycle_count;			//Variable zur bestimmen der Laufzeit
+uint_fast32_t time_since_start = 0;			//Laufzeit des Reglers (Zum Integrieren und Differenzieren)
+uint_fast32_t last_cycle_count = 0;			//Variable zur bestimmen der Laufzeit
+uint_fast32_t old_time = 0;
 
 uint_fast32_t throotle;
 
