@@ -40,7 +40,20 @@
 
 int main (void)
 {
-	board_init();		
+	board_init();
+	
+	#define TEST_PID
+	
+	#ifdef TEST_PID
+		pid_tmp test_tmp = {0,0};
+		uint32_t test_x = 0, test_w = 0, a = 0;
+		pid_settings_t test_set;
+		test_set.p = 1;
+		test_set.i = 1;
+		test_set.d = 1;
+	#endif
+
+	
 	bool w_done = false;
 	while (1)
 	{
@@ -55,7 +68,18 @@ int main (void)
 			}
 		}
 		else
-		control();
+		{
+			#ifdef TEST_PID
+				a = calculate_actuating_variable(test_set, test_w, test_x, &test_tmp);
+				speed.position[MOTOR_POS_FL] = test_x;
+				speed.position[MOTOR_POS_FR] = test_w;
+				speed.position[MOTOR_POS_BL] = a;
+				speed.position[MOTOR_POS_BR] = a;
+			#else
+				control();	
+			#endif
+		}
+		
 		
 		check_save();
 		uint8_t calib_stat;

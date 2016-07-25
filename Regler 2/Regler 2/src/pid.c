@@ -54,8 +54,8 @@ int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, i
 	//Calculating the actuation variable out of the controlled system include a proportional, integration and a differentation part
 	// y = KP * e + KI * INT(e,dt) + KD (de/dt)
 	y = _set.p * e;
-	y += _set.i * _tmp->e_int * (act_time - old_time);
-	y += _set.d *(e - _tmp->e_old)/(act_time - old_time);
+	y += _set.i * _tmp->e_int * act_time;
+	y += _set.d *(e - _tmp->e_old)/act_time;
 	
 	//Speichern des Wertes für die nächste Regelung
 	//Save the Control Deviation for the next controlling cycle
