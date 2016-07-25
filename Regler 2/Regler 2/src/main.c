@@ -48,6 +48,7 @@ int main (void)
 		pid_tmp test_tmp = {0,0};
 		uint32_t test_x = 0, test_w = 0, a = 0;
 		pid_settings_t test_set;
+		motor_values_t speed; 
 		test_set.p = 1;
 		test_set.i = 1;
 		test_set.d = 1;
@@ -75,6 +76,8 @@ int main (void)
 				speed.position[MOTOR_POS_FR] = test_w;
 				speed.position[MOTOR_POS_BL] = a;
 				speed.position[MOTOR_POS_BR] = a;
+				
+				set_motor_speeds(speed);
 			#else
 				control();	
 			#endif
