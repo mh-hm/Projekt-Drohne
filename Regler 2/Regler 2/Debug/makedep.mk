@@ -2,6 +2,8 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\rtc.c
+
 src\ASF\avr32\drivers\flashcdw\flashcdw.c
 
 src\ASF\avr32\drivers\gpio\gpio.c

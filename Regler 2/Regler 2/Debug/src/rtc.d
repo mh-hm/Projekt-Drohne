@@ -1,7 +1,4 @@
-src/ASF/common/boards/user_board/init.d \
- src/ASF/common/boards/user_board/init.o \
- src/ASF/common/boards/user_board/init.o: \
- ../src/ASF/common/boards/user_board/init.c ../src/asf.h \
+src/rtc.d src/rtc.o src/rtc.o: ../src/rtc.c ../src/asf.h \
  ../src/ASF/avr32/drivers/cpu/cycle_counter/cycle_counter.h \
  ../src/ASF/avr32/utils/compiler.h \
  ../src/ASF/avr32/utils/preprocessor/preprocessor.h \
@@ -96,9 +93,7 @@ src/ASF/common/boards/user_board/init.d \
  ../src/config/conf_twim.h ../src/ASF/common/services/serial/serial.h \
  ../src/ASF/common/services/serial/uc3_usart/usart_serial.h \
  ../src/ASF/avr32/drivers/usart/usart.h ../src/config/conf_usart_serial.h \
- ../src/ASF/avr32/drivers/wdt/wdt.h ../src/sensor.h ../src/asf.h \
- ../src/bno055.h ../src/com_spi.h ../src/motor_control.h \
- ../src/settings_t.h ../src/rtc.h
+ ../src/ASF/avr32/drivers/wdt/wdt.h ../src/rtc.h
 
 ../src/asf.h:
 
@@ -303,17 +298,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bi
 ../src/config/conf_usart_serial.h:
 
 ../src/ASF/avr32/drivers/wdt/wdt.h:
-
-../src/sensor.h:
-
-../src/asf.h:
-
-../src/bno055.h:
-
-../src/com_spi.h:
-
-../src/motor_control.h:
-
-../src/settings_t.h:
 
 ../src/rtc.h:

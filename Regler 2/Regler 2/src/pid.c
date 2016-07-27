@@ -11,7 +11,9 @@
 #include "pid.h"
 #include "motor_control.h"
 
-
+uint_fast32_t time_since_start = 0;			//Laufzeit des Reglers (Zum Integrieren und Differenzieren)
+uint_fast32_t last_cycle_count = 0;			//Variable zur bestimmen der Laufzeit
+uint_fast32_t old_time = 0;
 
 uint_fast32_t get_time_since_last_pid(void)
 {
@@ -20,14 +22,17 @@ uint_fast32_t get_time_since_last_pid(void)
 	if(last_cycle_count > count)
 	{
 		uint_fast32_t _c = (UINT32_MAX - last_cycle_count) + count;
+		_c = cpu_cy_2_us(_c, sysclk_get_cpu_hz());
 		last_cycle_count = count;
-		return cpu_cy_2_us(_c, sysclk_get_cpu_hz());
+		return _c;
 	}
 	//No cycle counter overflow
 	else
 	{
+		
+		uint_fast32_t _c = cpu_cy_2_us(count-last_cycle_count, sysclk_get_cpu_hz());
 		last_cycle_count = count;
-		return cpu_cy_2_us(count-last_cycle_count, sysclk_get_cpu_hz());
+		return _c;
 	}
 }
 
@@ -35,7 +40,7 @@ uint_fast32_t get_time_since_last_pid(void)
 //w ist Sollwert, x ist Istwert
 int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, int_fast32_t x, pid_tmp *_tmp)
 {
-	uint_fast32_t act_time = get_time_since_last_pid();
+	uint_fast32_t act_time = 5000;		//get_time_since_last_pid();
 	time_since_start += act_time;		//Calculation of the Controllers runtime
 	
 	int_fast32_t e,y;
@@ -47,14 +52,14 @@ int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, i
 		e += (w>x)?(-360*16):(360*16);
 	}
 
-	e = e << PID_SHIFT_AMOUNT;
+	//e = e << PID_SHIFT_AMOUNT;
 	
-	_tmp->e_int += e;	
-	
+	_tmp->e_int += e;
+		
 	//Calculating the actuation variable out of the controlled system include a proportional, integration and a differentation part
 	// y = KP * e + KI * INT(e,dt) + KD (de/dt)
 	y = _set.p * e;
-	y += _set.i * _tmp->e_int * act_time;
+	y += (_tmp->e_int * act_time) / _set.i;
 	y += _set.d *(e - _tmp->e_old)/act_time;
 	
 	//Speichern des Wertes für die nächste Regelung
@@ -62,7 +67,7 @@ int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, i
 	_tmp->e_old = e;
 	
 	old_time = act_time;
-	return y >> PID_SHIFT_AMOUNT;
+	return y; // >> PID_SHIFT_AMOUNT;
 }
 	
 void control()

@@ -15,6 +15,7 @@
 #include "com_spi.h"
 #include "motor_control.h"
 #include "settings_t.h"
+#include "rtc.h"
 
 void board_init(void)
 {
@@ -27,6 +28,7 @@ void board_init(void)
 	sensor_init();
 	motor_init();	
 	com_spi_init();
+	rtc_init(RTC);
 	ioport_set_pin_dir(GPIO_PA25, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(LED_TRANS, IOPORT_DIR_OUTPUT);
 	//ioport_set_pin_dir(RST_ARDU_REG, IOPORT_DIR_INPUT);

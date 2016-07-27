@@ -536,6 +536,12 @@
     <Folder Include="src\config\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\rtc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\rtc.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\spi_protocol.h">
       <SubType>compile</SubType>
     </Compile>

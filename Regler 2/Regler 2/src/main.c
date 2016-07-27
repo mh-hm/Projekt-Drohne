@@ -35,6 +35,7 @@
 #include "bno055.h"
 #include "com_spi.h"
 #include "pid.h"
+#include "rtc.h"
 
 
 
@@ -49,12 +50,13 @@ int main (void)
 		uint32_t test_x = 0, test_w = 0, a = 0;
 		pid_settings_t test_set;
 		motor_values_t speed; 
-		test_set.p = 1;
-		test_set.i = 1;
-		test_set.d = 1;
+		test_set.p = 0;
+		test_set.i = 50000;
+		test_set.d = 0;
+		ioport_set_pin_mode(GPIO_PB18,IOPORT_MODE_PULLUP);
 	#endif
-
 	
+	rtc_set_periodic_interrupt0(RTC);
 	bool w_done = false;
 	while (1)
 	{
@@ -71,6 +73,9 @@ int main (void)
 		else
 		{
 			#ifdef TEST_PID
+				if (ioport_get_pin_level(GPIO_PB18)) test_w = 20;
+				else test_w = 0;
+				
 				a = calculate_actuating_variable(test_set, test_w, test_x, &test_tmp);
 				speed.position[MOTOR_POS_FL] = test_x;
 				speed.position[MOTOR_POS_FR] = test_w;
@@ -78,6 +83,7 @@ int main (void)
 				speed.position[MOTOR_POS_BR] = a;
 				
 				set_motor_speeds(speed);
+				delay_ms(20);
 			#else
 				control();	
 			#endif
