@@ -8,7 +8,8 @@
 #include "sensor.h"
 #include "settings_t.h"
 
-bno055_reg_page0_u_t sensor_reg;
+bno055_reg_page0_u_t sensor_reg_page0;
+bno055_reg_page1_u_t sensor_reg_page1;
 
 void sensor_init(void){
 	//ioport_set_pin_dir(BOOT_SENS, IOPORT_DIR_OUTPUT);
@@ -43,9 +44,13 @@ void sensor_init(void){
 	
 	//Konfigurieren des Sensores
 	
-	//REMAP X AS Y
 	uint8_t val;
-	val = BNO055_REMAP_X_Y_Z_TYPE0;
+	//Change to external Clock
+	sensor_read_all();
+	val = BNO055_CLK_SRC_EXTERNAL << BNO055_CLK_SRC_POS;
+ 	sensor_write_data(BNO055_CLK_SRC_REG, &val,1);
+	//Remap Axes
+ 	val = BNO055_REMAP_X_Y_Z_TYPE0;
 	sensor_write_data(BNO055_AXIS_MAP_CONFIG_ADDR, &val,1);											//AXIS REMAPPING
 	val =	(BNO055_REMAP_AXIS_POSITIVE << BNO055_REMAP_Z_SIGN_POS)| \
 			(BNO055_REMAP_AXIS_NEGATIVE << BNO055_REMAP_Y_SIGN_POS )| \
@@ -53,15 +58,14 @@ void sensor_init(void){
 	sensor_write_data(BNO055_AXIS_MAP_SIGN_ADDR, &val, 1);											//AXIS REMAPPING SIGN
 	
 	//Output Data Format
-	val =	(BNO055_ACCEL_UNIT_MSQ << BNO055_ACCEL_UNIT_POS) & \
-			(BNO055_GYRO_UNIT_RPS << BNO055_GYRO_UNIT_POS) & \
-			(BNO055_EULER_UNIT_DEG << BNO055_EULER_UNIT_POS) & \
+	val =	(BNO055_ACCEL_UNIT_MSQ << BNO055_ACCEL_UNIT_POS) | \
+			(BNO055_GYRO_UNIT_RPS << BNO055_GYRO_UNIT_POS) | \
+			(BNO055_EULER_UNIT_DEG << BNO055_EULER_UNIT_POS) | \
 			(BNO055_TEMP_UNIT_CELSIUS << BNO055_TEMP_UNIT_POS); 
 	sensor_write_data(BNO055_UNIT_SEL_ADDR, &val, 1);
 	
 	sensor_switch_mode(BNO055_OPERATION_MODE_NDOF);
-	
-	sensor_read_data(BNO055_SYS_STAT_ADDR,&val,1);
+	sensor_read_all();
 }
 
 void sensor_switch_mode(uint8_t val)
@@ -114,7 +118,7 @@ void sensor_led_init(void)
 	ioport_set_pin_dir(LED_B_SENS, IOPORT_DIR_OUTPUT);
 }
 
-status_code_t sensor_read_data(bno055_register_addr_t _addr, const uint8_t *values, uint32_t count){
+status_code_t sensor_read_data(bno055_register_addr_t _addr, void* values, uint32_t count){
 	
 	ioport_set_pin_level(LED_TRANS,HIGH);
 	twim_package_t pack;
@@ -137,7 +141,7 @@ status_code_t sensor_write_data(bno055_register_addr_t _addr, uint8_t *values, u
 	_values[0] = _addr;
 	for (uint_fast8_t i = 0; i< count; i++) _values[i+1] = values[i];
 	
-	status_code_t rt = twim_write(TWI_SENS, &_values, count + 1, BNO055_TWI_ADDR_SENSOR, false);
+	status_code_t rt = twim_write(TWI_SENS, (void*) &_values, count + 1, BNO055_TWI_ADDR_SENSOR, false);
 	ioport_set_pin_level(LED_TRANS,LOW);
 	return rt;
 };
@@ -186,7 +190,19 @@ struct bno055_euler_t sensor_read_euler(void)
 	return _eul;
 };
 
+void sensor_read_all(void)
+{
+	//sensor_switch_page(BNO055_PAGE_ZERO);
+	sensor_read_data(BNO055_CHIP_ID_ADDR,&sensor_reg_page0.reg_array,BNO055_REGISTER_PAGE0_COUNT_BYTES);
+	sensor_switch_page(BNO055_PAGE_ONE);
+	sensor_read_data(BNO055_ACCEL_CONFIG_ADDR,&sensor_reg_page1.reg_array,BNO055_REGISTER_PAGE1_COUNT_BYTES);
+	sensor_switch_page(BNO055_PAGE_ZERO);
+};
 
+void sensor_switch_page(uint8_t page)
+{
+	sensor_write_data(BNO055_PAGE_ID_ADDR,&page,1);
+};
 
 //uint8_t page_0[106];
 //uint8_t page_1[31];

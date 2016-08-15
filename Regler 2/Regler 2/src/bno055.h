@@ -17,6 +17,9 @@ typedef uint64_t	u64;
 #define BNO055_STARTUP_TIME_MS 700
 #define BNO055_SWITCH_OP_TIME_MS 20
 
+#define BNO055_CLK_SRC_EXTERNAL	1
+#define BNO055_CLK_SRC_INTERNAL	0
+
 /********************************************************/
 /**\name	I2C ADDRESS DEFINITION FOR BNO055           */
 /********************************************************/
@@ -26,85 +29,169 @@ typedef uint64_t	u64;
 	#define BNO055_TWI_ADDR_SENSOR		0x29
 #endif
 
+/********************************************************/
+/**\name	REGISTER DEFINITION				            */
+/********************************************************/
+
+typedef struct __attribute__ ((__packed__)) bno055_reg_page0_t
+{
+	u8 	chip_id					;
+	u8 	accel_rev_id			;
+	u8 	mag_rev_id				;
+	u8 	gyro_rev_id				;
+	u8 	sw_rev_id_lsb			;
+	u8 	sw_rev_id_msb			;
+	u8 	bl_rev_id				;
+	u8  page_id					;
+	u8 	accel_data_x_lsb		;
+	u8 	accel_data_x_msb		;
+	u8 	accel_data_y_lsb		;
+	u8 	accel_data_y_msb		;
+	u8 	accel_data_z_lsb		;
+	u8 	accel_data_z_msb		;
+	u8 	mag_data_x_lsb			;
+	u8 	mag_data_x_msb			;
+	u8 	mag_data_y_lsb			;
+	u8 	mag_data_y_msb			;
+	u8 	mag_data_z_lsb			;
+	u8 	mag_data_z_msb			;
+	u8 	gyro_data_x_lsb			;
+	u8 	gyro_data_x_msb			;
+	u8 	gyro_data_y_lsb			;
+	u8 	gyro_data_y_msb			;
+	u8 	gyro_data_z_lsb			;
+	u8 	gyro_data_z_msb			;
+	u8 	euler_h_lsb				;
+	u8 	euler_h_msb				;
+	u8 	euler_r_lsb				;
+	u8 	euler_r_msb				;
+	u8 	euler_p_lsb				;
+	u8 	euler_p_msb				;
+	u8 	quaternion_data_w_lsb	;
+	u8 	quaternion_data_w_msb	;
+	u8 	quaternion_data_x_lsb	;
+	u8 	quaternion_data_x_msb	;
+	u8 	quaternion_data_y_lsb	;
+	u8 	quaternion_data_y_msb	;
+	u8 	quaternion_data_z_lsb	;
+	u8 	quaternion_data_z_msb	;
+	u8 	linear_accel_data_x_lsb	;
+	u8 	linear_accel_data_x_msb	;
+	u8 	linear_accel_data_y_lsb	;
+	u8 	linear_accel_data_y_msb	;
+	u8 	linear_accel_data_z_lsb	;
+	u8 	linear_accel_data_z_msb	;
+	u8 	gravity_data_x_lsb		;
+	u8 	gravity_data_x_msb		;
+	u8 	gravity_data_y_lsb		;
+	u8 	gravity_data_y_msb		;
+	u8 	gravity_data_z_lsb		;
+	u8 	gravity_data_z_msb		;
+	u8 	temp					;
+	u8 	calib_stat				;
+	u8 	selftest_result			;
+	u8 	intr_stat				;
+	u8 	sys_clk_stat			;
+	u8 	sys_stat				;
+	u8 	sys_err					;
+	u8 	unit_sel				;
+	u8 	data_select				;
+	u8 	opr_mode				;
+	u8 	pwr_mode				;
+	u8 	sys_trigger				;
+	u8 	temp_source				;
+	u8 	axis_map_config			;
+	u8 	axis_map_sign			;
+	u8 	sic_matrix_0_lsb		;
+	u8 	sic_matrix_0_msb		;
+	u8 	sic_matrix_1_lsb		;
+	u8 	sic_matrix_1_msb		;
+	u8 	sic_matrix_2_lsb		;
+	u8 	sic_matrix_2_msb		;
+	u8 	sic_matrix_3_lsb		;
+	u8 	sic_matrix_3_msb		;
+	u8 	sic_matrix_4_lsb		;
+	u8 	sic_matrix_4_msb		;
+	u8 	sic_matrix_5_lsb		;
+	u8 	sic_matrix_5_msb		;
+	u8 	sic_matrix_6_lsb		;
+	u8 	sic_matrix_6_msb		;
+	u8 	sic_matrix_7_lsb		;
+	u8 	sic_matrix_7_msb		;
+	u8 	sic_matrix_8_lsb		;
+	u8 	sic_matrix_8_msb		;
+	u8 	accel_offset_x_lsb		;
+	u8 	accel_offset_x_msb		;
+	u8 	accel_offset_y_lsb		;
+	u8 	accel_offset_y_msb		;
+	u8 	accel_offset_z_lsb		;
+	u8 	accel_offset_z_msb		;
+	u8 	mag_offset_x_lsb		;
+	u8 	mag_offset_x_msb		;
+	u8 	mag_offset_y_lsb		;
+	u8 	mag_offset_y_msb		;
+	u8 	mag_offset_z_lsb		;
+	u8 	mag_offset_z_msb		;
+	u8 	gyro_offset_x_lsb		;
+	u8 	gyro_offset_x_msb		;
+	u8 	gyro_offset_y_lsb		;
+	u8 	gyro_offset_y_msb		;
+	u8 	gyro_offset_z_lsb		;
+	u8 	gyro_offset_z_msb		;
+	u8 	accel_radius_lsb		;
+	u8 	accel_radius_msb		;
+	u8 	mag_radius_lsb			;
+	u8 	mag_radius_msb			;
+}bno055_reg_page0_t;
+
+typedef struct __attribute__ ((__packed__)) bno055_reg_page1_t
+{
+	u8 accel_config;
+	u8 	mag_config;
+	u8 	gyro_config;
+	u8 	gyro_mode_config;
+	u8 	accel_sleep_config;
+	u8 	gyro_sleep_config;
+	u8 	mag_sleep_config;
+	u8 	int_mask;
+	u8 	int_en;
+	u8 	accel_any_motion_thres;
+	u8 	accel_intr_settings;
+	u8 	accel_high_g_durn;
+	u8 	accel_high_g_thres;
+	u8 	accel_no_motion_thres;
+	u8 	accel_no_motion_set;
+	u8 	gyro_intr_seting;
+	u8 	gyro_highrate_x_set;
+	u8 	gyro_durn_x;
+	u8 	gyro_highrate_y_set;
+	u8 	gyro_durn_y;
+	u8 	gyro_highrate_z_set;
+	u8 	gyro_durn_z;
+	u8 	gyro_any_motion_thres;
+	u8 	gyro_any_motion_set;
+}bno055_reg_page1_t;
+
+#define BNO055_REGISTER_PAGE0_COUNT_BYTES	107
+#define BNO055_REGISTER_PAGE1_COUNT_BYTES	24
+
+typedef union bno055_reg_page1_u_t
+{
+	bno055_reg_page1_t reg;
+	u8 reg_array[BNO055_REGISTER_PAGE1_COUNT_BYTES];
+}bno055_reg_page1_u_t;
+
+typedef union bno055_reg_page0_u_t
+{
+	bno055_reg_page0_t reg;
+	u8 reg_array[BNO055_REGISTER_PAGE0_COUNT_BYTES];
+}bno055_reg_page0_u_t;
+
 /***************************************************/
 /**\name	REGISTER ADDRESS DEFINITION  */
 /***************************************************/
 /* Page id register definition*/
 #define BNO055_PAGE_ID_ADDR				    (0X07)
-
-typedef struct bno055_reg_page0_t
-{
-	u8 chip_id;
-	u8 accel_rev_id;
-	u8 mag_rev_id;
-	u8 gyro_rev_id;
-	s16 sw_rev_id;
-	u8 bl_rev_id;
-	u8 page_id;
-	s16 accel_data_x;
-	s16 accel_data_y;
-	s16 accel_data_z;
-	s16 mag_data_x;
-	s16 mag_data_y;
-	s16 mag_data_z;
-	s16 gyro_data_x;
-	s16 gyro_data_y;
-	s16 gyro_data_z;
-	s16 euler_h;
-	s16 euler_r;
-	s16 euler_p;
-	s16 quaternion_data_w;
-	s16 quaternion_data_x;
-	s16 quaternion_data_y;
-	s16 quaternion_data_z;
-	s16 linear_accel_data_x;
-	s16 linear_accel_data_y;
-	s16 linear_accel_data_z;
-	s16 gravity_data_x;
-	s16 gravity_data_y;
-	s16 gravity_data_z;
-	u8 temp;
-	u8 calib_stat;
-	u8 selftest_result;
-	u8 intr_stat;
-	u8 sys_clk_stat;
-	u8 sys_stat;
-	u8 sys_err;
-	u8 unit_sel;
-	u8 data_select;
-	u8 opr_mode;
-	u8 pwr_mode;
-	u8 sys_trigger;
-	u8 temp_source;
-	u8 axis_map_config;
-	u8 axis_map_sign;
-	s16 sic_matrix_0;
-	s16 sic_matrix_1;
-	s16 sic_matrix_2;
-	s16 sic_matrix_3;
-	s16 sic_matrix_4;
-	s16 sic_matrix_5;
-	s16 sic_matrix_6;
-	s16 sic_matrix_7;
-	s16 sic_matrix_8;
-	s16 accel_offset_x;
-	s16 accel_offset_y;
-	s16 accel_offset_z;
-	s16 mag_offset_x;
-	s16 mag_offset_y;
-	s16 mag_offset_z;
-	s16 gyro_offset_x;
-	s16 gyro_offset_y;
-	s16 gyro_offset_z;
-	s16 accel_radius;
-	s16 mag_radius;
-}bno055_reg_page0_t;
-
-typedef union bno055_reg_page0_u_t
-{
-	bno055_reg_page0_t reg;
-	u8 reg_array[107];
-}bno055_reg_page0_u_t;
 
 /* PAGE0 REGISTER DEFINITION START*/
 typedef enum bno055_register_addr_t
