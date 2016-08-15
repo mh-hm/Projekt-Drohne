@@ -132,6 +132,10 @@ void motor_init(void) //TODO: static?
 	//Register the RTC interrupt handler to the interrupt controller
 	INTC_register_interrupt(&t_c1_rc_isr, AVR32_TC_IRQ0, AVR32_INTC_INT0);
 	INTC_register_interrupt(&t_c2_rc_isr, AVR32_TC_IRQ1, AVR32_INTC_INT0);
+	
+#ifdef CONFIG_SLEEPMGR_ENABLE
+	sleepmgr_lock_mode(SLEEPMGR_STDBY);
+#endif
 };
 
 

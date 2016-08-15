@@ -10,38 +10,32 @@
 #include "sensor.h"
 #include "pid.h"
 #include "motor_control.h"
+#include "ast_rtc.h"
 
-uint_fast32_t time_since_start = 0;			//Laufzeit des Reglers (Zum Integrieren und Differenzieren)
-uint_fast32_t last_cycle_count = 0;			//Variable zur bestimmen der Laufzeit
-uint_fast32_t old_time = 0;
+#ifdef TEST_PID
+	pid_tmp volatile test_tmp = {0,0};
+	uint32_t volatile test_x = 0, test_w = 0, a = 0;
+	pid_settings_t test_set;
+#endif	
 
-uint_fast32_t get_time_since_last_pid(void)
+uint_fast32_t volatile act_time = 0;
+
+void pid_init(void)
 {
-	uint_fast32_t count = Get_sys_count();
-	//Check for an cycle counter overflow
-	if(last_cycle_count > count)
-	{
-		uint_fast32_t _c = (UINT32_MAX - last_cycle_count) + count;
-		_c = cpu_cy_2_us(_c, sysclk_get_cpu_hz());
-		last_cycle_count = count;
-		return _c;
-	}
-	//No cycle counter overflow
-	else
-	{
-		
-		uint_fast32_t _c = cpu_cy_2_us(count-last_cycle_count, sysclk_get_cpu_hz());
-		last_cycle_count = count;
-		return _c;
-	}
+	#ifdef TEST_PID
+		test_set.p = 1;
+		test_set.i = 100;
+		test_set.d = 100;
+		ioport_set_pin_mode(GPIO_PB18,IOPORT_MODE_PULLUP);
+	#endif
+	act_time = ast_get_per_time_ms(AST_PIR_PID_PRESCALSER);
+	ast_set_periodic_interrupt(AST_RTC,AST_PIR_PID_PRESCALSER,AST_PIR_PID);
 }
 
 //w is set value, x is the actual meassured value	
 //w ist Sollwert, x ist Istwert
 int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, int_fast32_t x, pid_tmp *_tmp)
 {
-	uint_fast32_t act_time = 5000;		//get_time_since_last_pid();
-	time_since_start += act_time;		//Calculation of the Controllers runtime
 	
 	int_fast32_t e,y;
 	
@@ -59,53 +53,67 @@ int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, i
 	//Calculating the actuation variable out of the controlled system include a proportional, integration and a differentation part
 	// y = KP * e + KI * INT(e,dt) + KD (de/dt)
 	y = _set.p * e;
-	y += (_tmp->e_int * act_time) / _set.i;
+	if (_set.i != 0) y += (_tmp->e_int * act_time) / _set.i;
 	y += _set.d *(e - _tmp->e_old)/act_time;
 	
 	//Speichern des Wertes für die nächste Regelung
 	//Save the Control Deviation for the next controlling cycle
 	_tmp->e_old = e;
-	
-	old_time = act_time;
+
 	return y; // >> PID_SHIFT_AMOUNT;
 }
 	
-void control()
+void pid_control()
 {
-	sensor_euler =  read_sensor_euler();
-	struct bno055_euler_t y = {0,0,0};
+	ioport_toggle_pin_level(LED_G_SENS);
+	ioport_set_pin_level(GPIO_PA25, HIGH);
+	#ifdef TEST_PID
 		
+		if (ioport_get_pin_level(GPIO_PB18))
+			test_w = 20;
+		else 
+			test_w = 0;
 	
+		a = calculate_actuating_variable(test_set, test_w, test_x, &test_tmp);
+		speed.position[MOTOR_POS_FL] = test_x;
+		speed.position[MOTOR_POS_FR] = test_w;
+		speed.position[MOTOR_POS_BL] = a;
+		speed.position[MOTOR_POS_BR] = a;
+	#else
+		sensor_euler =  sensor_read_euler();
+		struct bno055_euler_t volatile y = {0,0,0};
 		
-	//throttle constant for the controller
-	uint_fast32_t _thr = 0;
+		//throttle constant for the controller
+		uint_fast32_t volatile _thr = 0;
 	
-	//static temp variable for the controller needed for integration and differentation
-	static pid_tmp p_tmp = {0,0};
-	static pid_tmp h_tmp = {0,0};
-	static pid_tmp r_tmp = {0,0};
-//	static pid_tmp thr_tmp = {0,0};
-	
-	
-	//calculate all actuating variables 
-	y.p = calculate_actuating_variable(set.pid_pitch, (app_euler.p<0)?app_euler.p+360*16:app_euler.p, (sensor_euler.p<0)?sensor_euler.p+360*16:sensor_euler.p, &p_tmp);
-	y.r = calculate_actuating_variable(set.pid_roll, app_euler.r, sensor_euler.r, &r_tmp);
-	y.h = calculate_actuating_variable(set.pid_yaw, app_euler.h, sensor_euler.h, &h_tmp);
-	//int_fast32_t throttle = calculate_actuating_variable(set.pid_throttle, throotle, _thr, &thr_tmp);
-	
-	//Add all actuating variables to the motor speeds
-	int_fast32_t _esc0 =	 y.r	+	 y.h	+	-y.p	+	throotle;
-	int_fast32_t _esc1 =	-y.r	+	-y.h	+	-y.p	+	throotle;
-	int_fast32_t _esc2 =	 y.r	+	-y.h	+	 y.p	+	throotle;
-	int_fast32_t _esc3 =	-y.r	+	 y.h	+	 y.p	+	throotle;
-	
-	//TODO: check
-	
-	speed.position[MOTOR_POS_FL] = _esc0;
-	speed.position[MOTOR_POS_FR] = _esc1;
-	speed.position[MOTOR_POS_BL] = _esc2;
-	speed.position[MOTOR_POS_BR] = _esc3;
+		//static temp variable for the controller needed for integration and differentation
+		static volatile pid_tmp p_tmp = {0,0};
+		static volatile pid_tmp h_tmp = {0,0};
+		static volatile pid_tmp r_tmp = {0,0};
+	//	static pid_tmp thr_tmp = {0,0};
 	
 	
+		//calculate all actuating variables 
+		y.p = calculate_actuating_variable(set.pid_pitch, (app_euler.p<0)?app_euler.p+360*16:app_euler.p, (sensor_euler.p<0)?sensor_euler.p+360*16:sensor_euler.p, &p_tmp);
+		y.r = calculate_actuating_variable(set.pid_roll, app_euler.r, sensor_euler.r, &r_tmp);
+		y.h = calculate_actuating_variable(set.pid_yaw, app_euler.h, sensor_euler.h, &h_tmp);
+		//int_fast32_t throttle = calculate_actuating_variable(set.pid_throttle, throotle, _thr, &thr_tmp);
+	
+		//Add all actuating variables to the motor speeds
+		int_fast32_t _esc0 =	 y.r	+	 y.h	+	-y.p	+	throotle;
+		int_fast32_t _esc1 =	-y.r	+	-y.h	+	-y.p	+	throotle;
+		int_fast32_t _esc2 =	 y.r	+	-y.h	+	 y.p	+	throotle;
+		int_fast32_t _esc3 =	-y.r	+	 y.h	+	 y.p	+	throotle;
+	
+		//TODO: check
+	
+		speed.position[MOTOR_POS_FL] = _esc0;
+		speed.position[MOTOR_POS_FR] = _esc1;
+		speed.position[MOTOR_POS_BL] = _esc2;
+		speed.position[MOTOR_POS_BR] = _esc3;
+		
+	#endif
 	set_motor_speeds(speed);
+	ioport_set_pin_level(GPIO_PA25, LOW);
 }
+

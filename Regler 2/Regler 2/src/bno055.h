@@ -6,10 +6,10 @@
 
 typedef int8_t		s8;
 typedef int16_t		s16;
-typedef int32_t	s32;
-typedef int64_t	s64;
+typedef int32_t		s32;
+typedef int64_t		s64;
 
-typedef uint8_t	u8;
+typedef uint8_t		u8;
 typedef uint16_t	u16;
 typedef uint32_t	u32;
 typedef uint64_t	u64;
@@ -32,10 +32,84 @@ typedef uint64_t	u64;
 /* Page id register definition*/
 #define BNO055_PAGE_ID_ADDR				    (0X07)
 
+typedef struct bno055_reg_page0_t
+{
+	u8 chip_id;
+	u8 accel_rev_id;
+	u8 mag_rev_id;
+	u8 gyro_rev_id;
+	s16 sw_rev_id;
+	u8 bl_rev_id;
+	u8 page_id;
+	s16 accel_data_x;
+	s16 accel_data_y;
+	s16 accel_data_z;
+	s16 mag_data_x;
+	s16 mag_data_y;
+	s16 mag_data_z;
+	s16 gyro_data_x;
+	s16 gyro_data_y;
+	s16 gyro_data_z;
+	s16 euler_h;
+	s16 euler_r;
+	s16 euler_p;
+	s16 quaternion_data_w;
+	s16 quaternion_data_x;
+	s16 quaternion_data_y;
+	s16 quaternion_data_z;
+	s16 linear_accel_data_x;
+	s16 linear_accel_data_y;
+	s16 linear_accel_data_z;
+	s16 gravity_data_x;
+	s16 gravity_data_y;
+	s16 gravity_data_z;
+	u8 temp;
+	u8 calib_stat;
+	u8 selftest_result;
+	u8 intr_stat;
+	u8 sys_clk_stat;
+	u8 sys_stat;
+	u8 sys_err;
+	u8 unit_sel;
+	u8 data_select;
+	u8 opr_mode;
+	u8 pwr_mode;
+	u8 sys_trigger;
+	u8 temp_source;
+	u8 axis_map_config;
+	u8 axis_map_sign;
+	s16 sic_matrix_0;
+	s16 sic_matrix_1;
+	s16 sic_matrix_2;
+	s16 sic_matrix_3;
+	s16 sic_matrix_4;
+	s16 sic_matrix_5;
+	s16 sic_matrix_6;
+	s16 sic_matrix_7;
+	s16 sic_matrix_8;
+	s16 accel_offset_x;
+	s16 accel_offset_y;
+	s16 accel_offset_z;
+	s16 mag_offset_x;
+	s16 mag_offset_y;
+	s16 mag_offset_z;
+	s16 gyro_offset_x;
+	s16 gyro_offset_y;
+	s16 gyro_offset_z;
+	s16 accel_radius;
+	s16 mag_radius;
+}bno055_reg_page0_t;
+
+typedef union bno055_reg_page0_u_t
+{
+	bno055_reg_page0_t reg;
+	u8 reg_array[107];
+}bno055_reg_page0_u_t;
+
 /* PAGE0 REGISTER DEFINITION START*/
 typedef enum bno055_register_addr_t
 {
-	BNO055_CHIP_ID_ADDR = 0x00,
+	BNO055_CHIP_ID_ADDR					= 0x00,
 	BNO055_ACCEL_REV_ID_ADDR			= (0x01),
 	BNO055_MAG_REV_ID_ADDR              = (0x02),
 	BNO055_GYRO_REV_ID_ADDR             = (0x03),
@@ -43,12 +117,12 @@ typedef enum bno055_register_addr_t
 	BNO055_SW_REV_ID_MSB_ADDR			= (0x05),
 	BNO055_BL_REV_ID_ADDR				= (0X06),
 	/* Accel data register*/
-	BNO055_ACCEL_DATA_X_LSB_ADDR			= (0X08),
-	BNO055_ACCEL_DATA_X_MSB_ADDR			= (0X09),
-	BNO055_ACCEL_DATA_Y_LSB_ADDR			= (0X0A),
-	BNO055_ACCEL_DATA_Y_MSB_ADDR			= (0X0B),
-	BNO055_ACCEL_DATA_Z_LSB_ADDR			= (0X0C),
-	BNO055_ACCEL_DATA_Z_MSB_ADDR			= (0X0D),
+	BNO055_ACCEL_DATA_X_LSB_ADDR		= (0X08),
+	BNO055_ACCEL_DATA_X_MSB_ADDR		= (0X09),
+	BNO055_ACCEL_DATA_Y_LSB_ADDR		= (0X0A),
+	BNO055_ACCEL_DATA_Y_MSB_ADDR		= (0X0B),
+	BNO055_ACCEL_DATA_Z_LSB_ADDR		= (0X0C),
+	BNO055_ACCEL_DATA_Z_MSB_ADDR		= (0X0D),
 
 	/*Mag data register*/
 	BNO055_MAG_DATA_X_LSB_ADDR			= (0X0E),
@@ -67,14 +141,14 @@ typedef enum bno055_register_addr_t
 	BNO055_GYRO_DATA_Z_MSB_ADDR			= (0X19),
 
 	/*Euler data registers*/
-	BNO055_EULER_H_LSB_ADDR			= (0X1A),
-	BNO055_EULER_H_MSB_ADDR			= (0X1B),
+	BNO055_EULER_H_LSB_ADDR				= (0X1A),
+	BNO055_EULER_H_MSB_ADDR				= (0X1B),
 
-	BNO055_EULER_R_LSB_ADDR			= (0X1C),
-	BNO055_EULER_R_MSB_ADDR			= (0X1D),
+	BNO055_EULER_R_LSB_ADDR				= (0X1C),
+	BNO055_EULER_R_MSB_ADDR				= (0X1D),
 
-	BNO055_EULER_P_LSB_ADDR			= (0X1E),
-	BNO055_EULER_P_MSB_ADDR			= (0X1F),
+	BNO055_EULER_P_LSB_ADDR				= (0X1E),
+	BNO055_EULER_P_MSB_ADDR				= (0X1F),
 
 	/*Quaternion data registers*/
 	BNO055_QUATERNION_DATA_W_LSB_ADDR	= (0X20),
@@ -87,20 +161,20 @@ typedef enum bno055_register_addr_t
 	BNO055_QUATERNION_DATA_Z_MSB_ADDR	= (0X27),
 
 	/* Linear acceleration data registers*/
-	BNO055_LINEAR_ACCEL_DATA_X_LSB_ADDR			= (0X28),
-	BNO055_LINEAR_ACCEL_DATA_X_MSB_ADDR			= (0X29),
-	BNO055_LINEAR_ACCEL_DATA_Y_LSB_ADDR			= (0X2A),
-	BNO055_LINEAR_ACCEL_DATA_Y_MSB_ADDR			= (0X2B),
-	BNO055_LINEAR_ACCEL_DATA_Z_LSB_ADDR			= (0X2C),
-	BNO055_LINEAR_ACCEL_DATA_Z_MSB_ADDR			= (0X2D),
+	BNO055_LINEAR_ACCEL_DATA_X_LSB_ADDR	= (0X28),
+	BNO055_LINEAR_ACCEL_DATA_X_MSB_ADDR	= (0X29),
+	BNO055_LINEAR_ACCEL_DATA_Y_LSB_ADDR	= (0X2A),
+	BNO055_LINEAR_ACCEL_DATA_Y_MSB_ADDR	= (0X2B),
+	BNO055_LINEAR_ACCEL_DATA_Z_LSB_ADDR	= (0X2C),
+	BNO055_LINEAR_ACCEL_DATA_Z_MSB_ADDR	= (0X2D),
 
 	/*Gravity data registers*/
-	BNO055_GRAVITY_DATA_X_LSB_ADDR			= (0X2E),
-	BNO055_GRAVITY_DATA_X_MSB_ADDR			= (0X2F),
-	BNO055_GRAVITY_DATA_Y_LSB_ADDR			= (0X30),
-	BNO055_GRAVITY_DATA_Y_MSB_ADDR			= (0X31),
-	BNO055_GRAVITY_DATA_Z_LSB_ADDR			= (0X32),
-	BNO055_GRAVITY_DATA_Z_MSB_ADDR			= (0X33),
+	BNO055_GRAVITY_DATA_X_LSB_ADDR		= (0X2E),
+	BNO055_GRAVITY_DATA_X_MSB_ADDR		= (0X2F),
+	BNO055_GRAVITY_DATA_Y_LSB_ADDR		= (0X30),
+	BNO055_GRAVITY_DATA_Y_MSB_ADDR		= (0X31),
+	BNO055_GRAVITY_DATA_Z_LSB_ADDR		= (0X32),
+	BNO055_GRAVITY_DATA_Z_MSB_ADDR		= (0X33),
 
 	/* Temperature data register*/
 	BNO055_TEMP_ADDR					= (0X34),
@@ -148,34 +222,34 @@ typedef enum bno055_register_addr_t
 	BNO055_SIC_MATRIX_8_MSB_ADDR		= (0X54),
 
 	/* Accelerometer Offset registers*/
-	BNO055_ACCEL_OFFSET_X_LSB_ADDR				= (0X55),
-	BNO055_ACCEL_OFFSET_X_MSB_ADDR				= (0X56),
-	BNO055_ACCEL_OFFSET_Y_LSB_ADDR				= (0X57),
-	BNO055_ACCEL_OFFSET_Y_MSB_ADDR				= (0X58),
-	BNO055_ACCEL_OFFSET_Z_LSB_ADDR				= (0X59),
-	BNO055_ACCEL_OFFSET_Z_MSB_ADDR				= (0X5A),
+	BNO055_ACCEL_OFFSET_X_LSB_ADDR		= (0X55),
+	BNO055_ACCEL_OFFSET_X_MSB_ADDR		= (0X56),
+	BNO055_ACCEL_OFFSET_Y_LSB_ADDR		= (0X57),
+	BNO055_ACCEL_OFFSET_Y_MSB_ADDR		= (0X58),
+	BNO055_ACCEL_OFFSET_Z_LSB_ADDR		= (0X59),
+	BNO055_ACCEL_OFFSET_Z_MSB_ADDR		= (0X5A),
 
 	/* Magnetometer Offset registers*/
-	BNO055_MAG_OFFSET_X_LSB_ADDR				= (0X5B),
-	BNO055_MAG_OFFSET_X_MSB_ADDR				= (0X5C),
-	BNO055_MAG_OFFSET_Y_LSB_ADDR				= (0X5D),
-	BNO055_MAG_OFFSET_Y_MSB_ADDR				= (0X5E),
-	BNO055_MAG_OFFSET_Z_LSB_ADDR				= (0X5F),
-	BNO055_MAG_OFFSET_Z_MSB_ADDR				= (0X60),
+	BNO055_MAG_OFFSET_X_LSB_ADDR		= (0X5B),
+	BNO055_MAG_OFFSET_X_MSB_ADDR		= (0X5C),
+	BNO055_MAG_OFFSET_Y_LSB_ADDR		= (0X5D),
+	BNO055_MAG_OFFSET_Y_MSB_ADDR		= (0X5E),
+	BNO055_MAG_OFFSET_Z_LSB_ADDR		= (0X5F),
+	BNO055_MAG_OFFSET_Z_MSB_ADDR		= (0X60),
 
 	/* Gyroscope Offset registers*/
-	BNO055_GYRO_OFFSET_X_LSB_ADDR				= (0X61),
-	BNO055_GYRO_OFFSET_X_MSB_ADDR				= (0X62),
-	BNO055_GYRO_OFFSET_Y_LSB_ADDR				= (0X63),
-	BNO055_GYRO_OFFSET_Y_MSB_ADDR				= (0X64),
-	BNO055_GYRO_OFFSET_Z_LSB_ADDR				= (0X65),
-	BNO055_GYRO_OFFSET_Z_MSB_ADDR				= (0X66),
+	BNO055_GYRO_OFFSET_X_LSB_ADDR		= (0X61),
+	BNO055_GYRO_OFFSET_X_MSB_ADDR		= (0X62),
+	BNO055_GYRO_OFFSET_Y_LSB_ADDR		= (0X63),
+	BNO055_GYRO_OFFSET_Y_MSB_ADDR		= (0X64),
+	BNO055_GYRO_OFFSET_Z_LSB_ADDR		= (0X65),
+	BNO055_GYRO_OFFSET_Z_MSB_ADDR		= (0X66),
 
 	/* Radius registers*/
-	BNO055_ACCEL_RADIUS_LSB_ADDR				= (0X67),
-	BNO055_ACCEL_RADIUS_MSB_ADDR				= (0X68),
-	BNO055_MAG_RADIUS_LSB_ADDR					= (0X69),
-	BNO055_MAG_RADIUS_MSB_ADDR					= (0X6A),
+	BNO055_ACCEL_RADIUS_LSB_ADDR		= (0X67),
+	BNO055_ACCEL_RADIUS_MSB_ADDR		= (0X68),
+	BNO055_MAG_RADIUS_LSB_ADDR			= (0X69),
+	BNO055_MAG_RADIUS_MSB_ADDR			= (0X6A),
 	/* PAGE0 REGISTERS DEFINITION END*/
 
 	/* PAGE1 REGISTERS DEFINITION START*/

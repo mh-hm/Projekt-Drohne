@@ -35,66 +35,50 @@
 #include "bno055.h"
 #include "com_spi.h"
 #include "pid.h"
-#include "rtc.h"
+#include "ast_rtc.h"
 
-
+	
 
 int main (void)
 {
 	board_init();
-	
-	#define TEST_PID
-	
-	#ifdef TEST_PID
-		pid_tmp test_tmp = {0,0};
-		uint32_t test_x = 0, test_w = 0, a = 0;
-		pid_settings_t test_set;
-		motor_values_t speed; 
-		test_set.p = 0;
-		test_set.i = 50000;
-		test_set.d = 0;
-		ioport_set_pin_mode(GPIO_PB18,IOPORT_MODE_PULLUP);
-	#endif
-	
-	rtc_set_periodic_interrupt0(RTC);
+
 	bool w_done = false;
+	ioport_set_pin_level(LED_R_SENS,LED_SENS_ON);
 	while (1)
 	{
 		if (!w_done)
 		{
-			sensor_euler = read_sensor_euler();
-			if(sensor_euler.h != 0 || sensor_euler.p != 0 || sensor_euler.r != 0)
+			uint8_t calib_stat;
+			sensor_read_data(BNO055_CALIB_STAT_ADDR, &calib_stat, 1);
+			ioport_set_pin_level(LED_G_SENS,calib_stat!=63);
+			if( calib_stat == 0xff)
 			{
-				app_euler = sensor_euler;
-				throotle = 0;
-				w_done = true;
+				sensor_read_calibration();
+				if  (sensor_euler.h != 0 || sensor_euler.p != 0 || sensor_euler.r != 0)
+				{
+						sensor_euler = sensor_read_euler();
+						app_euler = sensor_euler;
+						throotle = 0;
+						w_done = true;
+						pid_init();
+				}
+				ioport_set_pin_level(LED_R_SENS,LED_SENS_OFF);
 			}
 		}
 		else
 		{
-			#ifdef TEST_PID
-				if (ioport_get_pin_level(GPIO_PB18)) test_w = 20;
-				else test_w = 0;
-				
-				a = calculate_actuating_variable(test_set, test_w, test_x, &test_tmp);
-				speed.position[MOTOR_POS_FL] = test_x;
-				speed.position[MOTOR_POS_FR] = test_w;
-				speed.position[MOTOR_POS_BL] = a;
-				speed.position[MOTOR_POS_BR] = a;
-				
-				set_motor_speeds(speed);
-				delay_ms(20);
-			#else
-				control();	
-			#endif
+			//ast_enable_async_wakeup(AST_RTC,AVR32_AST_WER_PER0_MASK);
+			//sleepmgr_enter_sleep();	//TODO: Interrupt enable? Wake up from interrupt? Wake up from ast possible
+			//Sleepmode Stop -> 16,7mA normal Mode -> 28,4mA (30MHz)
+			//Sleepmode Stop disables PBA -> is used for motors pwm
 		}
 		
-		
 		check_save();
-		uint8_t calib_stat;
-		read_sensor_data(BNO055_CALIB_STAT_ADDR, &calib_stat, 1);
+		//uint8_t calib_stat;
+		//read_sensor_data(BNO055_CALIB_STAT_ADDR, &calib_stat, 1);
 		
-		ioport_toggle_pin_level(GPIO_PA25);
+		//ioport_toggle_pin_level(GPIO_PA25);
 				
 	}
 }

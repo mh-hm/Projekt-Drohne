@@ -15,20 +15,22 @@
 #include "com_spi.h"
 #include "motor_control.h"
 #include "settings_t.h"
-#include "rtc.h"
+#include "pid.h"
+#include "ast_rtc.h"
 
 void board_init(void)
 {
 	sysclk_init();
-	//wdt_disable();
 	INTC_init_interrupts();
+	sleepmgr_init();
 	ioport_init();
 	//ioport_set_pin_dir(RST_ARDU_REG, IOPORT_DIR_OUTPUT);
 	settings_init(true);
 	sensor_init();
 	motor_init();	
 	com_spi_init();
-	rtc_init(RTC);
+	ast_init();
+	
 	ioport_set_pin_dir(GPIO_PA25, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(LED_TRANS, IOPORT_DIR_OUTPUT);
 	//ioport_set_pin_dir(RST_ARDU_REG, IOPORT_DIR_INPUT);

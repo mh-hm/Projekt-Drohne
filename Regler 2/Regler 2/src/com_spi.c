@@ -110,6 +110,10 @@ spi_status_t com_spi_init(void)
 	spi_enable(SPI_ARDU);
 	cpu_irq_enable();
 	
+#ifdef CONFIG_SLEEPMGR_ENABLE
+	sleepmgr_lock_mode(SLEEPMGR_IDLE);	//PDCA needs HSBClock
+#endif
+	
 	return SPI_OK;
 }
 

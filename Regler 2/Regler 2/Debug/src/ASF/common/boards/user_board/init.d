@@ -2,8 +2,7 @@ src/ASF/common/boards/user_board/init.d \
  src/ASF/common/boards/user_board/init.o \
  src/ASF/common/boards/user_board/init.o: \
  ../src/ASF/common/boards/user_board/init.c ../src/asf.h \
- ../src/ASF/avr32/drivers/cpu/cycle_counter/cycle_counter.h \
- ../src/ASF/avr32/utils/compiler.h \
+ ../src/ASF/avr32/drivers/ast/ast.h ../src/ASF/avr32/utils/compiler.h \
  ../src/ASF/avr32/utils/preprocessor/preprocessor.h \
  ../src/ASF/avr32/utils/preprocessor/tpaste.h \
  ../src/ASF/avr32/utils/preprocessor/stringz.h \
@@ -62,6 +61,7 @@ src/ASF/common/boards/user_board/init.d \
  ../src/ASF/common/utils/interrupt/interrupt_avr32.h \
  ../src/ASF/avr32/utils/preprocessor/tpaste.h \
  ../src/ASF/avr32/drivers/intc/intc.h \
+ ../src/ASF/avr32/drivers/cpu/cycle_counter/cycle_counter.h \
  ../src/ASF/avr32/drivers/cpu/avr32_reset_cause.h \
  ../src/ASF/common/services/clock/sysclk.h ../src/config/conf_clock.h \
  ../src/ASF/common/services/clock/uc3d/sysclk.h \
@@ -98,11 +98,11 @@ src/ASF/common/boards/user_board/init.d \
  ../src/ASF/avr32/drivers/usart/usart.h ../src/config/conf_usart_serial.h \
  ../src/ASF/avr32/drivers/wdt/wdt.h ../src/sensor.h ../src/asf.h \
  ../src/bno055.h ../src/com_spi.h ../src/motor_control.h \
- ../src/settings_t.h ../src/rtc.h
+ ../src/settings_t.h ../src/pid.h ../src/motor_control.h ../src/ast_rtc.h
 
 ../src/asf.h:
 
-../src/ASF/avr32/drivers/cpu/cycle_counter/cycle_counter.h:
+../src/ASF/avr32/drivers/ast/ast.h:
 
 ../src/ASF/avr32/utils/compiler.h:
 
@@ -222,6 +222,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bi
 
 ../src/ASF/avr32/drivers/intc/intc.h:
 
+../src/ASF/avr32/drivers/cpu/cycle_counter/cycle_counter.h:
+
 ../src/ASF/avr32/drivers/cpu/avr32_reset_cause.h:
 
 ../src/ASF/common/services/clock/sysclk.h:
@@ -316,4 +318,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bi
 
 ../src/settings_t.h:
 
-../src/rtc.h:
+../src/pid.h:
+
+../src/motor_control.h:
+
+../src/ast_rtc.h:

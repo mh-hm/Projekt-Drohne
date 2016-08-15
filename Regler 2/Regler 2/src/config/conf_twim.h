@@ -113,7 +113,7 @@
 #	endif
 #	define CONF_TWIM_IRQ_LINE          AVR32_TWIM_IRQ
 #	define CONF_TWIM_IRQ_GROUP         AVR32_TWIM_GROUP
-#	define CONF_TWIM_IRQ_LEVEL         1
+#	define CONF_TWIM_IRQ_LEVEL         2
 #else
 #	error MCU Not Supported
 #endif
