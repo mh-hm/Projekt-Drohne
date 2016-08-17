@@ -8,8 +8,8 @@
 #include "sensor.h"
 #include "settings_t.h"
 
-bno055_reg_page0_u_t sensor_reg_page0;
-bno055_reg_page1_u_t sensor_reg_page1;
+volatile bno055_reg_page0_t sensor_reg_page0;
+volatile bno055_reg_page1_t sensor_reg_page1;
 
 void sensor_init(void){
 	//ioport_set_pin_dir(BOOT_SENS, IOPORT_DIR_OUTPUT);
@@ -68,40 +68,41 @@ void sensor_init(void){
 	sensor_read_all();
 }
 
-void sensor_switch_mode(uint8_t val)
+void sensor_switch_mode(bno055_opr_mode_t mode)
 {
-	sensor_write_data(BNO055_OPR_MODE_ADDR, &val,1);
-	cpu_delay_ms(BNO055_SWITCH_OP_TIME_MS,sysclk_get_cpu_hz());					//SENSOR SWITCHING OPERATION MODE TIME
+	if (sensor_write_data(BNO055_OPR_MODE_ADDR, &mode,1) == TWI_SUCCESS)
+		sensor_reg_page0.opr_mode = mode;
+		
+	cpu_delay_ms(BNO055_MODE_SWITCHING_DELAY,sysclk_get_cpu_hz());					//SENSOR SWITCHING OPERATION MODE TIME
 }
 
-uint8_t sensor_read_mode(void)
+bno055_opr_mode_t sensor_read_mode(void)
 {
-	uint8_t old_mode;
-	sensor_read_data(BNO055_OPR_MODE_ADDR,&old_mode,1);
-	return old_mode;
+	sensor_read_data(BNO055_OPR_MODE_ADDR,&sensor_reg_page0.opr_mode,1);
+	return sensor_reg_page0.opr_mode;
 }
 
 bool sensor_read_calibration(void)
 {
-	uint8_t old_mode = sensor_read_mode();
+	sensor_switch_page(BNO055_PAGE_ZERO);
+	bno055_opr_mode_t old_mode = sensor_reg_page0.opr_mode;
 	sensor_switch_mode(BNO055_OPERATION_MODE_CONFIG);
-	uint8_t buf[22];
-	if (sensor_read_data(BNO055_ACCEL_OFFSET_X_LSB_ADDR,&buf,22) != STATUS_OK) return false;
+	if (sensor_read_data(BNO055_ACCEL_OFFSET_X_LSB_ADDR,&sensor_reg_page0.accel_offset_x_lsb,22) != STATUS_OK) return false;
 	
-	set.accel_offset.x = (((int16_t) buf[1]) << 8) + ((int16_t) buf[0]);
-	set.accel_offset.y = (((int16_t) buf[3]) << 8) + ((int16_t) buf[2]);
-	set.accel_offset.z = (((int16_t) buf[5]) << 8) + ((int16_t) buf[4]);
+	set.accel_offset.x = (((int16_t) sensor_reg_page0.accel_offset_x_msb) << 8) | ((int16_t) sensor_reg_page0.accel_offset_x_lsb);
+	set.accel_offset.y = (((int16_t) sensor_reg_page0.accel_offset_y_msb) << 8) | ((int16_t) sensor_reg_page0.accel_offset_y_lsb);
+	set.accel_offset.z = (((int16_t) sensor_reg_page0.accel_offset_z_msb) << 8) | ((int16_t) sensor_reg_page0.accel_offset_z_lsb);
 	
-	set.mag_offset.x = (((int16_t) buf[7]) << 8) + ((int16_t) buf[6]);
-	set.mag_offset.y = (((int16_t) buf[9]) << 8) + ((int16_t) buf[8]);
-	set.mag_offset.z = (((int16_t) buf[11]) << 8) + ((int16_t) buf[10]);
+	set.mag_offset.x =	 (((int16_t) sensor_reg_page0.mag_offset_x_msb) << 8) | ((int16_t) sensor_reg_page0.mag_offset_x_lsb);
+	set.mag_offset.y =	 (((int16_t) sensor_reg_page0.mag_offset_y_msb) << 8) | ((int16_t) sensor_reg_page0.mag_offset_y_lsb);
+	set.mag_offset.z =	 (((int16_t) sensor_reg_page0.mag_offset_z_msb) << 8) | ((int16_t) sensor_reg_page0.mag_offset_z_lsb);
 	
-	set.gyro_offset.x = (((int16_t) buf[13]) << 8) + ((int16_t) buf[12]);
-	set.gyro_offset.y = (((int16_t) buf[15]) << 8) + ((int16_t) buf[14]);
-	set.gyro_offset.z = (((int16_t) buf[17]) << 8) + ((int16_t) buf[16]);
+	set.gyro_offset.x =	 (((int16_t) sensor_reg_page0.gyro_offset_x_msb) << 8) | ((int16_t) sensor_reg_page0.gyro_offset_x_lsb);
+	set.gyro_offset.y =	 (((int16_t) sensor_reg_page0.gyro_offset_y_msb) << 8) | ((int16_t) sensor_reg_page0.gyro_offset_y_lsb);
+	set.gyro_offset.z =	 (((int16_t) sensor_reg_page0.gyro_offset_z_msb) << 8) | ((int16_t) sensor_reg_page0.gyro_offset_z_lsb);
 	
-	set.accel_offset.r = (((int16_t) buf[19]) << 8) + ((int16_t) buf[18]);
-	set.mag_offset.r = (((int16_t) buf[21]) << 8) + ((int16_t) buf[20]);
+	set.accel_offset.r = (((int16_t) sensor_reg_page0.accel_radius_msb) << 8) | ((int16_t) sensor_reg_page0.accel_radius_lsb);
+	set.mag_offset.r =	 (((int16_t) sensor_reg_page0.mag_radius_msb) << 8) | ((int16_t) sensor_reg_page0.mag_radius_lsb);
 	
 	set.sensor_calibration = 1;
 	sensor_switch_mode(old_mode);
@@ -148,91 +149,69 @@ status_code_t sensor_write_data(bno055_register_addr_t _addr, uint8_t *values, u
 
 struct bno055_accel_t sensor_read_accel(void)
 {
-	uint_fast8_t buf[6];
+	sensor_switch_page(BNO055_PAGE_ZERO);
 	struct bno055_accel_t _acc;
-	sensor_read_data(BNO055_ACCEL_DATA_X_LSB_ADDR, &buf,6);
-	_acc.x = (((int16_t) buf[1]) << 8) + ((int16_t) buf[0]);
-	_acc.y = (((int16_t) buf[3]) << 8) + ((int16_t) buf[2]);
-	_acc.z = (((int16_t) buf[5]) << 8) + ((int16_t) buf[4]);
+	sensor_read_data(BNO055_ACCEL_DATA_X_LSB_ADDR, &sensor_reg_page0.accel_data_x_lsb,6);
+	_acc.x = (((int16_t) sensor_reg_page0.accel_data_x_msb) << 8) + ((int16_t) sensor_reg_page0.accel_data_x_lsb);
+	_acc.y = (((int16_t) sensor_reg_page0.accel_data_y_msb) << 8) + ((int16_t) sensor_reg_page0.accel_data_y_lsb);
+	_acc.z = (((int16_t) sensor_reg_page0.accel_data_z_msb) << 8) + ((int16_t) sensor_reg_page0.accel_data_z_lsb);
 	return _acc;
 };
 
 struct bno055_gyro_t sensor_read_gyro(void)
 {
-	uint_fast8_t buf[6];
+	sensor_switch_page(BNO055_PAGE_ZERO);
 	struct bno055_gyro_t _gyro;
-	sensor_read_data(BNO055_GYRO_DATA_X_LSB_ADDR, &buf,6);
-	_gyro.x = (((int16_t) buf[1]) << 8) + ((int16_t) buf[0]);
-	_gyro.y = (((int16_t) buf[3]) << 8) + ((int16_t) buf[2]);
-	_gyro.z = (((int16_t) buf[5]) << 8) + ((int16_t) buf[4]);
+	sensor_read_data(BNO055_GYRO_DATA_X_LSB_ADDR, &sensor_reg_page0.gyro_data_x_lsb,6);
+	_gyro.x = (((int16_t) sensor_reg_page0.gyro_data_x_msb) << 8) + ((int16_t) sensor_reg_page0.gyro_data_x_lsb);
+	_gyro.y = (((int16_t) sensor_reg_page0.gyro_data_y_msb) << 8) + ((int16_t) sensor_reg_page0.gyro_data_y_lsb);
+	_gyro.z = (((int16_t) sensor_reg_page0.gyro_data_z_msb) << 8) + ((int16_t) sensor_reg_page0.gyro_data_z_lsb);
 	return _gyro;
 };
 
 struct bno055_mag_t sensor_read_mag(void)
 {
-	uint_fast8_t buf[6];
+	sensor_switch_page(BNO055_PAGE_ZERO);
 	struct bno055_mag_t _mag;
-	sensor_read_data(BNO055_MAG_DATA_X_LSB_ADDR, &buf,6);
-	_mag.x = (((int16_t) buf[1]) << 8) + ((int16_t) buf[0]);
-	_mag.y = (((int16_t) buf[3]) << 8) + ((int16_t) buf[2]);
-	_mag.z = (((int16_t) buf[5]) << 8) + ((int16_t) buf[4]);
+	sensor_read_data(BNO055_MAG_DATA_X_LSB_ADDR, &sensor_reg_page0.mag_data_x_lsb,6);
+	_mag.x = (((int16_t) sensor_reg_page0.mag_data_x_msb) << 8) + ((int16_t) sensor_reg_page0.mag_data_x_lsb);
+	_mag.y = (((int16_t) sensor_reg_page0.mag_data_y_msb) << 8) + ((int16_t) sensor_reg_page0.mag_data_y_lsb);
+	_mag.z = (((int16_t) sensor_reg_page0.mag_data_z_msb) << 8) + ((int16_t) sensor_reg_page0.mag_data_z_lsb);
 	return _mag;
 };
 
 struct bno055_euler_t sensor_read_euler(void)
 {
-	uint8_t buf[6];
+	sensor_switch_page(BNO055_PAGE_ZERO);
 	struct bno055_euler_t _eul;
-	sensor_read_data(BNO055_EULER_H_LSB_ADDR, &buf,6);
-	_eul.h = (((int16_t) buf[1]) << 8) + ((int16_t) buf[0]);
-	_eul.r = (((int16_t) buf[3]) << 8) + ((int16_t) buf[2]);
-	_eul.p = (((int16_t) buf[5]) << 8) + ((int16_t) buf[4]);
+	sensor_read_data(BNO055_EULER_H_LSB_ADDR, &sensor_reg_page0.euler_h_lsb,6);
+	_eul.h = (((int16_t) sensor_reg_page0.euler_h_msb) << 8) + ((int16_t) sensor_reg_page0.euler_h_lsb);
+	_eul.r = (((int16_t) sensor_reg_page0.euler_r_msb) << 8) + ((int16_t) sensor_reg_page0.euler_r_lsb);
+	_eul.p = (((int16_t) sensor_reg_page0.euler_p_msb) << 8) + ((int16_t) sensor_reg_page0.euler_p_lsb);
 	return _eul;
 };
 
+void sensor_read_page0(void)
+{
+	sensor_switch_page(BNO055_PAGE_ZERO);
+	sensor_read_data(BNO055_CHIP_ID_ADDR,&sensor_reg_page0,BNO055_REGISTER_PAGE0_COUNT_BYTES);
+}
+
+void sensor_read_page1(void)
+{
+	sensor_switch_page(BNO055_PAGE_ONE);
+	sensor_read_data(BNO055_ACCEL_CONFIG_ADDR,&sensor_reg_page1,BNO055_REGISTER_PAGE1_COUNT_BYTES);
+}
+	
 void sensor_read_all(void)
 {
-	//sensor_switch_page(BNO055_PAGE_ZERO);
-	sensor_read_data(BNO055_CHIP_ID_ADDR,&sensor_reg_page0.reg_array,BNO055_REGISTER_PAGE0_COUNT_BYTES);
-	sensor_switch_page(BNO055_PAGE_ONE);
-	sensor_read_data(BNO055_ACCEL_CONFIG_ADDR,&sensor_reg_page1.reg_array,BNO055_REGISTER_PAGE1_COUNT_BYTES);
-	sensor_switch_page(BNO055_PAGE_ZERO);
+	sensor_read_page0();
+	sensor_read_page1();
 };
 
 void sensor_switch_page(uint8_t page)
 {
-	sensor_write_data(BNO055_PAGE_ID_ADDR,&page,1);
+	if (page == sensor_reg_page0.page_id) return;
+	if (sensor_write_data(BNO055_PAGE_ID_ADDR,&page,1) == TWI_SUCCESS) sensor_reg_page0.page_id = page;
+	//TODO: If TWI_ERROR -> do something
 };
-
-//uint8_t page_0[106];
-//uint8_t page_1[31];
-//struct bno055_accel_t acc;
-//struct bno055_gyro_t gyr;
-//struct bno055_euler_t eul;
-//
-//void read_sensor(void)
-//{
-	////!!! Works only if start Adresse for read is 0
-	//uint8_t val = BNO055_PAGE_ZERO; //CHANGE PAGE
-	//write_sensor_data(BNO055_PAGE_ID_ADDR, &val, 1);
-	//
-	//
-	//read_sensor_data(BNO055_CHIP_ID_ADDR, &page_0, 106);
-	//
-	//acc.x = ((int16_t) page_0[BNO055_ACCEL_DATA_X_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_ACCEL_DATA_X_LSB_ADDR];
-	//acc.y = ((int16_t) page_0[BNO055_ACCEL_DATA_Y_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_ACCEL_DATA_Y_LSB_ADDR];
-	//acc.z = ((int16_t) page_0[BNO055_ACCEL_DATA_Z_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_ACCEL_DATA_Z_LSB_ADDR];
-	//
-	//eul.h = ((int16_t) page_0[BNO055_EULER_H_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_EULER_H_LSB_ADDR];
-	//eul.p = ((int16_t) page_0[BNO055_EULER_P_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_EULER_P_LSB_ADDR];
-	//eul.r = ((int16_t) page_0[BNO055_EULER_R_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_EULER_R_LSB_ADDR];
-	//
-	//gyr.x = ((int16_t) page_0[BNO055_GYRO_DATA_X_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_GYRO_DATA_X_LSB_ADDR];
-	//gyr.y = ((int16_t) page_0[BNO055_GYRO_DATA_Y_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_GYRO_DATA_Y_LSB_ADDR];
-	//gyr.z = ((int16_t) page_0[BNO055_GYRO_DATA_Z_MSB_ADDR] << 8) + (int16_t) page_0[BNO055_GYRO_DATA_Z_LSB_ADDR];
-	//
-	//val = BNO055_PAGE_ONE; //CHANGE PAGE
-	//write_sensor_data(BNO055_PAGE_ID_ADDR, &val, 1);
-	//
-	//read_sensor_data(BNO055_CHIP_ID_ADDR, &page_1, 20);
-//}

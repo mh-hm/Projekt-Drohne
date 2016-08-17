@@ -14,14 +14,14 @@
 #include "bno055.h"
 #include "user_board.h"
 
-extern bno055_reg_page0_u_t sensor_reg_page0;
-extern bno055_reg_page1_u_t sensor_reg_page1;
+extern volatile bno055_reg_page0_t sensor_reg_page0;
+extern volatile bno055_reg_page1_t sensor_reg_page1;
 
 void sensor_init(void);
 
-void sensor_switch_mode(uint8_t val);
+void sensor_switch_mode(bno055_opr_mode_t mode);
 
-uint8_t sensor_read_mode(void);
+bno055_opr_mode_t sensor_read_mode(void);
 
 bool sensor_read_calibration(void);
 
@@ -44,6 +44,8 @@ struct bno055_mag_t sensor_read_mag(void);
 
 struct bno055_euler_t sensor_read_euler(void);
 
+void sensor_read_page0(void);
+void sensor_read_page1(void);
 void sensor_read_all(void);
 
 void sensor_switch_page(uint8_t page);
