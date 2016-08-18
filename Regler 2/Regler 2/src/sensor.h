@@ -48,6 +48,8 @@ void sensor_read_page0(void);
 void sensor_read_page1(void);
 void sensor_read_all(void);
 
+void sensor_read_status(void);
+
 void sensor_switch_page(uint8_t page);
 
 #endif /* SENSOR_H_ */

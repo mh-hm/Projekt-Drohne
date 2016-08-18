@@ -50,9 +50,8 @@ int main (void)
 		if (!w_done)
 		{
 			
-			sensor_read_all();
-			sensor_euler = sensor_read_euler();
-			ioport_set_pin_level(LED_G_SENS,sensor_reg_page0.calib_stat==63?LED_SENS_ON:LED_SENS_OFF);
+			sensor_read_page0();
+			//ioport_set_pin_level(LED_B_SENS,sensor_reg_page0.calib_stat==63?LED_SENS_ON:LED_SENS_OFF);
 			
 			if(sensor_reg_page0.calib_stat == 0xff)
 			{

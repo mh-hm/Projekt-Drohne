@@ -417,11 +417,6 @@ s16 sic_8;/**< soft iron calibration matrix 8 data */
 #define	BNO055_MODE_SWITCHING_DELAY        (600)
 #define	BNO055_CONFIG_MODE_SWITCHING_DELAY ((u8)20)
 
-/* Power mode*/
-#define BNO055_POWER_MODE_NORMAL	(0X00)
-#define BNO055_POWER_MODE_LOWPOWER	(0X01)
-#define BNO055_POWER_MODE_SUSPEND	(0X02)
-
 /* PAGE-1 definitions*/
 /* Accel Range */
 
@@ -1739,6 +1734,12 @@ BNO055_GYRO_ANY_MOTION_THRES_ADDR
 /* PAGE1 DATA REGISTERS DEFINITION END*/
 /*************************************************/
 
+typedef enum __attribute__ ((__packed__)) bno055_power_mode_t{
+	BNO055_POWER_MODE_NORMAL_MODE	= 0,
+	BNO055_POWER_MODE_LOW_POWER_MODE	= 1,
+	BNO055_POWER_MODE_SUSPEND_MODE	= 2
+}bno055_power_mode_t;
+
 /* Operation mode settings*/
 typedef enum __attribute__ ((__packed__)) bno055_opr_mode_t{
 	BNO055_OPERATION_MODE_CONFIG			= (0X00),
@@ -1850,7 +1851,7 @@ typedef struct __attribute__ ((__packed__)) bno055_reg_page0_t
 	u8    unit_sel					;
 	u8    data_select				;
 	bno055_opr_mode_t	opr_mode	;
-	u8    pwr_mode					;
+	bno055_power_mode_t pwr_mode	;
 	u8    sys_trigger				;
 	u8    temp_source				;
 	u8    axis_map_config			;

@@ -45,13 +45,22 @@ void sensor_init(void){
 	//Konfigurieren des Sensores
 	
 	uint8_t val;
-	//Change to external Clock
-	sensor_read_all();
+	
+	//sensor_read_status();
+	
+	//Set normal power mode
+	val = BNO055_POWER_MODE_NORMAL_MODE;
+	sensor_write_data(BNO055_POWER_MODE_REG, &val, 1);
+	
 	val = BNO055_CLK_SRC_EXTERNAL << BNO055_CLK_SRC_POS;
  	sensor_write_data(BNO055_CLK_SRC_REG, &val,1);
+	 
+	cpu_delay_ms(20,sysclk_get_cpu_hz());
+	 
 	//Remap Axes
  	val = BNO055_REMAP_X_Y_Z_TYPE0;
 	sensor_write_data(BNO055_AXIS_MAP_CONFIG_ADDR, &val,1);											//AXIS REMAPPING
+	
 	val =	(BNO055_REMAP_AXIS_POSITIVE << BNO055_REMAP_Z_SIGN_POS)| \
 			(BNO055_REMAP_AXIS_NEGATIVE << BNO055_REMAP_Y_SIGN_POS )| \
 			(BNO055_REMAP_AXIS_POSITIVE << BNO055_REMAP_X_SIGN_POS);
@@ -64,8 +73,21 @@ void sensor_init(void){
 			(BNO055_TEMP_UNIT_CELSIUS << BNO055_TEMP_UNIT_POS); 
 	sensor_write_data(BNO055_UNIT_SEL_ADDR, &val, 1);
 	
+	//val = 0x81;
+ 	//sensor_write_data(BNO055_CLK_SRC_REG, &val,1);
+	//
+	//while (1)
+	//{
+		//sensor_read_status();
+		//if (sensor_reg_page0.sys_stat != BNO055_SYS_STAT_EXECUTING_SELFTEST) break;
+	//}
+	//
+	//sensor_read_page0();
+	
 	sensor_switch_mode(BNO055_OPERATION_MODE_NDOF);
-	sensor_read_all();
+	
+	sensor_read_status();
+	ioport_set_pin_level(LED_G_SENS,sensor_reg_page0.sys_stat == BNO055_SYS_STAT_SENSOR_FUSION_ALGORITHM_RUNNING?LED_SENS_ON:LED_SENS_OFF);
 }
 
 void sensor_switch_mode(bno055_opr_mode_t mode)
@@ -201,6 +223,12 @@ void sensor_read_page1(void)
 {
 	sensor_switch_page(BNO055_PAGE_ONE);
 	sensor_read_data(BNO055_ACCEL_CONFIG_ADDR,&sensor_reg_page1,BNO055_REGISTER_PAGE1_COUNT_BYTES);
+}
+
+void sensor_read_status(void)
+{
+	sensor_switch_page(BNO055_PAGE_ZERO);
+	sensor_read_data(BNO055_SYS_STAT_ADDR, &sensor_reg_page0.sys_stat,2);
 }
 	
 void sensor_read_all(void)
