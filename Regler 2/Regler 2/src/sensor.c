@@ -46,7 +46,9 @@ void sensor_init(void){
 	
 	uint8_t val;
 	
-	//sensor_read_status();
+	sensor_reg_page0.page_id = BNO055_PAGE_ZERO;
+		
+	sensor_read_page0();
 	
 	//Set normal power mode
 	val = BNO055_POWER_MODE_NORMAL_MODE;
@@ -216,13 +218,16 @@ struct bno055_euler_t sensor_read_euler(void)
 void sensor_read_page0(void)
 {
 	sensor_switch_page(BNO055_PAGE_ZERO);
-	sensor_read_data(BNO055_CHIP_ID_ADDR,&sensor_reg_page0,BNO055_REGISTER_PAGE0_COUNT_BYTES);
+	sensor_read_data(BNO055_CHIP_ID_ADDR,&sensor_reg_page0.chip_id,BNO055_REGISTER_PAGE0_COUNT_BYTES_0);	//TODO: ERR_ADRESS_OUT_OF_RANGE
+	sensor_read_data(BNO055_OPR_MODE_ADDR,&sensor_reg_page0.opr_mode,BNO055_REGISTER_PAGE0_COUNT_BYTES_1);
+	sensor_read_data(BNO055_ACCEL_OFFSET_X_LSB_ADDR,&sensor_reg_page0.accel_offset_x_lsb,BNO055_REGISTER_PAGE0_COUNT_BYTES_2);
 }
 
 void sensor_read_page1(void)
 {
 	sensor_switch_page(BNO055_PAGE_ONE);
-	sensor_read_data(BNO055_ACCEL_CONFIG_ADDR,&sensor_reg_page1,BNO055_REGISTER_PAGE1_COUNT_BYTES);
+	sensor_read_data(BNO055_ACCEL_CONFIG_ADDR,&sensor_reg_page1.accel_config,BNO055_REGISTER_PAGE1_COUNT_BYTES_0);
+	sensor_read_data(BNO055_INT_MASK_ADDR,&sensor_reg_page1.int_mask,BNO055_REGISTER_PAGE1_COUNT_BYTES_1);
 }
 
 void sensor_read_status(void)

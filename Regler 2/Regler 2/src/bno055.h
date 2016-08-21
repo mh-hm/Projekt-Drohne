@@ -1849,31 +1849,31 @@ typedef struct __attribute__ ((__packed__)) bno055_reg_page0_t
 	bno055_sys_stat_t   sys_stat	;
 	bno055_sys_err_t    sys_err		;
 	u8    unit_sel					;
-	u8    data_select				;
+	//u8    data_select				;
 	bno055_opr_mode_t	opr_mode	;
 	bno055_power_mode_t pwr_mode	;
 	u8    sys_trigger				;
 	u8    temp_source				;
 	u8    axis_map_config			;
 	u8    axis_map_sign				;
-	u8    sic_matrix_0_lsb			;
-	u8    sic_matrix_0_msb			;
-	u8    sic_matrix_1_lsb			;
-	u8    sic_matrix_1_msb			;
-	u8    sic_matrix_2_lsb			;
-	u8    sic_matrix_2_msb			;
-	u8    sic_matrix_3_lsb			;
-	u8    sic_matrix_3_msb			;
-	u8    sic_matrix_4_lsb			;
-	u8    sic_matrix_4_msb			;
-	u8    sic_matrix_5_lsb			;
-	u8    sic_matrix_5_msb			;
-	u8    sic_matrix_6_lsb			;
-	u8    sic_matrix_6_msb			;
-	u8    sic_matrix_7_lsb			;
-	u8    sic_matrix_7_msb			;
-	u8    sic_matrix_8_lsb			;
-	u8    sic_matrix_8_msb			;
+	//u8    sic_matrix_0_lsb			;
+	//u8    sic_matrix_0_msb			;
+	//u8    sic_matrix_1_lsb			;
+	//u8    sic_matrix_1_msb			;
+	//u8    sic_matrix_2_lsb			;
+	//u8    sic_matrix_2_msb			;
+	//u8    sic_matrix_3_lsb			;
+	//u8    sic_matrix_3_msb			;
+	//u8    sic_matrix_4_lsb			;
+	//u8    sic_matrix_4_msb			;
+	//u8    sic_matrix_5_lsb			;
+	//u8    sic_matrix_5_msb			;
+	//u8    sic_matrix_6_lsb			;
+	//u8    sic_matrix_6_msb			;
+	//u8    sic_matrix_7_lsb			;
+	//u8    sic_matrix_7_msb			;
+	//u8    sic_matrix_8_lsb			;
+	//u8    sic_matrix_8_msb			;
 	u8    accel_offset_x_lsb		;
 	u8    accel_offset_x_msb		;
 	u8    accel_offset_y_lsb		;
@@ -1906,7 +1906,7 @@ typedef struct __attribute__ ((__packed__)) bno055_reg_page1_t
 	u8 	gyro_mode_config;
 	u8 	accel_sleep_config;
 	u8 	gyro_sleep_config;
-	u8 	mag_sleep_config;
+	//u8 	mag_sleep_config;
 	u8 	int_mask;
 	u8 	int_en;
 	u8 	accel_any_motion_thres;
@@ -1926,8 +1926,14 @@ typedef struct __attribute__ ((__packed__)) bno055_reg_page1_t
 	u8 	gyro_any_motion_set;
 }bno055_reg_page1_t;
 
-#define BNO055_REGISTER_PAGE0_COUNT_BYTES	107
-#define BNO055_REGISTER_PAGE1_COUNT_BYTES	24
+#define BNO055_REGISTER_PAGE0_COUNT_BYTES	(BNO055_REGISTER_PAGE0_COUNT_BYTES_0 + BNO055_REGISTER_PAGE0_COUNT_BYTES_1 + BNO055_REGISTER_PAGE0_COUNT_BYTES_2)   //107
+#define BNO055_REGISTER_PAGE0_COUNT_BYTES_0	60
+#define BNO055_REGISTER_PAGE0_COUNT_BYTES_1	6
+#define BNO055_REGISTER_PAGE0_COUNT_BYTES_2	22
+
+#define BNO055_REGISTER_PAGE1_COUNT_BYTES	(BNO055_REGISTER_PAGE1_COUNT_BYTES_0 + BNO055_REGISTER_PAGE1_COUNT_BYTES_1) //24
+#define BNO055_REGISTER_PAGE1_COUNT_BYTES_0	6
+#define BNO055_REGISTER_PAGE1_COUNT_BYTES_1	17
 
 typedef union bno055_reg_page1_u_t
 {
