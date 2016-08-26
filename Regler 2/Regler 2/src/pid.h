@@ -19,10 +19,17 @@ uint_fast32_t throotle;
 volatile struct bno055_euler_t sensor_euler;
 volatile struct bno055_euler_t app_euler;
 
+enum wind_up_t{
+		WIND_UP_OFF,
+		WIND_UP_POS,
+		WIND_UP_NEG
+	};
+
 typedef struct pid_tmp
 {
-	int_fast32_t e_old;
-	int_fast32_t e_int;
+	int_fast32_t	e_old;
+	int_fast32_t	e_int;
+	enum wind_up_t	wind_up;
 }pid_tmp;
 
 motor_values_t volatile speed;

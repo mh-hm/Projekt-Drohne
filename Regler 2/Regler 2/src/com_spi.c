@@ -26,7 +26,7 @@ ISR(com_spi_interrupt_handler, AVR32_SPI_IRQ_GROUP, SPI_ARDU_IRQ_LEVEL)
 	pdca_opt.etrig			= false;
 	pdca_opt.r_addr			= NULL;
 	pdca_opt.r_size			= 0;
-
+	
 	uint8_t cmd = spi_get(SPI_ARDU);
 	switch (cmd)
 	{
@@ -51,7 +51,7 @@ ISR(com_spi_interrupt_handler, AVR32_SPI_IRQ_GROUP, SPI_ARDU_IRQ_LEVEL)
 		case SPI_CMD_MOTOR_DEBUG:
 			pdca_opt.pid			= AVR32_SPI_PDCA_ID_RX;
 			pdca_opt.addr			= (void *)&speed_1;
-			pdca_opt.size			= SPI_CMD_EULER_COORD_NUM_BYTES;
+			pdca_opt.size			= SPI_CMD_MOTOR_DEBUG_NUM_BYTES;
 			pdca_init_channel(PDCA_CHANNEL_SPI_RX,&pdca_opt);
 			
 			pdca_opt.pid			= AVR32_SPI_PDCA_ID_TX;

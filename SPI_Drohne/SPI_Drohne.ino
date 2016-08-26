@@ -24,9 +24,9 @@ void setup() {
   euler_app[1] = 6;
   euler_app[2] = 7;
   delay(500);
-  Serial.begin(9600);
+  Serial1.begin(9600);
   
-  Serial.println("Read Euler Coordinates from the regler! \n");
+  //Serial1.println("Read Euler Coordinates from the regler! \n");
 }
 
 void loop() {
@@ -36,26 +36,25 @@ void loop() {
  
   //{
   //if(Serial.available()) Serial.write(Serial.read());
-  while(Serial.read() != 'a');
-  read_and_send_Motorspeed();
-  //Serial.print("H: \t");
-  Serial.print(motor[0], DEC);
-  Serial.print("\t");
-  Serial.print(motor[1], DEC);
-  Serial.print("\t");
-  Serial.print(motor[2], DEC);
-  Serial.print("\t");
-  Serial.print(motor[3], DEC);
-  Serial.println();
-  //read_and_send_Euler();
-  //Serial.print("H: \t");
-//  Serial.print(euler[0], DEC);
-//  Serial.print("\t");
-//  Serial.print(euler[1], DEC);
-//  Serial.print("\t");
-//  Serial.print(euler[2], DEC);
-//  Serial.println();
-
+  while(Serial1.read() != 'a');
+//  read_and_send_Motorspeed();
+//  //Serial.print("H: \t");
+//  Serial1.print(motor[0], DEC);
+//  Serial1.print("\t");
+//  Serial1.print(motor[1], DEC);
+//  Serial1.print("\t");
+//  Serial1.print(motor[2], DEC);
+//  Serial1.print("\t");
+//  Serial1.print(motor[3], DEC);
+//  Serial1.println();
+  read_and_send_Euler();
+  //Serial1.print("H: \t");
+  Serial1.print(euler[0], DEC);
+  Serial1.print("\t");
+  Serial1.print(euler[1], DEC);
+  Serial1.print("\t");
+  Serial1.print(euler[2], DEC);
+  Serial1.println();
   //}
 }
 

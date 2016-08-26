@@ -50,12 +50,13 @@ int main (void)
 		if (!w_done)
 		{
 			
-			sensor_read_page0();
+			//sensor_read_page0();
 			//ioport_set_pin_level(LED_B_SENS,sensor_reg_page0.calib_stat==63?LED_SENS_ON:LED_SENS_OFF);
 			
-			if(sensor_reg_page0.calib_stat == 0xff)
-			{
-				sensor_read_calibration();
+			//if(sensor_reg_page0.calib_stat == 0xff)
+			//{
+				//sensor_read_calibration();
+				sensor_euler = sensor_read_euler();
 				if  (sensor_euler.h != 0 || sensor_euler.p != 0 || sensor_euler.r != 0)
 				{
 						sensor_euler = sensor_read_euler();
@@ -65,10 +66,11 @@ int main (void)
 						pid_init();
 				}
 				ioport_set_pin_level(LED_R_SENS,LED_SENS_OFF);
-			}
+			//}
 		}
 		else
 		{
+			
 			//ast_enable_async_wakeup(AST_RTC,AVR32_AST_WER_PER0_MASK);
 			//sleepmgr_enter_sleep();	//TODO: Interrupt enable? Wake up from interrupt? Wake up from ast possible
 			//Sleepmode Stop -> 16,7mA normal Mode -> 28,4mA (30MHz)

@@ -12,23 +12,28 @@
 #include "motor_control.h"
 #include "ast_rtc.h"
 
+//#define TEST_PID
+#ifdef TEST_PID 
+	#undef TEST_PID
+#endif
+
 #ifdef TEST_PID
 	pid_tmp volatile test_tmp = {0,0};
-	uint32_t volatile test_x = 0, test_w = 0, a = 0;
+	int32_t volatile test_x = 0, test_w = 0, a = 0;
 	pid_settings_t test_set;
 #endif	
 
-uint_fast32_t volatile act_time = 0;
+int_fast32_t volatile act_time = 0;
 
 void pid_init(void)
 {
 	#ifdef TEST_PID
 		test_set.p = 1;
-		test_set.i = 100;
-		test_set.d = 100;
+		test_set.i = 1000;
+		test_set.d = 10;
 		ioport_set_pin_mode(GPIO_PB18,IOPORT_MODE_PULLUP);
 	#endif
-	act_time = ast_get_per_time_ms(AST_PIR_PID_PRESCALSER);
+	act_time = (int_fast32_t) ast_get_per_time_ms(AST_PIR_PID_PRESCALSER);
 	ast_set_periodic_interrupt(AST_RTC,AST_PIR_PID_PRESCALSER,AST_PIR_PID);
 }
 
@@ -48,13 +53,18 @@ int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, i
 
 	//e = e << PID_SHIFT_AMOUNT;
 	
-	_tmp->e_int += e;
+	if(_tmp->wind_up == WIND_UP_OFF) _tmp->e_int += e;
+	else if(_tmp->wind_up == WIND_UP_NEG && e > 0) _tmp->e_int += e;
+	else if(_tmp->wind_up == WIND_UP_POS && e < 0) _tmp->e_int += e;
+	
 		
 	//Calculating the actuation variable out of the controlled system include a proportional, integration and a differentation part
 	// y = KP * e + KI * INT(e,dt) + KD (de/dt)
 	y = _set.p * e;
 	if (_set.i != 0) y += (_tmp->e_int * act_time) / _set.i;
 	y += _set.d *(e - _tmp->e_old)/act_time;
+	
+	_tmp->wind_up = (y >= esc_timer_values.max_motorspeed)?WIND_UP_POS:(y <= 0)?WIND_UP_NEG:WIND_UP_OFF;
 	
 	//Speichern des Wertes für die nächste Regelung
 	//Save the Control Deviation for the next controlling cycle
@@ -65,20 +75,20 @@ int_fast32_t calculate_actuating_variable(pid_settings_t _set, int_fast32_t w, i
 	
 void pid_control()
 {
-	ioport_toggle_pin_level(LED_G_SENS);
+	ioport_toggle_pin_level(LED_B_SENS);
 	ioport_set_pin_level(GPIO_PA25, HIGH);
 	#ifdef TEST_PID
 		
 		if (ioport_get_pin_level(GPIO_PB18))
 			test_w = 20;
 		else 
-			test_w = 0;
+			test_w = -20;
 	
 		a = calculate_actuating_variable(test_set, test_w, test_x, &test_tmp);
-		speed.position[MOTOR_POS_FL] = test_x;
+		speed.position[MOTOR_POS_FL] = test_tmp.wind_up;
 		speed.position[MOTOR_POS_FR] = test_w;
 		speed.position[MOTOR_POS_BL] = a;
-		speed.position[MOTOR_POS_BR] = a;
+		speed.position[MOTOR_POS_BR] = test_tmp.e_int;
 	#else
 		sensor_euler =  sensor_read_euler();
 		struct bno055_euler_t volatile y = {0,0,0};
@@ -87,9 +97,9 @@ void pid_control()
 		uint_fast32_t volatile _thr = 0;
 	
 		//static temp variable for the controller needed for integration and differentation
-		static volatile pid_tmp p_tmp = {0,0};
-		static volatile pid_tmp h_tmp = {0,0};
-		static volatile pid_tmp r_tmp = {0,0};
+		static volatile pid_tmp p_tmp = {0,0,false};
+		static volatile pid_tmp h_tmp = {0,0,false};
+		static volatile pid_tmp r_tmp = {0,0,false};
 	//	static pid_tmp thr_tmp = {0,0};
 	
 	
