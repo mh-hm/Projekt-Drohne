@@ -12,7 +12,7 @@
 #include <board.h>
 #include <conf_board.h>
 #include "sensor.h"
-#include "com_spi.h"
+#include "communication.h"
 #include "motor_control.h"
 #include "settings_t.h"
 #include "pid.h"
@@ -30,7 +30,8 @@ void board_init(void)
 	motor_init();	
 	com_spi_init();
 	ast_init();
-	
+	usart_init();
+		
 	ioport_set_pin_dir(GPIO_PA25, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(LED_TRANS, IOPORT_DIR_OUTPUT);
 	//ioport_set_pin_dir(RST_ARDU_REG, IOPORT_DIR_INPUT);

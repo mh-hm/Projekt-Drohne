@@ -6,7 +6,7 @@
  */ 
 
 #include "asf.h"
-#include "com_spi.h"
+#include "communication.h"
 #include "spi_protocol.h"
 #include "pid.h"
 #include "motor_control.h"
@@ -21,13 +21,18 @@ ISR(com_spi_interrupt_handler, AVR32_SPI_IRQ_GROUP, SPI_ARDU_IRQ_LEVEL)
 {
 	pdca_disable(PDCA_CHANNEL_SPI_RX);
 	pdca_disable(PDCA_CHANNEL_SPI_TX);
-	pdca_channel_options_t pdca_opt;
+	volatile pdca_channel_options_t pdca_opt;
 	pdca_opt.transfer_size	= PDCA_TRANSFER_SIZE_BYTE;
 	pdca_opt.etrig			= false;
 	pdca_opt.r_addr			= NULL;
 	pdca_opt.r_size			= 0;
 	
 	uint8_t cmd = spi_get(SPI_ARDU);
+	#ifdef USART_DEBUG
+		usart_write_line(USART,"CMD: ");
+		usart_putchar(USART,cmd);
+		usart_putchar(USART,'\n');
+	#endif
 	switch (cmd)
 	{
 		case SPI_CMD_EULER_COORD:
@@ -43,7 +48,7 @@ ISR(com_spi_interrupt_handler, AVR32_SPI_IRQ_GROUP, SPI_ARDU_IRQ_LEVEL)
 			
 			MACRO_DIS_SPI_RX_INTR;
 			
-			pdca_enable_interrupt_transfer_complete(PDCA_CHANNEL_SPI_TX);
+			pdca_enable_interrupt_transfer_complete(PDCA_CHANNEL_SPI_RX);
 			
 			pdca_enable(PDCA_CHANNEL_SPI_RX);
 			pdca_enable(PDCA_CHANNEL_SPI_TX);
@@ -61,7 +66,7 @@ ISR(com_spi_interrupt_handler, AVR32_SPI_IRQ_GROUP, SPI_ARDU_IRQ_LEVEL)
 			
 			MACRO_DIS_SPI_RX_INTR;
 			
-			pdca_enable_interrupt_transfer_complete(PDCA_CHANNEL_SPI_TX);
+			pdca_enable_interrupt_transfer_complete(PDCA_CHANNEL_SPI_RX);
 			
 			pdca_enable(PDCA_CHANNEL_SPI_RX);
 			pdca_enable(PDCA_CHANNEL_SPI_TX);
@@ -75,9 +80,13 @@ ISR(com_spi_interrupt_handler, AVR32_SPI_IRQ_GROUP, SPI_ARDU_IRQ_LEVEL)
 
 ISR(com_pdca_interrupt_handler, AVR32_PDCA_IRQ_GROUP, PDCA_IRQ_LEVEL)
 {
-	pdca_disable_interrupt_transfer_complete(PDCA_CHANNEL_SPI_TX);
+	#ifdef USART_DEBUG
+		usart_write_line(USART,"CMD END\n");
+	#endif
+	pdca_disable_interrupt_transfer_complete(PDCA_CHANNEL_SPI_RX);
 	pdca_disable(PDCA_CHANNEL_SPI_RX);
 	pdca_disable(PDCA_CHANNEL_SPI_TX);
+	//spi_get(SPI_ARDU);
 	MACRO_EN_SPI_RX_INTR;
 };
 
@@ -117,5 +126,23 @@ spi_status_t com_spi_init(void)
 	return SPI_OK;
 }
 
-
+void usart_init(void)
+{
+	
+	ioport_set_pin_dir(USART_TX,IOPORT_DIR_OUTPUT);
+	ioport_set_pin_dir(USART_RX,IOPORT_DIR_INPUT);
+	
+	static const gpio_map_t USART_GPIO_MAP =	{{USART_RX, USART_RX_PER_FUNC},{USART_TX, USART_TX_PER_FUNC}};
+	gpio_enable_module(USART_GPIO_MAP,2);
+		
+	sysclk_enable_peripheral_clock(USART);
+	
+	usart_options_t opt;
+	opt.baudrate = USART_BAUD;
+	opt.charlength = USART_CHARLENGTH;
+	opt.channelmode = USART_CHMODE;
+	opt.paritytype = USART_PARITY;
+	opt.stopbits = USART_STOP;	
+	usart_init_rs232(USART, &opt, sysclk_get_pba_hz());
+}
 

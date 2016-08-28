@@ -7,7 +7,7 @@
 #define SPI_CMD_MOTOR_DEBUG 0x99
 #define SPI_CMD_MOTOR_DEBUG_NUM_BYTES 8
 
-#define DELAY 3
+#define DELAY 5
 
 signed int euler[3];
 signed int euler_app[3];
@@ -37,6 +37,7 @@ void loop() {
   //{
   //if(Serial.available()) Serial.write(Serial.read());
   while(Serial1.read() != 'a');
+  Serial1.println(SPI.transfer(1));
 //  read_and_send_Motorspeed();
 //  //Serial.print("H: \t");
 //  Serial1.print(motor[0], DEC);
@@ -47,14 +48,14 @@ void loop() {
 //  Serial1.print("\t");
 //  Serial1.print(motor[3], DEC);
 //  Serial1.println();
-  read_and_send_Euler();
-  //Serial1.print("H: \t");
-  Serial1.print(euler[0], DEC);
-  Serial1.print("\t");
-  Serial1.print(euler[1], DEC);
-  Serial1.print("\t");
-  Serial1.print(euler[2], DEC);
-  Serial1.println();
+  //read_and_send_Euler();
+  ////Serial1.print("H: \t");
+  //Serial1.print(euler[0], DEC);
+  //Serial1.print("\t");
+  //Serial1.print(euler[1], DEC);
+  //Serial1.print("\t");
+  //Serial1.print(euler[2], DEC);
+  //Serial1.println();
   //}
 }
 

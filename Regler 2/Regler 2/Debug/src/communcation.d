@@ -1,8 +1,6 @@
-src/ASF/common/boards/user_board/init.d \
- src/ASF/common/boards/user_board/init.o \
- src/ASF/common/boards/user_board/init.o: \
- ../src/ASF/common/boards/user_board/init.c ../src/asf.h \
- ../src/ASF/avr32/drivers/ast/ast.h ../src/ASF/avr32/utils/compiler.h \
+src/communcation.d src/communcation.o src/communcation.o: \
+ ../src/communcation.c ../src/asf.h ../src/ASF/avr32/drivers/ast/ast.h \
+ ../src/ASF/avr32/utils/compiler.h \
  ../src/ASF/avr32/utils/preprocessor/preprocessor.h \
  ../src/ASF/avr32/utils/preprocessor/tpaste.h \
  ../src/ASF/avr32/utils/preprocessor/stringz.h \
@@ -96,9 +94,9 @@ src/ASF/common/boards/user_board/init.d \
  ../src/config/conf_twim.h ../src/ASF/common/services/serial/serial.h \
  ../src/ASF/common/services/serial/uc3_usart/usart_serial.h \
  ../src/ASF/avr32/drivers/usart/usart.h ../src/config/conf_usart_serial.h \
- ../src/ASF/avr32/drivers/wdt/wdt.h ../src/sensor.h ../src/asf.h \
- ../src/bno055.h ../src/communication.h ../src/motor_control.h \
- ../src/settings_t.h ../src/pid.h ../src/motor_control.h ../src/ast_rtc.h
+ ../src/ASF/avr32/drivers/wdt/wdt.h ../src/communication.h \
+ ../src/spi_protocol.h ../src/pid.h ../src/settings_t.h ../src/bno055.h \
+ ../src/motor_control.h
 
 ../src/asf.h:
 
@@ -306,20 +304,14 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bi
 
 ../src/ASF/avr32/drivers/wdt/wdt.h:
 
-../src/sensor.h:
-
-../src/asf.h:
-
-../src/bno055.h:
-
 ../src/communication.h:
 
-../src/motor_control.h:
-
-../src/settings_t.h:
+../src/spi_protocol.h:
 
 ../src/pid.h:
 
-../src/motor_control.h:
+../src/settings_t.h:
 
-../src/ast_rtc.h:
+../src/bno055.h:
+
+../src/motor_control.h:

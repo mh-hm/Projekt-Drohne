@@ -212,6 +212,12 @@ struct bno055_euler_t sensor_read_euler(void)
 	_eul.h = (((int16_t) sensor_reg_page0.euler_h_msb) << 8) + ((int16_t) sensor_reg_page0.euler_h_lsb);
 	_eul.r = (((int16_t) sensor_reg_page0.euler_r_msb) << 8) + ((int16_t) sensor_reg_page0.euler_r_lsb);
 	_eul.p = (((int16_t) sensor_reg_page0.euler_p_msb) << 8) + ((int16_t) sensor_reg_page0.euler_p_lsb);
+	
+	//#ifdef USART_DEBUG
+		//usart_write_line(USART,"EULER:");
+		//usart_serial_write_packet(USART, &sensor_reg_page0.euler_h_lsb, 6);
+	//#endif
+	
 	return _eul;
 };
 

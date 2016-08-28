@@ -591,10 +591,10 @@
     <None Include="src\ASF\common\services\cpu\reset_cause.h">
       <SubType>compile</SubType>
     </None>
-    <Compile Include="src\com_spi.c">
+    <Compile Include="src\communcation.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\com_spi.h">
+    <Compile Include="src\communication.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\motor_control.c">

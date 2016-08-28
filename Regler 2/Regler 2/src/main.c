@@ -33,7 +33,7 @@
 #include "motor_control.h"
 #include "sensor.h"
 #include "bno055.h"
-#include "com_spi.h"
+#include "communication.h"
 #include "pid.h"
 #include "ast_rtc.h"
 
@@ -42,6 +42,8 @@
 int main (void)
 {
 	board_init();
+
+	usart_write_line(USART,"DROHNE v0.1\n");
 
 	bool w_done = false;
 	ioport_set_pin_level(LED_R_SENS,LED_SENS_ON);

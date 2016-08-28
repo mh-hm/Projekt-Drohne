@@ -18,7 +18,7 @@ src\ASF\avr32\drivers\scif\scif_uc3d.c
 
 src\ASF\avr32\drivers\wdt\wdt4.c
 
-src\com_spi.c
+src\communcation.c
 
 src\motor_control.c
 
