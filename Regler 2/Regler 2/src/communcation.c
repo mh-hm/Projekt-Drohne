@@ -19,6 +19,8 @@ motor_values_t speed_1;
 
 ISR(com_spi_interrupt_handler, AVR32_SPI_IRQ_GROUP, SPI_ARDU_IRQ_LEVEL)
 {
+	irqflags_t flags = cpu_irq_save();
+	
 	pdca_disable(PDCA_CHANNEL_SPI_RX);
 	pdca_disable(PDCA_CHANNEL_SPI_TX);
 	volatile pdca_channel_options_t pdca_opt;
@@ -28,11 +30,12 @@ ISR(com_spi_interrupt_handler, AVR32_SPI_IRQ_GROUP, SPI_ARDU_IRQ_LEVEL)
 	pdca_opt.r_size			= 0;
 	
 	uint8_t cmd = spi_get(SPI_ARDU);
-	#ifdef USART_DEBUG
-		usart_write_line(USART,"CMD: ");
-		usart_putchar(USART,cmd);
-		usart_putchar(USART,'\n');
-	#endif
+	//#ifdef USART_DEBUG
+		//usart_write_line(USART,"CMD: ");
+		//usart_putchar(USART,cmd);
+		//usart_putchar(USART,'\n');
+	//#endif
+	
 	switch (cmd)
 	{
 		case SPI_CMD_EULER_COORD:
@@ -47,7 +50,6 @@ ISR(com_spi_interrupt_handler, AVR32_SPI_IRQ_GROUP, SPI_ARDU_IRQ_LEVEL)
 			pdca_init_channel(PDCA_CHANNEL_SPI_TX,&pdca_opt);
 			
 			MACRO_DIS_SPI_RX_INTR;
-			
 			pdca_enable_interrupt_transfer_complete(PDCA_CHANNEL_SPI_RX);
 			
 			pdca_enable(PDCA_CHANNEL_SPI_RX);
@@ -76,13 +78,15 @@ ISR(com_spi_interrupt_handler, AVR32_SPI_IRQ_GROUP, SPI_ARDU_IRQ_LEVEL)
 		default:
 			break;
 	}
+	
+	cpu_irq_restore(flags);
 };
 
 ISR(com_pdca_interrupt_handler, AVR32_PDCA_IRQ_GROUP, PDCA_IRQ_LEVEL)
 {
-	#ifdef USART_DEBUG
-		usart_write_line(USART,"CMD END\n");
-	#endif
+	//#ifdef USART_DEBUG
+		//usart_write_line(USART,"CMD END\n");
+	//#endif
 	pdca_disable_interrupt_transfer_complete(PDCA_CHANNEL_SPI_RX);
 	pdca_disable(PDCA_CHANNEL_SPI_RX);
 	pdca_disable(PDCA_CHANNEL_SPI_TX);

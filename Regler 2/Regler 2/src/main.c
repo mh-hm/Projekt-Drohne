@@ -37,8 +37,6 @@
 #include "pid.h"
 #include "ast_rtc.h"
 
-	
-
 int main (void)
 {
 	board_init();
@@ -69,17 +67,13 @@ int main (void)
 				}
 				ioport_set_pin_level(LED_R_SENS,LED_SENS_OFF);
 			//}
-		}
-		else
-		{
-			
-			//ast_enable_async_wakeup(AST_RTC,AVR32_AST_WER_PER0_MASK);
-			//sleepmgr_enter_sleep();	//TODO: Interrupt enable? Wake up from interrupt? Wake up from ast possible
-			//Sleepmode Stop -> 16,7mA normal Mode -> 28,4mA (30MHz)
-			//Sleepmode Stop disables PBA -> is used for motors pwm
-		}
+		}			
+		//ast_enable_async_wakeup(AST_RTC,AVR32_AST_WER_PER0_MASK);
+		//sleepmgr_enter_sleep();	//TODO: Interrupt enable? Wake up from interrupt? Wake up from ast possible
+		//Sleepmode Stop -> 16,7mA normal Mode -> 28,4mA (30MHz)
+		//Sleepmode Stop disables PBA -> is used for motors pwm
 		
-		check_save();
+		//check_save();
 		//uint8_t calib_stat;
 		//read_sensor_data(BNO055_CALIB_STAT_ADDR, &calib_stat, 1);
 		

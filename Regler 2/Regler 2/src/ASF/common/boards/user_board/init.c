@@ -31,6 +31,7 @@ void board_init(void)
 	com_spi_init();
 	ast_init();
 	usart_init();
+	
 		
 	ioport_set_pin_dir(GPIO_PA25, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(LED_TRANS, IOPORT_DIR_OUTPUT);

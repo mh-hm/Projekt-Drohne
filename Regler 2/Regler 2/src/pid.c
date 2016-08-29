@@ -12,10 +12,12 @@
 #include "motor_control.h"
 #include "ast_rtc.h"
 
+#include <stdio.h>
+
+volatile struct bno055_euler_t sensor_euler;
+volatile struct bno055_euler_t app_euler;
+
 //#define TEST_PID
-#ifdef TEST_PID 
-	#undef TEST_PID
-#endif
 
 #ifdef TEST_PID
 	pid_tmp volatile test_tmp = {0,0};
@@ -109,6 +111,12 @@ void pid_control()
 		y.h = calculate_actuating_variable(set.pid_yaw, app_euler.h, sensor_euler.h, &h_tmp);
 		//int_fast32_t throttle = calculate_actuating_variable(set.pid_throttle, throotle, _thr, &thr_tmp);
 	
+		#ifdef USART_DEBUG
+			char str[10];
+			sprintf(&str,"%i\t%i\t%i\n", p_tmp.e_old, r_tmp.e_old, h_tmp.e_old);
+			usart_write_line(USART,str);
+		#endif
+	
 		//Add all actuating variables to the motor speeds
 		int_fast32_t _esc0 =	 y.r	+	 y.h	+	-y.p	+	throotle;
 		int_fast32_t _esc1 =	-y.r	+	-y.h	+	-y.p	+	throotle;
@@ -123,7 +131,7 @@ void pid_control()
 		speed.position[MOTOR_POS_BR] = _esc3;
 		
 	#endif
-	set_motor_speeds(speed);
+	//set_motor_speeds(speed);
 	ioport_set_pin_level(GPIO_PA25, LOW);
 }
 
