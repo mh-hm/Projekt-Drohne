@@ -98,7 +98,7 @@ src/ASF/common/boards/user_board/init.d \
  ../src/ASF/avr32/drivers/usart/usart.h ../src/config/conf_usart_serial.h \
  ../src/ASF/avr32/drivers/wdt/wdt.h ../src/sensor.h ../src/asf.h \
  ../src/bno055.h ../src/communication.h ../src/motor_control.h \
- ../src/settings_t.h ../src/pid.h ../src/motor_control.h ../src/ast_rtc.h
+ ../src/settings_t.h ../src/motor_control.h ../src/pid.h ../src/ast_rtc.h
 
 ../src/asf.h:
 
@@ -318,8 +318,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr32\avr32-gnu-toolchain\bi
 
 ../src/settings_t.h:
 
-../src/pid.h:
-
 ../src/motor_control.h:
+
+../src/pid.h:
 
 ../src/ast_rtc.h:

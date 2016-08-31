@@ -11,6 +11,7 @@
 
 #include "asf.h"
 #include "bno055.h"
+#include "motor_control.h"
 
 typedef struct{
 	uint32_t	p;
@@ -24,6 +25,7 @@ typedef struct __attribute__ ((__packed__)){
 	uint8_t error;
 	uint8_t warning;
 	motor_values_t motor_speeds;
+	uint8_t checksum;
 } communication_frame_out_t;
 
 typedef struct __attribute__ ((__packed__)){
@@ -31,6 +33,7 @@ typedef struct __attribute__ ((__packed__)){
 	uint16_t throttle;
 	uint8_t batterylevel;
 	uint8_t buffer[8];
+	uint8_t checksum;
 } communication_frame_in_t;
 
 
