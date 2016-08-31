@@ -15,5 +15,4 @@ spi_status_t com_spi_init(void);
 
 void usart_init(void);
 
-
 #endif /* COM_SPI_H_ */

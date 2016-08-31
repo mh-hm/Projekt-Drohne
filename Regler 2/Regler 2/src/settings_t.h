@@ -18,6 +18,23 @@ typedef struct{
 	uint32_t	d;
 }pid_settings_t;
 
+typedef struct __attribute__ ((__packed__)){
+	struct bno055_euler_t sensor_euler;
+	uint16_t throttle;
+	uint8_t error;
+	uint8_t warning;
+	motor_values_t motor_speeds;
+} communication_frame_out_t;
+
+typedef struct __attribute__ ((__packed__)){
+	struct bno055_euler_t communication_frame_in,app_euler;
+	uint16_t throttle;
+	uint8_t batterylevel;
+	uint8_t buffer[8];
+} communication_frame_in_t;
+
+
+
 #define		SETTINGS_USERPAGE_OFFSET	32
 #define		SETTINGS_VERSION			11
 
@@ -36,6 +53,8 @@ typedef struct{
 	} settings_t;
 
 extern volatile settings_t set;
+extern volatile communication_frame_out_t communication_frame_out;
+extern volatile communication_frame_in_t communication_frame_in;
 
 void settings_init(bool iopin_save);
 

@@ -51,7 +51,7 @@ typedef enum motor_pos_t{
 // ex. for setting, reading and altering motor-speeds...
 typedef struct{
 	// contains all 4 motor-values in array, so we could implement it ex. in a for-loop
-	int_fast16_t position[4];
+	int16_t position[4];
 	// motor_values_t.position[0=MOTOR_POS_FL] contains value for/from the front-left-motor
 	// -1 means, that the specific speed will not be set in set_motor_speeds
 	// 0 means, that the specific motor-speed will not be altered, if used with alter_motor_speeds

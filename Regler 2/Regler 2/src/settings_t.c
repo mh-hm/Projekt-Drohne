@@ -8,6 +8,8 @@
 #include "settings_t.h"
 
 volatile settings_t set;
+volatile communication_frame_out_t communication_frame_out;
+volatile communication_frame_in_t communication_frame_in;
 
 //Read settings set of UserPage on Controller
 //If no data -> Default-values

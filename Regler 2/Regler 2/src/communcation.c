@@ -38,15 +38,15 @@ ISR(com_spi_interrupt_handler, AVR32_SPI_IRQ_GROUP, SPI_ARDU_IRQ_LEVEL)
 	
 	switch (cmd)
 	{
-		case SPI_CMD_EULER_COORD:
+		case SPI_CMD_EULER_COORD_BATT:
 			pdca_opt.pid			= AVR32_SPI_PDCA_ID_RX;
-			pdca_opt.addr			= (void *)&app_euler;
-			pdca_opt.size			= SPI_CMD_EULER_COORD_NUM_BYTES;
+			pdca_opt.addr			= (void *)&communication_frame_in;
+			pdca_opt.size			= SPI_CMD_EULER_COORD_BATT_NUM_BYTES;
 			pdca_init_channel(PDCA_CHANNEL_SPI_RX,&pdca_opt);
 			
 			pdca_opt.pid			= AVR32_SPI_PDCA_ID_TX;
-			pdca_opt.addr			= (void *)&sensor_euler;
-			pdca_opt.size			= SPI_CMD_EULER_COORD_NUM_BYTES;
+			pdca_opt.addr			= (void *)&communication_frame_out;
+			pdca_opt.size			= SPI_CMD_EULER_COORD_BATT_NUM_BYTES;
 			pdca_init_channel(PDCA_CHANNEL_SPI_TX,&pdca_opt);
 			
 			MACRO_DIS_SPI_RX_INTR;
@@ -74,6 +74,24 @@ ISR(com_spi_interrupt_handler, AVR32_SPI_IRQ_GROUP, SPI_ARDU_IRQ_LEVEL)
 			pdca_enable(PDCA_CHANNEL_SPI_TX);
 			break;
 		case SPI_CMD_SET_WRITE:
+			break;
+		case SPI_CMD_EULER_COORD_BATT_DIAG:
+			pdca_opt.pid			= AVR32_SPI_PDCA_ID_RX;
+			pdca_opt.addr			= (void *)&speed_1;
+			pdca_opt.size			= SPI_CMD_EULER_COORD_BATT_DIAG_NUM_BYTES_REC;
+			pdca_init_channel(PDCA_CHANNEL_SPI_RX,&pdca_opt);
+		
+			pdca_opt.pid			= AVR32_SPI_PDCA_ID_TX;
+			pdca_opt.addr			= (void *)&esc_timer_compare_values;
+			pdca_opt.size			= SPI_CMD_EULER_COORD_BATT_DIAG_NUM_BYTES_TR;
+			pdca_init_channel(PDCA_CHANNEL_SPI_TX,&pdca_opt);
+		
+			MACRO_DIS_SPI_RX_INTR;
+		
+			pdca_enable_interrupt_transfer_complete(PDCA_CHANNEL_SPI_RX);
+		
+			pdca_enable(PDCA_CHANNEL_SPI_RX);
+			pdca_enable(PDCA_CHANNEL_SPI_TX);
 			break;
 		default:
 			break;

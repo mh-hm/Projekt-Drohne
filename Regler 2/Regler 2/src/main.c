@@ -60,7 +60,7 @@ int main (void)
 				if  (sensor_euler.h != 0 || sensor_euler.p != 0 || sensor_euler.r != 0)
 				{
 						sensor_euler = sensor_read_euler();
-						app_euler = sensor_euler;
+						communication_frame_in,app_euler = sensor_euler;
 						throotle = 0;
 						w_done = true;
 						pid_init();

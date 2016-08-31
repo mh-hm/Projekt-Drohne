@@ -15,7 +15,7 @@
 #include <stdio.h>
 
 volatile struct bno055_euler_t sensor_euler;
-volatile struct bno055_euler_t app_euler;
+volatile struct bno055_euler_t communication_frame_in,app_euler;
 
 //#define TEST_PID
 
@@ -92,7 +92,7 @@ void pid_control()
 		speed.position[MOTOR_POS_BL] = a;
 		speed.position[MOTOR_POS_BR] = test_tmp.e_int;
 	#else
-		sensor_euler =  sensor_read_euler();
+		communication_frame_out.sensor_euler =  sensor_read_euler();
 		struct bno055_euler_t volatile y = {0,0,0};
 		
 		//throttle constant for the controller
@@ -106,9 +106,9 @@ void pid_control()
 	
 	
 		//calculate all actuating variables 
-		y.p = calculate_actuating_variable(set.pid_pitch, (app_euler.p<0)?app_euler.p+360*16:app_euler.p, (sensor_euler.p<0)?sensor_euler.p+360*16:sensor_euler.p, &p_tmp);
-		y.r = calculate_actuating_variable(set.pid_roll, app_euler.r, sensor_euler.r, &r_tmp);
-		y.h = calculate_actuating_variable(set.pid_yaw, app_euler.h, sensor_euler.h, &h_tmp);
+		y.p = calculate_actuating_variable(set.pid_pitch, (communication_frame_in.app_euler.p<0)?communication_frame_in.app_euler.p+360*16:communication_frame_in.app_euler.p, (communication_frame_out.sensor_euler.p<0)?sensor_euler.p+360*16:sensor_euler.p, &p_tmp);
+		y.r = calculate_actuating_variable(set.pid_roll, communication_frame_in.app_euler.r, communication_frame_out.sensor_euler.r, &r_tmp);
+		y.h = calculate_actuating_variable(set.pid_yaw, communication_frame_in.app_euler.h, communication_frame_out.sensor_euler.h, &h_tmp);
 		//int_fast32_t throttle = calculate_actuating_variable(set.pid_throttle, throotle, _thr, &thr_tmp);
 	
 		#ifdef USART_DEBUG
