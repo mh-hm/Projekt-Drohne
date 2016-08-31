@@ -14,9 +14,6 @@
 
 #include <stdio.h>
 
-volatile struct bno055_euler_t sensor_euler;
-volatile struct bno055_euler_t communication_frame_in,app_euler;
-
 //#define TEST_PID
 
 #ifdef TEST_PID
@@ -106,7 +103,7 @@ void pid_control()
 	
 	
 		//calculate all actuating variables 
-		y.p = calculate_actuating_variable(set.pid_pitch, (communication_frame_in.app_euler.p<0)?communication_frame_in.app_euler.p+360*16:communication_frame_in.app_euler.p, (communication_frame_out.sensor_euler.p<0)?sensor_euler.p+360*16:sensor_euler.p, &p_tmp);
+		y.p = calculate_actuating_variable(set.pid_pitch, (communication_frame_in.app_euler.p<0)?communication_frame_in.app_euler.p+360*16:communication_frame_in.app_euler.p, (communication_frame_out.sensor_euler.p<0)?communication_frame_out.sensor_euler.p+360*16:communication_frame_out.sensor_euler.p, &p_tmp);
 		y.r = calculate_actuating_variable(set.pid_roll, communication_frame_in.app_euler.r, communication_frame_out.sensor_euler.r, &r_tmp);
 		y.h = calculate_actuating_variable(set.pid_yaw, communication_frame_in.app_euler.h, communication_frame_out.sensor_euler.h, &h_tmp);
 		//int_fast32_t throttle = calculate_actuating_variable(set.pid_throttle, throotle, _thr, &thr_tmp);

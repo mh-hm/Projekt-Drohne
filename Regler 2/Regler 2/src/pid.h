@@ -16,8 +16,6 @@
 
 uint_fast32_t throotle;
 
-extern volatile struct bno055_euler_t sensor_euler;
-extern volatile struct bno055_euler_t communication_frame_in,app_euler;
 
 enum wind_up_t{
 		WIND_UP_OFF,

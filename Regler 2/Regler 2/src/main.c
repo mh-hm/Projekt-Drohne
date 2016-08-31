@@ -56,11 +56,11 @@ int main (void)
 			//if(sensor_reg_page0.calib_stat == 0xff)
 			//{
 				//sensor_read_calibration();
-				sensor_euler = sensor_read_euler();
-				if  (sensor_euler.h != 0 || sensor_euler.p != 0 || sensor_euler.r != 0)
+				communication_frame_out.sensor_euler = sensor_read_euler();
+				if  (communication_frame_out.sensor_euler.h != 0 || communication_frame_out.sensor_euler.p != 0 || communication_frame_out.sensor_euler.r != 0)
 				{
-						sensor_euler = sensor_read_euler();
-						communication_frame_in,app_euler = sensor_euler;
+						communication_frame_out.sensor_euler = sensor_read_euler();
+						communication_frame_in.app_euler = communication_frame_out.sensor_euler;
 						throotle = 0;
 						w_done = true;
 						pid_init();
