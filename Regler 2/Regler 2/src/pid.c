@@ -108,17 +108,13 @@ void pid_control()
 		y.h = calculate_actuating_variable(set.pid_yaw, communication_frame_in.app_euler.h, communication_frame_out.sensor_euler.h, &h_tmp);
 		//int_fast32_t throttle = calculate_actuating_variable(set.pid_throttle, throotle, _thr, &thr_tmp);
 	
-		#ifdef USART_DEBUG
-			char str[10];
-			sprintf(&str,"%i\t%i\t%i\n", p_tmp.e_old, r_tmp.e_old, h_tmp.e_old);
-			usart_write_line(USART,str);
-		#endif
+
 	
 		//Add all actuating variables to the motor speeds
-		int_fast32_t _esc0 =	 y.r	+	 y.h	+	-y.p	+	throotle;
-		int_fast32_t _esc1 =	-y.r	+	-y.h	+	-y.p	+	throotle;
-		int_fast32_t _esc2 =	 y.r	+	-y.h	+	 y.p	+	throotle;
-		int_fast32_t _esc3 =	-y.r	+	 y.h	+	 y.p	+	throotle;
+		int_fast32_t _esc0 =	 y.r	+	 y.h	+	 y.p	+	throotle;
+		int_fast32_t _esc1 =	-y.r	+	-y.h	+	 y.p	+	throotle;
+		int_fast32_t _esc2 =	 y.r	+	-y.h	+	-y.p	+	throotle;
+		int_fast32_t _esc3 =	-y.r	+	 y.h	+	-y.p	+	throotle;
 	
 		//TODO: check
 	
@@ -127,8 +123,16 @@ void pid_control()
 		speed.position[MOTOR_POS_BL] = _esc2;
 		speed.position[MOTOR_POS_BR] = _esc3;
 		
+		#ifdef USART_DEBUG
+			char str[60];
+			sprintf(&str,"E\t%i\t%i\t%i\n", p_tmp.e_old, r_tmp.e_old, h_tmp.e_old);
+			usart_write_line(USART,str);
+			sprintf(&str,"M\t%i\t%i\t%i\t%i\n", speed.position[MOTOR_POS_FL], speed.position[MOTOR_POS_FR], speed.position[MOTOR_POS_BL],speed.position[MOTOR_POS_BR]);
+			usart_write_line(USART,str);
+		#endif
+		
 	#endif
-	//set_motor_speeds(speed);
+	set_motor_speeds(speed);
 	ioport_set_pin_level(GPIO_PA25, LOW);
 }
 
