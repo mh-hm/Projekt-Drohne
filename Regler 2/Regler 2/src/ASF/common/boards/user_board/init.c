@@ -27,7 +27,7 @@ void board_init(void)
 	//ioport_set_pin_dir(RST_ARDU_REG, IOPORT_DIR_OUTPUT);
 	settings_init(true);
 	sensor_init();
-	motor_init();	
+	motor_init();
 	com_spi_init();
 	ast_init();
 	usart_init();

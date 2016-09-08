@@ -27,3 +27,5 @@ D:\Projects\Code\COm\COm\COm\bin\Debug\COm.xml
 D:\Projects\Code\COm\COm\COm\obj\x86\Debug\COm.Form1.resources
 D:\Projects\Code\COm\COm\COm\obj\x86\Debug\COm.Resources.resources
 D:\Projects\Code\COm\COm\COm\obj\x86\Debug\COm.vbproj.GenerateResource.Cache
+C:\Users\Hannes\Documents\GitHub\Projekt-Drohne\COm\COm\obj\x86\Debug\COm.xml
+C:\Users\Hannes\Documents\GitHub\Projekt-Drohne\COm\COm\obj\x86\Debug\COm.pdb

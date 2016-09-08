@@ -132,7 +132,9 @@ void pid_control()
 		#endif
 		
 	#endif
+	
 	set_motor_speeds(speed);
+	
 	ioport_set_pin_level(GPIO_PA25, LOW);
 }
 

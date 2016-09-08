@@ -16,6 +16,10 @@
 
 
 
+//extern int testInteger;
+
+
+
 
 // initializes the motor-functions, setting timer-preferences, etc. ...
 void motor_init(void) //TODO: static?
@@ -99,12 +103,19 @@ void motor_init(void) //TODO: static?
 	tc_write_rc(TIMER_ESC, ESC_TIMER_USED_CHANNEL1, esc_timer_values.period);
 	tc_write_rc(TIMER_ESC, ESC_TIMER_USED_CHANNEL2, esc_timer_values.period);
 	
+	
 	//pre-fill
-	tc_write_ra(TIMER_ESC, ESC_TIMER_USED_CHANNEL1, esc_timer_values.min);
+	esc_timer_compare_values[MOTOR_POS_FL] = esc_timer_values.min;
+	esc_timer_compare_values[MOTOR_POS_FR] = esc_timer_values.min;
+	esc_timer_compare_values[MOTOR_POS_BL] = esc_timer_values.min;
+	esc_timer_compare_values[MOTOR_POS_BR] = esc_timer_values.min;
+	
+	tc_write_ra(TIMER_ESC, ESC_TIMER_USED_CHANNEL1, esc_timer_values.min); 
 	tc_write_ra(TIMER_ESC, ESC_TIMER_USED_CHANNEL2, esc_timer_values.min);
 	tc_write_rb(TIMER_ESC, ESC_TIMER_USED_CHANNEL1, esc_timer_values.min);
 	tc_write_rb(TIMER_ESC, ESC_TIMER_USED_CHANNEL2, esc_timer_values.min);
-
+	
+	
 	tc_start (TIMER_ESC, ESC_TIMER_USED_CHANNEL1); //starting timer-channel
 	tc_start (TIMER_ESC, ESC_TIMER_USED_CHANNEL2);
 	
@@ -151,6 +162,7 @@ void t_c1_rc_isr(void)
 	tc_write_ra(TIMER_ESC, ESC_TIMER_USED_CHANNEL1, esc_timer_compare_values[MOTOR_POS_T_C1_A]);
 	tc_write_rb(TIMER_ESC, ESC_TIMER_USED_CHANNEL1, esc_timer_compare_values[MOTOR_POS_T_C1_B]);
 	tc_read_sr(TIMER_ESC, ESC_TIMER_USED_CHANNEL1);
+	//testInteger = 222;
 }
 
 #if __GNUC__
@@ -164,6 +176,7 @@ void t_c2_rc_isr(void)
 	tc_write_ra(TIMER_ESC, ESC_TIMER_USED_CHANNEL2, esc_timer_compare_values[MOTOR_POS_T_C2_A]);
 	tc_write_rb(TIMER_ESC, ESC_TIMER_USED_CHANNEL2, esc_timer_compare_values[MOTOR_POS_T_C2_B]);
 	tc_read_sr(TIMER_ESC, ESC_TIMER_USED_CHANNEL2);
+	//testInteger = 333;
 }
 
 

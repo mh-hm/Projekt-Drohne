@@ -37,6 +37,8 @@
 #include "pid.h"
 #include "ast_rtc.h"
 
+//int testInteger = 0;
+
 int main (void)
 {
 	board_init();
