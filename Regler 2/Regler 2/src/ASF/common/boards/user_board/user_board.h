@@ -103,7 +103,7 @@
 #define AST_PRESCALER			6
 
 #define AST_PIR_PID				0
-#define AST_PIR_PID_PRESCALSER	13	//10 17ms
+#define AST_PIR_PID_PRESCALSER	13	//10 17ms //TODO: Check Time
 #define ast_per0_pir_func		pid_control()
 
 #define AST_PIR_LEDS			1
