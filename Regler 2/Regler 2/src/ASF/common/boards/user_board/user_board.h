@@ -101,8 +101,17 @@
 #define AST_RTC					&AVR32_AST
 #define AST_SELECTED_CLOCK		AVR32_AST_CSSEL_SLOWCLOCK
 #define AST_PRESCALER			6
+
 #define AST_PIR_PID				0
 #define AST_PIR_PID_PRESCALSER	13	//10 17ms
+#define ast_per0_pir_func		pid_control()
+
+#define AST_PIR_LEDS			1
+#define AST_PIR_LEDS_PRESCALER	14	//PERODIC TIME = (2 ^ (PRESCALER + 1)) / CLOCK
+#define ast_per1_pir_func		;	//ISR FUNCTION
+//TO INIT PER-INTERRUPT:
+//ast_set_periodic_interrupt(AST_RTC,AST_PIR_LEDS_PRESCALER,AST_PIR_LEDS);
+
 #define AST_IRQ_LEVEL			1
 #define AST_IRQ_NR				AVR32_AST_PER_IRQ
 #define AST_IRQ_GROUP			AVR32_AST_IRQ_GROUP1

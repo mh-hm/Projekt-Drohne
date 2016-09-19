@@ -49,14 +49,14 @@ uint32_t ast_get_per_time_ms(uint8_t prescaler)
 
 ISR(ast_per0_interrupt_handler, AST_IRQ_GROUP, AST_IRQ_LEVEL)
 {
-	pid_control();
+	ast_per0_pir_func;
 	ast_clear_status_flag(AST_RTC, AVR32_AST_SCR_PER0_MASK);
 };
 
 ISR(ast_per1_interrupt_handler, AST_IRQ_GROUP, AST_IRQ_LEVEL)
 {
+	ast_per1_pir_func;
 	ast_clear_status_flag(AST_RTC, AVR32_AST_SCR_PER1_MASK);
-	ioport_toggle_pin_level(LED_R_SENS);
 };
 
 void ast_set_periodic_interrupt(volatile avr32_ast_t *ast, uint8_t prescaler, uint8_t periodic_channel)
