@@ -145,7 +145,7 @@ void motor_init(void) //TODO: static?
 	INTC_register_interrupt(&t_c2_rc_isr, AVR32_TC_IRQ1, AVR32_INTC_INT0);
 	
 #ifdef CONFIG_SLEEPMGR_ENABLE
-	sleepmgr_lock_mode(SLEEPMGR_STDBY);
+	sleepmgr_lock_mode(SLEEPMGR_FROZEN);
 #endif
 };
 

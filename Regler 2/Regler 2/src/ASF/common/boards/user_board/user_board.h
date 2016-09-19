@@ -96,6 +96,11 @@
 #define TWI_SENS				&AVR32_TWIM
 #define TWI_SENS_SPEED			TWI_FAST_MODE_SPEED //400kHz
 
+#define PWMA_GCLK_NR			4
+#define PWMA_GCLK_SCR			SCIF_GCCTRL_PBACLOCK
+#define PWMA_GCLK_DIV			1		//f_GCLK = f_SRC / (2*(DIV+1)) if DIVEN = true
+#define PWMA_GCLK_DIVEN			false
+
 //AST
 
 #define AST_RTC					&AVR32_AST

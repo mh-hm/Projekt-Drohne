@@ -12,6 +12,11 @@ volatile bno055_reg_page0_t sensor_reg_page0;
 volatile bno055_reg_page1_t sensor_reg_page1;
 
 void sensor_init(void){
+	
+	#ifdef CONFIG_SLEEPMGR_ENABLE
+		sleepmgr_lock_mode(SLEEPMGR_FROZEN);
+	#endif
+	
 	//ioport_set_pin_dir(BOOT_SENS, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(ADDR0_SENS, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(RST_SENS, IOPORT_DIR_OUTPUT);
@@ -135,6 +140,9 @@ bool sensor_read_calibration(void)
 
 void sensor_led_init(void)
 {
+	const scif_gclk_opt_t scif_gclk_opt = {.clock_source = PWMA_GCLK_SCR, .diven = PWMA_GCLK_DIVEN, .divider = PWMA_GCLK_DIV};
+	scif_start_gclk(PWMA_GCLK_NR, &scif_gclk_opt);	//Start GCLK of PWMA
+	
 	ioport_set_pin_level(LED_B_SENS, LED_SENS_OFF);
 	ioport_set_pin_level(LED_G_SENS, LED_SENS_OFF);
 	ioport_set_pin_level(LED_R_SENS, LED_SENS_OFF);
